@@ -2,4 +2,26 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <!-- Black -->
+    <color name="black_5">#F8F9FB</color>
+    <color name="black_10">#E1E3E7</color>
+    <color name="black_20">#C7C9CD</color>
+    <color name="black_30">#84878E</color>
+    <color name="black_40">#575960</color>
+    <color name="black_50">#191919</color>
+    <!-- Primary -->
+    <color name="primary_10">#F0F4FF</color>
+    <color name="primary_20">#CCD8FF</color>
+    <color name="primary_30">#9BB6F2</color>
+    <color name="primary_40">#7793F0</color>
+    <color name="primary_50">#5175EC</color>
+    <color name="gra">#9FC4C6</color>
+    <color name="red_5">#FFF4F4</color>
+    <color name="red">#FF2B2B</color>
+    <color name="green_5">#E4F8E1</color>
+    <color name="green">#BAE2B3</color>
+    <!-- Shadow -->
+    <color name="shadow_notification_card">#33ABABAB</color>
+    <color name="bottom_bar">#33393939</color>
 </resources>
