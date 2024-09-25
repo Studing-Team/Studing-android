@@ -37,7 +37,7 @@
     </style>
 
     <style name="Subtitle2">
-        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
         <item name="lineHeight">20sp</item>
@@ -64,9 +64,27 @@
         <item name="lineHeight">18sp</item>
     </style>
 
+    <style name="Caption10">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+    <style name="Caption12">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
     <style name="Nav">
         <item name="android:fontFamily">@font/inter_semi_bold</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+    <style name="Pretendard">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
     </style>
 
