@@ -88,4 +88,18 @@
         <item name="android:lineSpacingExtra">0dp</item>
     </style>
 
+
+    <!--  EditText -->
+    <!-- Title, Topic, SubTopic -->
+    <style name="LoginEditText" parent="Body1">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLength">15</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:textColorHint">@color/black_50</item>
+        <item name="android:background">@drawable/background_edittext_login</item>
+        <item name="android:paddingHorizontal">15dp</item>
+        <item name="android:paddingVertical">8dp</item>
+    </style>
+
 </resources>
