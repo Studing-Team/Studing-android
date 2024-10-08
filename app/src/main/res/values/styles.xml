@@ -108,4 +108,15 @@
         <item name="android:paddingVertical">8dp</item>
     </style>
 
+
+    <!--  회원가입 step chip -->
+    <style name="SignUpStepChip" parent="BodyAdd">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/black_40</item>
+        <item name="android:background">@drawable/background_signup_step_chip</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="android:paddingVertical">4dp</item>
+    </style>
+
 </resources>
