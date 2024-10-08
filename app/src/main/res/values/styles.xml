@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Font -->
+    <style name="HeadLine1">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">40dp</item>
+    </style>
+
+    <style name="HeadLine2">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">34dp</item>
+    </style>
+
+    <style name="HeadLine3">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="HeadLine4">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="Subtitle1">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">22dp</item>
+    </style>
+
+    <style name="Subtitle2">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">20dp</item>
+    </style>
+
+    <style name="Body1">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">20dp</item>
+    </style>
+
+    <style name="Body2">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">18dp</item>
+    </style>
+
+    <style name="Body3">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">18dp</item>
+    </style>
+
+    <style name="BodyAdd">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">18dp</item>
+    </style>
+
+    <style name="Caption10">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+    <style name="Caption12">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+    <style name="Nav">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+    <style name="Pretendard">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+
+    <!-- Login 입력창 -->
+    <style name="LoginEditText" parent="Body2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLength">15</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:textColorHint">@color/black_50</item>
+        <item name="android:background">@drawable/background_edittext_login</item>
+        <item name="android:paddingHorizontal">15dp</item>
+        <item name="android:paddingVertical">8dp</item>
+    </style>
+
+
+    <!--  회원가입 step chip -->
+    <style name="SignUpStepChip" parent="BodyAdd">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/black_40</item>
+        <item name="android:background">@drawable/background_signup_step_chip</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="android:paddingVertical">4dp</item>
+    </style>
+
+    <!-- 회원가입 입력창 -->
+    <style name="SignUpEditText" parent="Body2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLength">16</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:textColorHint">@color/black_20</item>
+        <item name="android:background">@drawable/background_signup_edittext_unselected</item>
+        <item name="android:paddingHorizontal">15dp</item>
+        <item name="android:paddingVertical">10dp</item>
+    </style>
+
+    <!-- 버튼 -->
+    <style name="NextButton" parent="Subtitle2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">50dp</item>
+        <item name="android:backgroundTint">@drawable/background_button</item>
+        <item name="android:paddingVertical">15dp</item>
+    </style>
+
+</resources>
