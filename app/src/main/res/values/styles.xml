@@ -119,4 +119,15 @@
         <item name="android:paddingVertical">4dp</item>
     </style>
 
+    <!-- 회원가입 입력창 -->
+    <style name="SignUpEditText" parent="Body2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLength">16</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/black_50</item>
+        <item name="android:textColorHint">@color/black_20</item>
+        <item name="android:background">@drawable/background_signup_edittext_unselected</item>
+        <item name="android:paddingHorizontal">15dp</item>
+        <item name="android:paddingVertical">10dp</item>
+    </style>
 </resources>
