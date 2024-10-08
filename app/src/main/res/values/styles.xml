@@ -5,63 +5,70 @@
         <item name="android:fontFamily">@font/inter_bold</item>
         <item name="android:textSize">34sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">40sp</item>
+        <item name="lineHeight">40dp</item>
     </style>
 
     <style name="HeadLine2">
         <item name="android:fontFamily">@font/inter_semi_bold</item>
         <item name="android:textSize">24sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">34sp</item>
+        <item name="lineHeight">34dp</item>
     </style>
 
     <style name="HeadLine3">
         <item name="android:fontFamily">@font/inter_semi_bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">24sp</item>
+        <item name="lineHeight">24dp</item>
     </style>
 
     <style name="HeadLine4">
         <item name="android:fontFamily">@font/inter_medium</item>
         <item name="android:textSize">20sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">24sp</item>
+        <item name="lineHeight">24dp</item>
     </style>
 
     <style name="Subtitle1">
         <item name="android:fontFamily">@font/inter_semi_bold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">22sp</item>
+        <item name="lineHeight">22dp</item>
     </style>
 
     <style name="Subtitle2">
         <item name="android:fontFamily">@font/inter_semi_bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">20sp</item>
+        <item name="lineHeight">20dp</item>
     </style>
 
     <style name="Body1">
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="android:textSize">16sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">20sp</item>
+        <item name="lineHeight">20dp</item>
     </style>
 
     <style name="Body2">
         <item name="android:fontFamily">@font/inter_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">18sp</item>
+        <item name="lineHeight">18dp</item>
     </style>
 
     <style name="Body3">
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">0dp</item>
-        <item name="lineHeight">18sp</item>
+        <item name="lineHeight">18dp</item>
+    </style>
+
+    <style name="BodyAdd">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">18dp</item>
     </style>
 
     <style name="Caption10">
@@ -89,9 +96,8 @@
     </style>
 
 
-    <!--  EditText -->
-    <!-- Title, Topic, SubTopic -->
-    <style name="LoginEditText" parent="Body1">
+    <!-- Login 입력창 -->
+    <style name="LoginEditText" parent="Body2">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxLength">15</item>
         <item name="android:inputType">text</item>
