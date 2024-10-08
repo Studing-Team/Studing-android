@@ -40,6 +40,22 @@ class LoginFragment : Fragment() {
 
         binding.run {
 
+            buttonLogin.setOnClickListener {
+                // 로그인 기능 구현
+            }
+
+            buttonQna.setOnClickListener {
+                // 스튜딩 카카오톡 채널로 연결
+            }
+
+            buttonSignUp.setOnClickListener {
+                val nextFragment = SignUpStep1Fragment()
+
+                val transaction = loginActivity.manager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView_login, nextFragment)
+                transaction.addToBackStack("")
+                transaction.commit()
+            }
 
             val balloon = Balloon.Builder(loginActivity)
 //                .setWidth(BalloonSizeSpec.WRAP)
