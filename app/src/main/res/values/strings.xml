@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Studing</string>
     <string name="splash">대학생의 모든 것을 담은,</string>
+    <string name="sign_up"><u>회원가입</u></string>
 </resources>
