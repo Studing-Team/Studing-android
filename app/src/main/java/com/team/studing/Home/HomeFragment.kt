@@ -1,4 +1,4 @@
-package com.team.studing
+package com.team.studing.Home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,7 +19,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
         binding.run {
-            
+
         }
 
         return binding.root
