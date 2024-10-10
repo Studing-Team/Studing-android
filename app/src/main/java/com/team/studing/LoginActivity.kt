@@ -1,6 +1,9 @@
 package com.team.studing
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.team.studing.databinding.ActivityLoginBinding
@@ -23,5 +26,10 @@ class LoginActivity : AppCompatActivity() {
 //        navController = navHostFragment.navController
 
         setContentView(binding.root)
+    }
+
+    fun hideKeyboard(){
+        val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.window.decorView.applicationWindowToken, 0)
     }
 }

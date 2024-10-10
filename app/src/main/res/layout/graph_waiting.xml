@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imageView_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_waiting_disabled"
+        app:layout_constraintStart_toStartOf="@+id/textView_send"
+        app:layout_constraintEnd_toEndOf="@+id/textView_send"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_send"
+        style="@style/Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="제출 완료"
+        android:textAlignment="center"
+        android:textColor="@color/black_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_send" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/black_10"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_send"
+        app:layout_constraintStart_toEndOf="@+id/imageView_send"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_check"
+        app:layout_constraintTop_toTopOf="@+id/imageView_send" />
+
+    <ImageView
+        android:id="@+id/imageView_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_waiting_disabled"
+        app:layout_constraintStart_toStartOf="@+id/textView_check"
+        app:layout_constraintEnd_toEndOf="@+id/textView_check"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_check"
+        style="@style/Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="58dp"
+        android:text="확인 중"
+        android:textAlignment="center"
+        android:textColor="@color/black_20"
+        app:layout_constraintStart_toEndOf="@+id/textView_send"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_check" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/black_10"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_check"
+        app:layout_constraintStart_toEndOf="@+id/imageView_check"
+        app:layout_constraintEnd_toStartOf="@+id/imageView_complete"
+        app:layout_constraintTop_toTopOf="@+id/imageView_check" />
+
+    <ImageView
+        android:id="@+id/imageView_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_waiting_disabled"
+        app:layout_constraintStart_toStartOf="@+id/textView_complete"
+        app:layout_constraintEnd_toEndOf="@+id/textView_complete"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_complete"
+        style="@style/Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="58dp"
+        android:text="승인 완료"
+        android:textAlignment="center"
+        android:textColor="@color/black_20"
+        app:layout_constraintStart_toEndOf="@+id/textView_check"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_complete" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

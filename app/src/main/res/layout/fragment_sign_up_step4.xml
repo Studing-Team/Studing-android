@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUp.SignUpStep4Fragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider_background"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/black_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <View
+        android:id="@+id/divider_progress"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@drawable/background_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@id/divider_background"
+        app:layout_constraintEnd_toEndOf="@+id/divider_background"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/divider_background"
+        app:layout_constraintTop_toTopOf="@+id/divider_background"
+        app:layout_constraintWidth_percent="0.6666" />
+
+    <Button
+        android:id="@+id/button_next"
+        style="@style/NextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="다음"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="22dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_background"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_step"
+                style="@style/SignUpStepChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step.4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_intro"
+                style="@style/HeadLine3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="학번을 선택해주세요"
+                android:textColor="@color/black_50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView_step"
+                app:layout_constraintTop_toBottomOf="@+id/textView_step" />
+
+            <TextView
+                android:id="@+id/textView_student_number"
+                style="@style/BodyAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="학번"
+                android:textColor="@color/black_30"
+                app:layout_constraintStart_toStartOf="@+id/textView_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_intro" />
+
+            <TextView
+                android:id="@+id/editText_student_number"
+                style="@style/Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_signup_edittext_unselected"
+                android:paddingVertical="11dp"
+                android:paddingHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:text="학번을 선택해주세요"
+                android:textColor="@color/black_20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView_student_number"
+                app:layout_constraintTop_toBottomOf="@+id/textView_student_number" />
+
+            <ImageView
+                android:id="@+id/imageView_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_down_disabled"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editText_student_number"
+                app:layout_constraintEnd_toEndOf="@+id/editText_student_number"
+                app:layout_constraintTop_toTopOf="@+id/editText_student_number" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_student_number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_signup_edittext_unselected"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText_student_number" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUp.SignUpStep3Fragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider_background"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/black_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <View
+        android:id="@+id/divider_progress"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@drawable/background_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@id/divider_background"
+        app:layout_constraintEnd_toEndOf="@+id/divider_background"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/divider_background"
+        app:layout_constraintTop_toTopOf="@+id/divider_background"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <Button
+        android:id="@+id/button_register_major"
+        style="@style/NextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:text="우리 학과 등록하기"
+        android:enabled="false"
+        android:backgroundTint="@color/primary_50"
+        app:layout_constraintBottom_toTopOf="@+id/button_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_next"
+        style="@style/NextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="다음"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="22dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_register_major"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_background"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_step"
+                style="@style/SignUpStepChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Step.3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_intro"
+                style="@style/HeadLine3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="학과 정보를 입력해주세요"
+                android:textColor="@color/black_50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView_step"
+                app:layout_constraintTop_toBottomOf="@+id/textView_step" />
+
+            <TextView
+                android:id="@+id/textView_major"
+                style="@style/BodyAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="전공학과"
+                android:textColor="@color/black_30"
+                app:layout_constraintStart_toStartOf="@+id/textView_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_intro" />
+
+            <EditText
+                android:id="@+id/editText_major"
+                style="@style/SignUpEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="학과를 입력해주세요"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView_major"
+                app:layout_constraintTop_toBottomOf="@+id/textView_major" />
+
+            <ImageView
+                android:id="@+id/imageView_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/editText_major"
+                app:layout_constraintEnd_toEndOf="@+id/editText_major"
+                app:layout_constraintTop_toTopOf="@+id/editText_major" />
+
+            <TextView
+                android:id="@+id/textView_major_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/inter_regular"
+                android:text="현재 등록된 학과만 보여드려요!"
+                android:textColor="@color/black_30"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/editText_major"
+                app:layout_constraintTop_toBottomOf="@+id/editText_major" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_major"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView_major_description"
+                app:layout_constraintTop_toBottomOf="@+id/textView_major_description" />
+
+            <LinearLayout
+                android:id="@+id/layout_no_major"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_major_description">
+
+                <TextView
+                    android:id="@+id/textView_no_major"
+                    style="@style/Subtitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="찾으시는 학과가 없으신가요?"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_50" />
+
+                <TextView
+                    android:id="@+id/textView_no_major2"
+                    style="@style/Caption12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="아래 버튼을 눌러 구글폼을 통해 나의 학과를 등록해요.\n3일 이내로 빠르게 추가해드릴게요!"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_40" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
