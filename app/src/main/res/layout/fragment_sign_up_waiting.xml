@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUp.SignUpWaitingFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_back"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider_background"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/black_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <View
+        android:id="@+id/divider_progress"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@drawable/background_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@id/divider_background"
+        app:layout_constraintEnd_toEndOf="@+id/divider_background"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/divider_background"
+        app:layout_constraintTop_toTopOf="@+id/divider_background"
+        app:layout_constraintWidth_percent="1" />
+
+    <Button
+        android:id="@+id/button_notification"
+        style="@style/NextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:text="알림 받기"
+        app:layout_constraintBottom_toTopOf="@+id/button_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_start"
+        style="@style/Subtitle2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="스튜딩 시작하기"
+        android:textColor="@color/black_50"
+        android:background="@drawable/background_button_start"
+        app:backgroundTint="@null"
+        app:rippleColor="@color/transparent"
+        android:paddingVertical="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_background"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_intro"
+                style="@style/HeadLine3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="학교 인증을 진행 중이에요 :)"
+                android:textColor="@color/black_50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_intro_description"
+                style="@style/Caption12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="학교 인증이 완료된 후에\n스튜딩의 모든 기능을 이용할 수 있어요."
+                android:textColor="@color/black_40"
+                app:layout_constraintEnd_toEndOf="@+id/textView_intro"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_intro" />
+
+            <LinearLayout
+                android:id="@+id/layout_graph_waiting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/background_signup_card"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="85dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView_intro_description"
+                app:layout_constraintStart_toStartOf="@+id/textView_intro_description"
+                app:layout_constraintTop_toBottomOf="@+id/textView_intro_description">
+
+                <include
+                    android:id="@+id/graph_waiting"
+                    layout="@layout/graph_waiting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView_waiting_intro"
+                style="@style/Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="24시간 이내로 승인 여부를 알려드릴게요."
+                android:textColor="@color/black_50"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_graph_waiting" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:text="알림 받기로 승인 여부를 빠르게 확인할까요?"
+                android:textColor="@color/black_40"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView_waiting_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_waiting_intro" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
