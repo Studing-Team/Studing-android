@@ -2,4 +2,8 @@
     <string name="app_name">Studing</string>
     <string name="splash">대학생의 모든 것을 담은,</string>
     <string name="sign_up"><u>회원가입</u></string>
+    <!-- 이용약관 동의 -->
+    <string name="agreement1"><u>서비스 이용약관</u></string>
+    <string name="agreement2"><u>개인정보 수집 및 이용동의</u></string>
+    <string name="agreement3"><u>마케팅 정보 수신동의</u></string>
 </resources>
