@@ -53,4 +53,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // tooltip
+    implementation("com.github.skydoves:balloon:1.6.6")
 }

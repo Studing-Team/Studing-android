@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.team.studing.LoginActivity
-import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.databinding.FragmentSplashBinding
 
