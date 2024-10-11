@@ -1,5 +1,6 @@
 package com.team.studing.Login
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ColorFilter
@@ -7,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
@@ -81,6 +83,8 @@ class LoginFragment : Fragment() {
 
             buttonQna.setOnClickListener {
                 // 스튜딩 카카오톡 채널로 연결
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_BzmZn"))
+                startActivity(intent)
             }
 
             buttonSignUp.setOnClickListener {
