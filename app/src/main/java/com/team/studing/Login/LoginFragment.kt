@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.balloon
 import com.skydoves.balloon.showAlignBottom
+import com.skydoves.balloon.showAlignTop
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.SignUp.SignUpStep1Fragment
@@ -41,22 +43,6 @@ class LoginFragment : Fragment() {
 
         binding.run {
 
-            buttonLogin.setOnClickListener {
-                // 로그인 기능 구현
-            }
-
-            buttonQna.setOnClickListener {
-                // 스튜딩 카카오톡 채널로 연결
-            }
-
-            buttonSignUp.setOnClickListener {
-                val nextFragment = SignUpStep1Fragment()
-
-                val transaction = loginActivity.manager.beginTransaction()
-                transaction.replace(R.id.fragmentContainerView_login, nextFragment)
-                transaction.addToBackStack("")
-                transaction.commit()
-            }
             loginActivity.setStatusBarTransparent()
 
             val balloon = Balloon.Builder(loginActivity)
@@ -79,11 +65,32 @@ class LoginFragment : Fragment() {
                 .setMarginBottom(10)
                 .setMarginHorizontal(35)
                 .setCornerRadius(16f)
-                .setBackgroundDrawableResource(R.drawable.background_tooltip)
+                .setBackgroundDrawableResource(R.drawable.background_tooltip_black5)
                 .setBalloonAnimation(BalloonAnimation.ELASTIC)
                 .build()
 
-            buttonQna.showAlignBottom(balloon)
+            buttonQna.showAlignTop(balloon)
+
+            Handler().postDelayed({
+                balloon.dismiss()
+            }, 1000)
+
+            buttonLogin.setOnClickListener {
+                // 로그인 기능 구현
+            }
+
+            buttonQna.setOnClickListener {
+                // 스튜딩 카카오톡 채널로 연결
+            }
+
+            buttonSignUp.setOnClickListener {
+                val nextFragment = SignUpStep1Fragment()
+
+                val transaction = loginActivity.manager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView_login, nextFragment)
+                transaction.addToBackStack("")
+                transaction.commit()
+            }
         }
 
         return binding.root
