@@ -34,6 +34,15 @@ class SignUpStep5Fragment : Fragment() {
         binding.run {
             imageViewCheckboxAll.setOnClickListener {
                 isAgreementAllCheck = !isAgreementAllCheck
+                if(isAgreementAllCheck) {
+                    isAgreement1Check = true
+                    isAgreement2Check = true
+                    isAgreement3Check = true
+                } else {
+                    isAgreement1Check = false
+                    isAgreement2Check = false
+                    isAgreement3Check = false
+                }
                 checkAgreement()
                 if(isAgreementAllCheck) {
                     imageViewCheckboxAll.setImageResource(R.drawable.ic_checkbox_checked)
