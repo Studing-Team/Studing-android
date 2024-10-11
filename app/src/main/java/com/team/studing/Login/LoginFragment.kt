@@ -61,7 +61,7 @@ class LoginFragment : Fragment() {
                 .setArrowColorResource(R.color.black_5)
                 .setTextGravity(Gravity.CENTER)
                 .setElevation(0)
-                .setPaddingHorizontal(25)
+                .setPaddingHorizontal(15)
                 .setPaddingVertical(5)
                 .setMarginTop(10)
                 .setMarginBottom(10)
