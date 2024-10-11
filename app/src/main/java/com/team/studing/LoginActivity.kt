@@ -19,11 +19,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
-        enableEdgeToEdge()
-
-//        val navHostFragment = supportFragmentManager
-//            .findFragmentById(R.id.fragmentContainerView_login) as NavHostFragment
-//        navController = navHostFragment.navController
+//        enableEdgeToEdge()
 
         setContentView(binding.root)
     }
