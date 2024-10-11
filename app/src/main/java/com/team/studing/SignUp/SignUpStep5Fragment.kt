@@ -1,5 +1,7 @@
 package com.team.studing.SignUp
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -85,6 +87,22 @@ class SignUpStep5Fragment : Fragment() {
                 } else {
                     imageViewCheckbox3.setImageResource(R.drawable.ic_checkbox_unchecked)
                 }
+            }
+
+            textViewAgreement1.setOnClickListener {
+                // 서비스 이용약관 노션 페이지 연결
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.notion.so/11905c1258e080ee91cecfb7ff633bab?pvs=4"))
+                startActivity(intent)
+            }
+
+            textViewAgreement2.setOnClickListener {
+                // 서비스 이용약관 노션 페이지 연결
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.notion.so/11905c1258e08063bba2f82d320de454?pvs=4"))
+                startActivity(intent)
+            }
+
+            textViewAgreement3.setOnClickListener {
+
             }
 
             buttonNext.setOnClickListener {
