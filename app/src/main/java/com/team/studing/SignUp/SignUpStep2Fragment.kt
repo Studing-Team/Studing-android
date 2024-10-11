@@ -1,5 +1,7 @@
 package com.team.studing.SignUp
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
@@ -35,7 +37,7 @@ class SignUpStep2Fragment : Fragment() {
                     textViewUniversityDescription.visibility = View.VISIBLE
                     recyclerViewUniversity.visibility = View.VISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_delete_disabled)
+                    imageViewSearch.setImageResource(R.drawable.ic_delete_disabled)
 
                     // 검색 기능 구현
 
@@ -44,7 +46,7 @@ class SignUpStep2Fragment : Fragment() {
                     textViewUniversityDescription.visibility = View.INVISIBLE
                     recyclerViewUniversity.visibility = View.INVISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_search)
+                    imageViewSearch.setImageResource(R.drawable.ic_search)
                 }
             }
 
@@ -56,9 +58,9 @@ class SignUpStep2Fragment : Fragment() {
                     textViewUniversityDescription.visibility = View.INVISIBLE
                     recyclerViewUniversity.visibility = View.INVISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_search)
-
                     loginActivity.hideKeyboard()
+
+                    imageViewSearch.setImageResource(R.drawable.ic_search)
                 }
             }
 

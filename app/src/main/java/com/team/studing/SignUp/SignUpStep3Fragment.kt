@@ -32,7 +32,7 @@ class SignUpStep3Fragment : Fragment() {
                     textViewMajorDescription.visibility = View.VISIBLE
                     recyclerViewMajor.visibility = View.VISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_delete_disabled)
+                    imageViewSearch.setImageResource(R.drawable.ic_delete_disabled)
 
                     // 검색 기능 구현
 
@@ -41,7 +41,7 @@ class SignUpStep3Fragment : Fragment() {
                     textViewMajorDescription.visibility = View.INVISIBLE
                     recyclerViewMajor.visibility = View.INVISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_search)
+                    imageViewSearch.setImageResource(R.drawable.ic_search)
                 }
             }
 
@@ -53,7 +53,7 @@ class SignUpStep3Fragment : Fragment() {
                     textViewMajorDescription.visibility = View.INVISIBLE
                     recyclerViewMajor.visibility = View.INVISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_search)
+                    imageViewSearch.setImageResource(R.drawable.ic_search)
 
                     loginActivity.hideKeyboard()
                 }
