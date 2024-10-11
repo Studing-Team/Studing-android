@@ -14,6 +14,7 @@ import com.team.studing.Home.HomeFragment
 import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep1Binding
 
 class SignUpStep1Fragment : Fragment() {
@@ -231,6 +232,8 @@ class SignUpStep1Fragment : Fragment() {
 
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
             editTextPasswordCheck.transformationMethod = PasswordTransformationMethod.getInstance()

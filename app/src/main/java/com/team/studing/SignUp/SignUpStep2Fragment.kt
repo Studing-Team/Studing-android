@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep2Binding
 
 class SignUpStep2Fragment : Fragment() {
@@ -76,6 +77,8 @@ class SignUpStep2Fragment : Fragment() {
     }
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             textViewUniversityDescription.visibility = View.INVISIBLE
             recyclerViewUniversity.visibility = View.INVISIBLE

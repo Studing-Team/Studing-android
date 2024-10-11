@@ -23,6 +23,7 @@ import com.skydoves.balloon.showAlignBottom
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.SignUp.SignUpStep1Fragment
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -56,6 +57,7 @@ class LoginFragment : Fragment() {
                 transaction.addToBackStack("")
                 transaction.commit()
             }
+            loginActivity.setStatusBarTransparent()
 
             val balloon = Balloon.Builder(loginActivity)
 //                .setWidth(BalloonSizeSpec.WRAP)

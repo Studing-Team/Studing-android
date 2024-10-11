@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep6Binding
 
 class SignUpStep6Fragment : Fragment() {
@@ -77,6 +78,8 @@ class SignUpStep6Fragment : Fragment() {
     }
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             toolbar.run {
 

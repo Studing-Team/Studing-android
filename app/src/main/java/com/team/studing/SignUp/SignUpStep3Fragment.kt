@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep3Binding
 
 class SignUpStep3Fragment : Fragment() {
@@ -73,6 +74,8 @@ class SignUpStep3Fragment : Fragment() {
     }
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             textViewMajorDescription.visibility = View.INVISIBLE
             recyclerViewMajor.visibility = View.INVISIBLE

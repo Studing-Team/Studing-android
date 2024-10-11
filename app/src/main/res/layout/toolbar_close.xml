@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="16dp">
+    android:paddingBottom="16dp"
+    android:paddingTop="40dp">
 
     <ImageView
         android:id="@+id/button_close"
@@ -19,9 +20,9 @@
     <TextView
         android:id="@+id/textView_title"
         style="@style/Subtitle1"
-        android:textColor="@color/black_50"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black_50"
         app:layout_constraintBottom_toBottomOf="@+id/button_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
