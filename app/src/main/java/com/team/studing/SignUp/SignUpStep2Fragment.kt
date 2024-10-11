@@ -64,6 +64,12 @@ class SignUpStep2Fragment : Fragment() {
                 }
             }
 
+            buttonRegisterUniversity.setOnClickListener {
+                // 우리 학교 & 학과 등록 구글폼 연결
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/mjsYrF3FSeQUjnsC7"))
+                startActivity(intent)
+            }
+
             buttonNext.setOnClickListener {
                 val nextFragment = SignUpStep3Fragment()
 
