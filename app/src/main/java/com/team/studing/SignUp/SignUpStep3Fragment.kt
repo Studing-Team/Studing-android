@@ -1,5 +1,7 @@
 package com.team.studing.SignUp
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep3Binding
 
 class SignUpStep3Fragment : Fragment() {
@@ -31,7 +34,7 @@ class SignUpStep3Fragment : Fragment() {
                     textViewMajorDescription.visibility = View.VISIBLE
                     recyclerViewMajor.visibility = View.VISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_delete_disabled)
+                    imageViewSearch.setImageResource(R.drawable.ic_delete_disabled)
 
                     // 검색 기능 구현
 
@@ -40,7 +43,7 @@ class SignUpStep3Fragment : Fragment() {
                     textViewMajorDescription.visibility = View.INVISIBLE
                     recyclerViewMajor.visibility = View.INVISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_search)
+                    imageViewSearch.setImageResource(R.drawable.ic_search)
                 }
             }
 
@@ -52,10 +55,16 @@ class SignUpStep3Fragment : Fragment() {
                     textViewMajorDescription.visibility = View.INVISIBLE
                     recyclerViewMajor.visibility = View.INVISIBLE
 
-                    imageViewSearch.setBackgroundResource(R.drawable.ic_search)
+                    imageViewSearch.setImageResource(R.drawable.ic_search)
 
                     loginActivity.hideKeyboard()
                 }
+            }
+
+            buttonRegisterMajor.setOnClickListener {
+                // 우리 학교 & 학과 등록 구글폼 연결
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/mjsYrF3FSeQUjnsC7"))
+                startActivity(intent)
             }
 
             buttonNext.setOnClickListener {
@@ -73,6 +82,8 @@ class SignUpStep3Fragment : Fragment() {
     }
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             textViewMajorDescription.visibility = View.INVISIBLE
             recyclerViewMajor.visibility = View.INVISIBLE

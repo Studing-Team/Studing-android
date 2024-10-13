@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpFinishBinding
 
 class SignUpFinishFragment : Fragment() {
@@ -21,6 +22,8 @@ class SignUpFinishFragment : Fragment() {
 
         binding = FragmentSignUpFinishBinding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
+
+        loginActivity.setStatusBarTransparent()
 
         binding.run {
             buttonStart.setOnClickListener {

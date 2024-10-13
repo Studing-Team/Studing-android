@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep4Binding
 
 class SignUpStep4Fragment : Fragment() {
@@ -48,6 +49,8 @@ class SignUpStep4Fragment : Fragment() {
     }
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             recyclerViewStudentNumber.visibility = View.INVISIBLE
 

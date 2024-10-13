@@ -100,15 +100,17 @@
                 app:layout_constraintStart_toStartOf="@+id/textView_intro"
                 app:layout_constraintTop_toBottomOf="@+id/textView_intro" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView_student_card"
                 android:layout_width="0dp"
                 android:layout_height="188dp"
                 android:layout_marginTop="20dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/background_signup_card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_intro_description" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_intro_description"
+                app:shapeAppearanceOverlay="@style/RoundSector" />
 
             <LinearLayout
                 android:id="@+id/layout_image_upload"

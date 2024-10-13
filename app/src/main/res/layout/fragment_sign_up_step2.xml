@@ -160,6 +160,7 @@
                 android:id="@+id/layout_no_university"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="112dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
