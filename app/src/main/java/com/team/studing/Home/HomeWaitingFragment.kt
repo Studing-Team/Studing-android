@@ -47,6 +47,7 @@ class HomeWaitingFragment : Fragment() {
 
     fun initView() {
         mainActivity.setStatusBarTransparent()
+        mainActivity.hideBottomNavigation(true)
 
         binding.run {
             graphWaiting.run {
