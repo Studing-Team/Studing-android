@@ -95,6 +95,13 @@
         <item name="android:lineSpacingExtra">0dp</item>
     </style>
 
+    <style name="Chips">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="lineHeight">20dp</item>
+    </style>
+
 
     <!-- Login 입력창 -->
     <style name="LoginEditText" parent="Body2">
