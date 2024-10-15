@@ -56,4 +56,7 @@ dependencies {
 
     // tooltip
     implementation("com.github.skydoves:balloon:1.6.6")
+
+    // onboarding dot indicator
+    implementation("com.tbuonomo:dotsindicator:5.0")
 }

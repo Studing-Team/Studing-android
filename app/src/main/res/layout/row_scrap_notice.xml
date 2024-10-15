@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="8dp"
+    android:background="@drawable/background_home_notice"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="17.5dp">
+
+    <TextView
+        android:id="@+id/textView_notice_scrap_title"
+        style="@style/BodyAdd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="타이틀"
+        android:textAlignment="textStart"
+        android:textColor="@color/black_80"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_student_council_type"
+        app:layout_constraintTop_toBottomOf="@+id/textView_student_council_type" />
+
+    <TextView
+        android:id="@+id/textView_notice_scrap_content"
+        style="@style/Caption12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:maxLines="1"
+        android:text="공지 내용"
+        android:textAlignment="textStart"
+        android:textColor="@color/black_80"
+        app:layout_constraintEnd_toEndOf="@+id/textView_notice_scrap_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_notice_scrap_title"
+        app:layout_constraintTop_toBottomOf="@+id/textView_notice_scrap_title" />
+
+    <TextView
+        android:id="@+id/textView_notice_scrap_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16.75dp"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="2"
+        android:text="2024년 0월 00일"
+        android:textAlignment="textStart"
+        android:textColor="@color/black_30"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@+id/textView_notice_scrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textView_notice_scrap_content" />
+
+    <TextView
+        android:id="@+id/textView_student_council_type"
+        style="@style/StudentCouncilChip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_student_council_chip_primary10"
+        android:text="총학생회"
+        android:textColor="@color/primary_50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_scrap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_notice_scrap_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_notice_scrap_date"
+        app:srcCompat="@drawable/ic_scrap_selected" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

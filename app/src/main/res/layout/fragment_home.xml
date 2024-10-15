@@ -1,13 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/color_gradient_linear_30"
     tools:context=".Home.HomeFragment" >
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_home"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="홈화면" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView_student_council_intro"
+                style="@style/Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="대학교의 학생회 소식"
+                android:textColor="@color/black_50"
+                app:layout_constraintStart_toStartOf="@+id/banner"
+                app:layout_constraintTop_toBottomOf="@+id/banner" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_student_council"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintEnd_toEndOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="@+id/textView_student_council_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_student_council_intro" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textView_notice_intro"
+                style="@style/Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="전체 공지사항이에요"
+                android:textColor="@color/black_50"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView_student_council"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_student_council" />
+
+            <LinearLayout
+                android:id="@+id/button_notice_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:foregroundTint="@color/black_30"
+                android:foregroundTintMode="multiply"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView_notice_intro">
+
+                <TextView
+                    android:id="@+id/textView_notice_more"
+                    style="@style/Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="더보기"
+                    android:textColor="@color/black_30" />
+
+                <ImageView
+                    android:id="@+id/imageView_notice_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_arrow_right_black30" />
+            </LinearLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="@+id/textView_notice_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_notice_intro" />
+
+            <include
+                android:id="@+id/layout_empty_notice"
+                layout="@layout/empty_home_notice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="@+id/textView_notice_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_notice_intro" />
+
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dots_indicator_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                app:dotsColor="@color/white"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="10dp"
+                app:dotsSpacing="10dp"
+                app:dotsWidthFactor="2.5"
+                app:layout_constraintEnd_toEndOf="@+id/viewPager"
+                app:layout_constraintStart_toStartOf="@+id/viewPager"
+                app:layout_constraintTop_toBottomOf="@+id/viewPager"
+                app:progressMode="true"
+                app:selectedDotColor="@color/primary_50" />
+
+            <TextView
+                android:id="@+id/textView_notice_scrap_intro"
+                style="@style/Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="님이 저장한 공지사항이에요"
+                android:textColor="@color/black_50"
+                app:layout_constraintStart_toStartOf="@+id/textView_notice_intro"
+                app:layout_constraintTop_toBottomOf="@+id/dots_indicator_notice" />
+
+            <LinearLayout
+                android:id="@+id/button_notice_scrap_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:foregroundTint="@color/black_30"
+                android:foregroundTintMode="multiply"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView_notice_scrap_intro">
+
+                <TextView
+                    android:id="@+id/textView_notice_scrap_more"
+                    style="@style/Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="더보기"
+                    android:textColor="@color/black_30" />
+
+                <ImageView
+                    android:id="@+id/imageView_notice_scrap_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_arrow_right_black30" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/layout_empty_scrap_notice"
+                layout="@layout/empty_home_scrap_notice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintEnd_toEndOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="@+id/textView_notice_scrap_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_notice_scrap_intro" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_scrap_notice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintEnd_toEndOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="@+id/textView_notice_scrap_intro"
+                app:layout_constraintTop_toBottomOf="@+id/textView_notice_scrap_intro" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/color_gradient_banner"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="15dp">
+
+                    <TextView
+                        android:id="@+id/textView_unread_notice_with_nickname"
+                        style="@style/Subtitle1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"
+                        android:text="님이 놓친 공지사항"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_unread_notice_number"
+                        style="@style/Subtitle1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:text="7개"
+                        android:textColor="@color/primary_50"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_unread_notice_with_nickname"
+                        app:layout_constraintStart_toEndOf="@+id/textView_unread_notice_with_nickname"
+                        app:layout_constraintTop_toTopOf="@+id/textView_unread_notice_with_nickname" />
+
+                    <TextView
+                        android:id="@+id/textView_unread_notice_description"
+                        style="@style/Caption12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="나만 모르는 이벤트, 놓치지 말아요!"
+                        android:textColor="@color/black_5"
+                        app:layout_constraintStart_toStartOf="@+id/textView_unread_notice_with_nickname"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_unread_notice_with_nickname" />
+
+                    <ImageView
+                        android:id="@+id/button_show_unread"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/background_button_banner"
+                        android:padding="15dp"
+                        android:src="@drawable/ic_arrow_right_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
