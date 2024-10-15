@@ -126,6 +126,13 @@
         <item name="android:paddingVertical">4dp</item>
     </style>
 
+    <!--  학생회 type chip -->
+    <style name="StudentCouncilChip" parent="Chips">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingHorizontal">10dp</item>
+    </style>
+
     <!-- 회원가입 입력창 -->
     <style name="SignUpEditText" parent="Body2">
         <item name="android:layout_height">wrap_content</item>
@@ -145,6 +152,15 @@
         <item name="cornerRadius">50dp</item>
         <item name="android:backgroundTint">@drawable/background_button</item>
         <item name="android:paddingVertical">15dp</item>
+    </style>
+
+    <!-- 이미지 round style - 10dp -->
+    <style name="RoundSector10">
+        <item name="cornerSizeTopLeft">10dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 
 </resources>
