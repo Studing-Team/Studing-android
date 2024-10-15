@@ -133,6 +133,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView_qna"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView_qna"
-            app:srcCompat="@drawable/ic_arrow_right_black" />
+            app:srcCompat="@drawable/ic_arrow_right_black40" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
