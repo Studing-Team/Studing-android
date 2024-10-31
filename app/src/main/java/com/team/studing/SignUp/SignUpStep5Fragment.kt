@@ -34,6 +34,26 @@ class SignUpStep5Fragment : Fragment() {
         initView()
 
         binding.run {
+
+            textViewAgreement1.setOnClickListener {
+                // 서비스 이용약관 노션 페이지
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://studingofficial.notion.site/11905c1258e080ee91cecfb7ff633bab"))
+                startActivity(intent)
+            }
+
+            textViewAgreement2.setOnClickListener {
+                // 개인정보 수집 및 이용동의 노션 페이지
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://studingofficial.notion.site/11905c1258e08063bba2f82d320de454"))
+                startActivity(intent)
+            }
+
+            textViewAgreement3.setOnClickListener {
+                // 마케팅 정보 수신동의 노션 페이지
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://studingofficial.notion.site/12005c1258e080dbb1c2d0a2b1c1d75e"))
+                startActivity(intent)
+            }
+
+
             imageViewCheckboxAll.setOnClickListener {
                 isAgreementAllCheck = !isAgreementAllCheck
                 if(isAgreementAllCheck) {
