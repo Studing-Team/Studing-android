@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.SignUp.SignUpStep6Fragment
 import com.team.studing.databinding.FragmentHomeFailBinding
 
 class HomeFailFragment : Fragment() {
@@ -35,14 +34,14 @@ class HomeFailFragment : Fragment() {
 
             buttonReupload.setOnClickListener {
                 // 회원가입 - 학생증 제출 (step6) 화면으로 전환
-                loginActivity.finish()
+                mainActivity.finish()
 
-                val nextFragment = SignUpStep6Fragment()
-
-                val transaction = loginActivity.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainerView_login, nextFragment)
-                transaction.commit()
-                true
+                // loginActivity로 돌아가면서 추가 정보 전달
+                val intent = Intent(mainActivity, LoginActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT // loginActivity를 포그라운드로 가져옴
+                    putExtra("openFragment", "SignUpStep6Fragment")
+                }
+                mainActivity.startActivity(intent)
             }
 
             buttonQna.setOnClickListener {
