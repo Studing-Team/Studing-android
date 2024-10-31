@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_empty_student_council"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_home_student_council_empty"
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_empty_student_council" />
+
+            <TextView
+                android:id="@+id/textView_empty_student_council_description"
+                style="@style/Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="18dp"
+                android:text="등록된 학생회 정보가 없어요" />
+
+            <TextView
+                android:id="@+id/textView_empty_student_council_description2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/inter_regular"
+                android:text="아래 구글폼을 통해 학생회 정보를 입력해주세요.\n3일 이내로 빠르게 추가해드릴게요!"
+                android:textAlignment="center"
+                android:textColor="@color/black_30"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/button_register_student_council"
+                style="@style/Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="59dp"
+                android:paddingVertical="9dp"
+                android:text="학생회 등록하기"
+                android:textColor="@color/white"
+                app:cornerRadius="50dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView_empty_scrap_notice_description2"
+                app:layout_constraintStart_toStartOf="@+id/textView_empty_scrap_notice_description2"
+                app:layout_constraintTop_toBottomOf="@+id/textView_empty_scrap_notice_description2" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
