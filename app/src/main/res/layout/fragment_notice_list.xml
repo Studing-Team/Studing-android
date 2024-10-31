@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/color_gradient_linear_10"
     tools:context=".Home.NoticeListFragment">
 
@@ -17,62 +17,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_notice_list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/button_qna"
-        app:layout_constraintStart_toStartOf="@+id/button_qna"
-        app:layout_constraintTop_toBottomOf="@+id/button_qna"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/button_qna"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="14dp"
-        android:background="@drawable/background_button_qna_gray"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="9dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView_student_council">
-
-        <ImageView
-            android:id="@+id/imageView_qna"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_qna_black40" />
-
-        <TextView
-            android:id="@+id/textView_qna"
-            style="@style/Body2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="스튜딩 문의하기"
-            android:textColor="@color/black_40"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_qna"
-            app:layout_constraintStart_toEndOf="@+id/imageView_qna"
-            app:layout_constraintTop_toTopOf="@+id/imageView_qna" />
-
-        <ImageView
-            android:id="@+id/imageView_arrow_qna"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_qna"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView_qna"
-            app:srcCompat="@drawable/ic_arrow_right_black40" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_student_council"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -81,8 +25,79 @@
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" >
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView_student_council">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_qna"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/background_button_qna_gray"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="9dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView_qna"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_qna_black40" />
+
+                <TextView
+                    android:id="@+id/textView_qna"
+                    style="@style/Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="스튜딩 문의하기"
+                    android:textColor="@color/black_40"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView_qna"
+                    app:layout_constraintStart_toEndOf="@+id/imageView_qna"
+                    app:layout_constraintTop_toTopOf="@+id/imageView_qna" />
+
+                <ImageView
+                    android:id="@+id/imageView_arrow_qna"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_qna"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView_qna"
+                    app:srcCompat="@drawable/ic_arrow_right_black40" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_notice_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/button_qna"
+                app:layout_constraintStart_toStartOf="@+id/button_qna"
+                app:layout_constraintTop_toBottomOf="@+id/button_qna"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
