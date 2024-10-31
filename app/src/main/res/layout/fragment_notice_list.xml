@@ -7,6 +7,14 @@
     android:background="@drawable/color_gradient_linear_10"
     tools:context=".Home.NoticeListFragment">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_back_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_notice_list"
