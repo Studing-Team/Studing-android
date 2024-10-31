@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
-            app:srcCompat="@drawable/ic_logo_foreground" />
+            app:srcCompat="@drawable/ic_student_council_default" />
 
         <TextView
             android:id="@+id/textView_student_council_name"
