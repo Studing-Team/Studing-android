@@ -121,9 +121,19 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">@color/black_40</item>
-        <item name="android:background">@drawable/background_signup_step_chip</item>
+        <item name="android:background">@drawable/background_chip_black10</item>
         <item name="android:paddingHorizontal">14dp</item>
         <item name="android:paddingVertical">4dp</item>
+    </style>
+
+    <!--  공지사항 등록 tag chip -->
+    <style name="RegisterNoticeTagChip" parent="BodyAdd">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/black_30</item>
+        <item name="android:background">@drawable/background_chip_black10</item>
+        <item name="android:paddingHorizontal">15dp</item>
+        <item name="android:paddingVertical">5dp</item>
     </style>
 
     <!--  학생회 type chip -->
