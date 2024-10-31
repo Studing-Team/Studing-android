@@ -1,14 +1,15 @@
 package com.team.studing.Home
 
+//import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
@@ -16,7 +17,6 @@ import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.showAlignTop
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentHomeWaitingBinding
 
 class HomeWaitingFragment : Fragment() {
@@ -27,7 +27,7 @@ class HomeWaitingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentHomeWaitingBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
@@ -51,7 +51,7 @@ class HomeWaitingFragment : Fragment() {
 
         binding.run {
             graphWaiting.run {
-                imageViewSend.setImageResource(R.drawable.ic_waiting_complete)
+                imageViewSend.setImageResource(R.drawable.ic_complete)
                 textViewSend.run {
                     setTextColor(resources.getColor(R.color.primary_50))
                     setTextAppearance(R.style.BodyAdd)
@@ -64,7 +64,7 @@ class HomeWaitingFragment : Fragment() {
                     .setText("24시간 이내로 승인 여부를 알려드릴게요!")
                     .setTextColorResource(R.color.black_30)
                     .setTextSize(12f)
-                    .setTextTypeface(ResourcesCompat.getFont(mainActivity,R.font.inter_regular)!!)
+                    .setTextTypeface(ResourcesCompat.getFont(mainActivity, R.font.inter_regular)!!)
                     .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
                     .setArrowSize(8)
                     .setArrowPosition(0.5f)

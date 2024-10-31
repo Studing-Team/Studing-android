@@ -1,18 +1,17 @@
 package com.team.studing.Home
 
+//import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.SignUp.SignUpStep2Fragment
 import com.team.studing.SignUp.SignUpStep6Fragment
-import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentHomeFailBinding
 
 class HomeFailFragment : Fragment() {
@@ -24,11 +23,11 @@ class HomeFailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentHomeFailBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
-        loginActivity = activity as LoginActivity
+        loginActivity = LoginActivity()
 
         initView()
 
@@ -59,16 +58,17 @@ class HomeFailFragment : Fragment() {
     fun initView() {
         mainActivity.setStatusBarTransparent()
         mainActivity.hideBottomNavigation(true)
-        
+        mainActivity.hideWriteNoticeButton(true)
+
         binding.run {
             graphWaiting.run {
-                imageViewSend.setImageResource(R.drawable.ic_waiting_complete)
+                imageViewSend.setImageResource(R.drawable.ic_complete)
                 textViewSend.run {
                     setTextColor(resources.getColor(R.color.primary_50))
                     setTextAppearance(R.style.BodyAdd)
                 }
 
-                imageViewCheck.setImageResource(R.drawable.ic_waiting_complete)
+                imageViewCheck.setImageResource(R.drawable.ic_complete)
                 textViewCheck.run {
                     setTextColor(resources.getColor(R.color.primary_50))
                     setTextAppearance(R.style.BodyAdd)

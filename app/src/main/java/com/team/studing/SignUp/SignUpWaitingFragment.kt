@@ -1,10 +1,10 @@
 package com.team.studing.SignUp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.databinding.FragmentSignUpWaitingBinding
@@ -17,7 +17,7 @@ class SignUpWaitingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentSignUpWaitingBinding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
@@ -55,7 +55,7 @@ class SignUpWaitingFragment : Fragment() {
             }
 
             graphWaiting.run {
-                imageViewSend.setImageResource(R.drawable.ic_waiting_complete)
+                imageViewSend.setImageResource(R.drawable.ic_complete)
                 textViewSend.run {
                     setTextColor(resources.getColor(R.color.primary_50))
                     setTextAppearance(R.style.BodyAdd)
