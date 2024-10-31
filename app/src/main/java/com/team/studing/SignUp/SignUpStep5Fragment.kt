@@ -1,5 +1,7 @@
 package com.team.studing.SignUp
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep5Binding
 import kotlin.math.log
 
@@ -33,6 +36,15 @@ class SignUpStep5Fragment : Fragment() {
         binding.run {
             imageViewCheckboxAll.setOnClickListener {
                 isAgreementAllCheck = !isAgreementAllCheck
+                if(isAgreementAllCheck) {
+                    isAgreement1Check = true
+                    isAgreement2Check = true
+                    isAgreement3Check = true
+                } else {
+                    isAgreement1Check = false
+                    isAgreement2Check = false
+                    isAgreement3Check = false
+                }
                 checkAgreement()
                 if(isAgreementAllCheck) {
                     imageViewCheckboxAll.setImageResource(R.drawable.ic_checkbox_checked)
@@ -77,6 +89,22 @@ class SignUpStep5Fragment : Fragment() {
                 }
             }
 
+            textViewAgreement1.setOnClickListener {
+                // 서비스 이용약관 노션 페이지 연결
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.notion.so/11905c1258e080ee91cecfb7ff633bab?pvs=4"))
+                startActivity(intent)
+            }
+
+            textViewAgreement2.setOnClickListener {
+                // 서비스 이용약관 노션 페이지 연결
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.notion.so/11905c1258e08063bba2f82d320de454?pvs=4"))
+                startActivity(intent)
+            }
+
+            textViewAgreement3.setOnClickListener {
+
+            }
+
             buttonNext.setOnClickListener {
                 val nextFragment = SignUpStep6Fragment()
 
@@ -101,6 +129,8 @@ class SignUpStep5Fragment : Fragment() {
     }
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             toolbar.run {
 

@@ -172,5 +172,14 @@
         <item name="cornerSizeBottomLeft">10dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
+  
+    <!-- 이미지 round style -->
+    <style name="RoundSector">
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
 
 </resources>

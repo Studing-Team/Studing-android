@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSplashBinding
 
 class SplashFragment : Fragment() {
@@ -22,6 +23,8 @@ class SplashFragment : Fragment() {
 
         binding = FragmentSplashBinding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
+
+        loginActivity.setStatusBarTransparent()
 
         Handler().postDelayed({
             val nextFragment = LoginFragment()

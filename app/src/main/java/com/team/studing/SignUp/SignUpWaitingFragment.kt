@@ -1,12 +1,18 @@
 package com.team.studing.SignUp
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpWaitingBinding
 
 class SignUpWaitingFragment : Fragment() {
@@ -28,6 +34,10 @@ class SignUpWaitingFragment : Fragment() {
 
             buttonNotification.setOnClickListener {
                 // 알림 권한 설정
+                if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.TIRAMISU && PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(loginActivity, Manifest.permission.POST_NOTIFICATIONS)){
+                    // 푸쉬 권한 없음
+                    ActivityCompat.requestPermissions(loginActivity, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 123)
+                }
             }
 
             buttonStart.setOnClickListener {
@@ -45,6 +55,8 @@ class SignUpWaitingFragment : Fragment() {
     }
 
     fun initView() {
+        loginActivity.setStatusBarTransparent()
+
         binding.run {
             toolbar.run {
 
