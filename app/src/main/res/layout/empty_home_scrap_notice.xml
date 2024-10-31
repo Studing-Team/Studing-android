@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_empty_home_scrap_notice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_home_notice_scrap_empty"
+        android:paddingHorizontal="37dp"
+        android:paddingVertical="22.5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView_empty_scrap_notice_description"
+            style="@style/Subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아직 저장한 공지사항이 없어요"
+            android:textColor="@color/black_50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_empty_scrap_notice_description2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="필요한 공지사항을 저장하여 빠르게 확인해보세요"
+            android:textColor="@color/black_40"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView_empty_scrap_notice_description"
+            app:layout_constraintStart_toStartOf="@+id/textView_empty_scrap_notice_description"
+            app:layout_constraintTop_toBottomOf="@+id/textView_empty_scrap_notice_description" />
+
+        <Button
+            android:id="@+id/button_show_whole_notice"
+            style="@style/Body2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="3dp"
+            android:text="전체 공지사항 보기"
+            android:textColor="@color/white"
+            app:cornerRadius="50dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView_empty_scrap_notice_description2"
+            app:layout_constraintStart_toStartOf="@+id/textView_empty_scrap_notice_description2"
+            app:layout_constraintTop_toBottomOf="@+id/textView_empty_scrap_notice_description2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

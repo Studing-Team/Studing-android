@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_home_notice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_home_notice"
+    android:padding="15dp">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageView_notice"
+        android:layout_width="match_parent"
+        android:layout_height="199dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundSector10"
+        android:src="@drawable/example" />
+
+    <TextView
+        android:id="@+id/textView_notice_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="타이틀"
+        android:textAlignment="textStart"
+        android:textColor="@color/black_50"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_notice"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView_notice"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_notice" />
+
+    <TextView
+        android:id="@+id/textView_notice_content"
+        style="@style/Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:text="공지 내용"
+        android:textAlignment="textStart"
+        android:textColor="@color/black_50"
+        app:layout_constraintEnd_toEndOf="@+id/textView_notice_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView_notice_title"
+        app:layout_constraintTop_toBottomOf="@+id/textView_notice_title" />
+
+    <TextView
+        android:id="@+id/textView_notice_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/inter_regular"
+        android:maxLines="2"
+        android:text="2024년 0월 00일"
+        android:textAlignment="textStart"
+        android:textColor="@color/black_30"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@+id/textView_notice_content"
+        app:layout_constraintTop_toBottomOf="@+id/textView_notice_content" />
+
+    <TextView
+        android:id="@+id/textView_student_council_type"
+        style="@style/StudentCouncilChip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="11dp"
+        android:background="@drawable/background_student_council_chip_primary10"
+        android:text="총학생회"
+        android:textColor="@color/primary_50"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_notice"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_notice" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_notice_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView_notice_date"
+        app:layout_constraintTop_toTopOf="@+id/textView_notice_date">
+
+        <ImageView
+            android:id="@+id/imageView_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_like_black30" />
+
+        <TextView
+            android:id="@+id/textView_like_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/inter_regular"
+            android:text="0"
+            android:textColor="@color/black_30"
+            android:textSize="11sp" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="2dp"
+            android:layout_weight="1"
+            app:dividerColor="#767676" />
+
+        <ImageView
+            android:id="@+id/imageView_scrap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_scrap_black30" />
+
+        <TextView
+            android:id="@+id/textView_scrap_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/inter_regular"
+            android:text="0"
+            android:textColor="@color/black_30"
+            android:textSize="11sp" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="2dp"
+            android:layout_weight="1"
+            app:dividerColor="#767676" />
+
+        <ImageView
+            android:id="@+id/imageView_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_show_black30" />
+
+        <TextView
+            android:id="@+id/textView_show_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/inter_regular"
+            android:text="0"
+            android:textColor="@color/black_30"
+            android:textSize="11sp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

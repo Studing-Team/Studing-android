@@ -1,6 +1,7 @@
 package com.team.studing
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -61,5 +62,13 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    fun hideBottomNavigation(state:Boolean){
+        if(state) binding.bottomNavigationView.visibility = View.GONE else binding.bottomNavigationView.visibility=View.VISIBLE
+    }
+
+    fun hideWriteNoticeButton(state:Boolean){
+        if(state) binding.buttonWriteNotice.visibility = View.GONE else binding.buttonWriteNotice.visibility=View.VISIBLE
     }
 }
