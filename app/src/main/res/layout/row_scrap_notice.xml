@@ -70,7 +70,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView_notice_scrap_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView_notice_scrap_date"
-        app:srcCompat="@drawable/ic_scrap_selected" />
+        android:tint="@color/primary_50"
+        android:src="@drawable/ic_scrap_selected" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
