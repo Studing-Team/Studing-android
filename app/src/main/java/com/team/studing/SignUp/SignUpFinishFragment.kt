@@ -1,11 +1,13 @@
 package com.team.studing.SignUp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.team.studing.LoginActivity
+import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpFinishBinding
@@ -27,7 +29,11 @@ class SignUpFinishFragment : Fragment() {
 
         binding.run {
             buttonStart.setOnClickListener {
-                // 홈화면으로 전환
+                // 로그인 후 홈화면으로 전환
+
+                val mainIntent = Intent(loginActivity, MainActivity::class.java)
+                mainIntent.putExtra("isLogin",true)
+                startActivity(mainIntent)
             }
         }
 
