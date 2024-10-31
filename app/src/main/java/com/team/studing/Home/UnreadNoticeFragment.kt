@@ -69,7 +69,7 @@ class UnreadNoticeFragment : Fragment() {
 
             toolbar.run {
                 buttonBack.setOnClickListener {
-
+                    fragmentManager?.popBackStack()
                 }
                 textViewTitle.text = "${numOfUnreadNotice}개 남음"
             }
