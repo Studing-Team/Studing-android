@@ -82,7 +82,7 @@ class LoginFragment : Fragment() {
                 .setBalloonAnimation(BalloonAnimation.ELASTIC)
                 .build()
 
-            buttonQna.showAlignBottom(balloon)
+            buttonQna.showAlignTop(balloon)
 
             Handler().postDelayed({
                 balloon.dismiss()
