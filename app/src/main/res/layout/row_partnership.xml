@@ -71,6 +71,24 @@
                     android:layout_height="wrap_content"
                     android:text="가게명"
                     android:textColor="@color/black_50" />
+
+                <ImageView
+                    android:id="@+id/imageView_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    app:srcCompat="@drawable/ic_category_drink" />
+
+                <TextView
+                    android:id="@+id/textView_store_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="2dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="술집"
+                    android:textColor="#84878E" />
             </LinearLayout>
 
             <TextView
