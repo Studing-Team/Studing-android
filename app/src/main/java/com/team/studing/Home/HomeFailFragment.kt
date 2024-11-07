@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentHomeFailBinding
 
 class HomeFailFragment : Fragment() {

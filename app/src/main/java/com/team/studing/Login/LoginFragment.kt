@@ -1,6 +1,7 @@
 package com.team.studing.Login
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
@@ -13,13 +14,11 @@ import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.showAlignBottom
 import com.skydoves.balloon.showAlignTop
 import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.SignUp.SignUpStep1Fragment
-import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -45,7 +44,9 @@ class LoginFragment : Fragment() {
             }
 
             buttonQna.setOnClickListener {
-                // 스튜딩 카카오톡 채널로 연결
+                // 스튜딩 카카오톡 채널
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_BzmZn"))
+                startActivity(intent)
             }
 
             buttonSignUp.setOnClickListener {
@@ -81,7 +82,7 @@ class LoginFragment : Fragment() {
                 .setBalloonAnimation(BalloonAnimation.ELASTIC)
                 .build()
 
-            buttonQna.showAlignBottom(balloon)
+            buttonQna.showAlignTop(balloon)
 
             Handler().postDelayed({
                 balloon.dismiss()

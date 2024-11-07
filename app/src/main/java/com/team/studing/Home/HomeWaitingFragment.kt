@@ -17,6 +17,7 @@ import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.showAlignTop
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentHomeWaitingBinding
 
 class HomeWaitingFragment : Fragment() {

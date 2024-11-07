@@ -41,7 +41,7 @@
         <Button
             android:id="@+id/button_scrap"
             style="@style/Subtitle2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="11dp"
             android:layout_weight="1"
@@ -54,7 +54,7 @@
         <Button
             android:id="@+id/button_next"
             style="@style/Subtitle2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingHorizontal="23.5dp"
