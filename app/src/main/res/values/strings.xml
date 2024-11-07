@@ -7,4 +7,14 @@
     <string name="agreement2"><u>개인정보 수집 및 이용동의</u></string>
     <string name="agreement3"><u>마케팅 정보 수신동의</u></string>
     <string name="app_version">V.1.0.0</string>
+
+    <string name="logout">로그아웃 하시겠습니까?</string>
+    <string name="withdrawal">모든 안내사항을 확인해주세요.\n탈퇴를 진행할까요?</string>
+
+    <!-- 탈퇴하기 안내 문구-->
+    <string name="withdrawal_description">잠깐! 스튜딩을 탈퇴하기 전에\n아래의 안내사항을 확인해주세요</string>
+    <string name="withdrawal_cuation1_title">📌 처음부터 다시 가입해야 해요</string>
+    <string name="withdrawal_cuation1_description">탈퇴 회원의 정보는 탈퇴 후 완전히 삭제돼요.\n스튜딩을 떠나시면 회원가입부터 다시 해야해요.</string>
+    <string name="withdrawal_cuation2_title">🥺 스튜딩과 함께한 기록이 사라져요</string>
+    <string name="withdrawal_cuation2_description">저장한 공지 및 좋아요 기록이 전부 사라져요.\n필요한 대학교 정보를 더 받아보실래요?</string>
 </resources>
