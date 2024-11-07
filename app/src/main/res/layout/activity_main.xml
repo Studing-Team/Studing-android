@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -23,16 +22,17 @@
         android:id="@+id/button_write_notice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:backgroundTint="@color/primary_50"
         android:clickable="true"
-        app:fabSize="normal"
-        app:borderWidth="0dp"
-        app:maxImageSize="36dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
         android:src="@drawable/ic_write_notice"
-        android:layout_marginBottom="15dp"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
+        app:maxImageSize="36dp"
+        app:rippleColor="@color/transparent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
         app:tint="@null" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

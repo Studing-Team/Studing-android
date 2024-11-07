@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <!-- 바깥쪽 그라데이션 스트로크 설정 -->
+            <gradient
+                android:angle="180"
+                android:centerColor="#91B3C7"
+                android:endColor="#7793F0"
+                android:startColor="#ABD39E" />
+            <corners android:radius="15dp" />
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+    <item
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp">
+        <shape android:shape="rectangle">
+            <!-- 내부 배경 설정 (필요한 경우 색상 설정) -->
+            <solid android:color="#FFFFFFFF" />
+            <corners android:radius="15dp" />
+        </shape>
+    </item>
+
+</layer-list>
