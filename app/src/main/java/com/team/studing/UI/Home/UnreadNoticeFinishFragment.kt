@@ -1,4 +1,4 @@
-package com.team.studing.Home
+package com.team.studing.UI.Home
 
 import android.os.Bundle
 import android.view.LayoutInflater

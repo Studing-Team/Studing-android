@@ -1,4 +1,4 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -34,9 +34,17 @@ class SignUpWaitingFragment : Fragment() {
 
             buttonNotification.setOnClickListener {
                 // 알림 권한 설정
-                if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.TIRAMISU && PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(loginActivity, Manifest.permission.POST_NOTIFICATIONS)){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
+                        loginActivity,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    )
+                ) {
                     // 푸쉬 권한 없음
-                    ActivityCompat.requestPermissions(loginActivity, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 123)
+                    ActivityCompat.requestPermissions(
+                        loginActivity,
+                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                        123
+                    )
                 }
             }
 

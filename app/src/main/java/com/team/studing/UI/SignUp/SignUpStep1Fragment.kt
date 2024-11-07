@@ -1,18 +1,15 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.os.Bundle
-import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import com.team.studing.Home.HomeFragment
+import androidx.fragment.app.Fragment
 import com.team.studing.LoginActivity
-import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentSignUpStep1Binding
@@ -32,7 +29,7 @@ class SignUpStep1Fragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentSignUpStep1Binding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
@@ -44,18 +41,14 @@ class SignUpStep1Fragment : Fragment() {
             buttonPasswordShow.bringToFront()
 
             editTextId.addTextChangedListener {
-                if(editTextId.text.isNotEmpty()) {
-                    buttonDoubleCheck.isEnabled = true
-                } else {
-                    buttonDoubleCheck.isEnabled = false
-                }
+                buttonDoubleCheck.isEnabled = editTextId.text.isNotEmpty()
             }
 
             editTextPassword.addTextChangedListener {
                 textViewPasswordDescription.visibility = View.VISIBLE
-                if(editTextPassword.text.isNotEmpty()) {
+                if (editTextPassword.text.isNotEmpty()) {
                     editTextPasswordCheck.setTextAppearance(R.style.BodyAdd)
-                    if(isPasswordShow) {
+                    if (isPasswordShow) {
                         // 비밀번호가 보이는 경우
                         buttonPasswordShow.setImageResource(R.drawable.ic_eye_close_enabled)
                     } else {
@@ -64,7 +57,7 @@ class SignUpStep1Fragment : Fragment() {
                     }
                 } else {
                     editTextPasswordCheck.setTextAppearance(R.style.Body2)
-                    if(isPasswordShow) {
+                    if (isPasswordShow) {
                         // 비밀번호가 보이는 경우
                         buttonPasswordShow.setImageResource(R.drawable.ic_eye_close_disabled)
                     } else {
@@ -72,7 +65,7 @@ class SignUpStep1Fragment : Fragment() {
                         buttonPasswordShow.setImageResource(R.drawable.ic_eye_open_disabled)
                     }
                 }
-                if(validatePassword(editTextPassword.text.toString())) {
+                if (validatePassword(editTextPassword.text.toString())) {
                     isPasswordValid = true
                     textViewPasswordDescription.run {
                         text = "사용 가능한 비밀번호에요"
@@ -87,7 +80,7 @@ class SignUpStep1Fragment : Fragment() {
                     }
                     editTextPassword.setBackgroundResource(R.drawable.background_signup_edittext_fail)
                 }
-                if(editTextPasswordCheck.text.toString() == editTextPassword.text.toString()) {
+                if (editTextPasswordCheck.text.toString() == editTextPassword.text.toString()) {
                     isPasswordCheckValid = true
                     loginActivity.hideKeyboard()
                     textViewPasswordCheckDescription.run {
@@ -108,9 +101,9 @@ class SignUpStep1Fragment : Fragment() {
 
             editTextPasswordCheck.addTextChangedListener {
                 textViewPasswordCheckDescription.visibility = View.VISIBLE
-                if(editTextPasswordCheck.text.isNotEmpty()) {
+                if (editTextPasswordCheck.text.isNotEmpty()) {
                     editTextPasswordCheck.setTextAppearance(R.style.BodyAdd)
-                    if(isPasswordCheckShow) {
+                    if (isPasswordCheckShow) {
                         // 비밀번호가 보이는 경우
                         buttonPasswordCheckShow.setImageResource(R.drawable.ic_eye_close_enabled)
                     } else {
@@ -119,7 +112,7 @@ class SignUpStep1Fragment : Fragment() {
                     }
                 } else {
                     editTextPasswordCheck.setTextAppearance(R.style.Body2)
-                    if(isPasswordCheckShow) {
+                    if (isPasswordCheckShow) {
                         // 비밀번호가 보이는 경우
                         buttonPasswordCheckShow.setImageResource(R.drawable.ic_eye_close_disabled)
                     } else {
@@ -127,7 +120,7 @@ class SignUpStep1Fragment : Fragment() {
                         buttonPasswordCheckShow.setImageResource(R.drawable.ic_eye_open_disabled)
                     }
                 }
-                if(editTextPasswordCheck.text.toString() == editTextPassword.text.toString()) {
+                if (editTextPasswordCheck.text.toString() == editTextPassword.text.toString()) {
                     isPasswordCheckValid = true
                     loginActivity.hideKeyboard()
                     textViewPasswordCheckDescription.run {
@@ -148,24 +141,26 @@ class SignUpStep1Fragment : Fragment() {
 
             buttonPasswordShow.setOnClickListener {
                 isPasswordShow = !isPasswordShow
-                if(isPasswordShow) {
+                if (isPasswordShow) {
                     // 비밀번호 보이는 경우
-                    Log.d("스튜딩","password show : ${isPasswordShow}")
-                    if(editTextPassword.text.isNotEmpty()) {
+                    Log.d("스튜딩", "password show : ${isPasswordShow}")
+                    if (editTextPassword.text.isNotEmpty()) {
                         buttonPasswordShow.setImageResource(R.drawable.ic_eye_close_enabled)
                     } else {
                         buttonPasswordShow.setImageResource(R.drawable.ic_eye_close_disabled)
                     }
-                    editTextPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    editTextPassword.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
                 } else {
                     // 비밀번호 보이지 않는 경우
-                    Log.d("스튜딩","password show : ${isPasswordShow}")
-                    if(editTextPassword.text.isNotEmpty()) {
+                    Log.d("스튜딩", "password show : ${isPasswordShow}")
+                    if (editTextPassword.text.isNotEmpty()) {
                         buttonPasswordShow.setImageResource(R.drawable.ic_eye_open_enabled)
                     } else {
                         buttonPasswordShow.setImageResource(R.drawable.ic_eye_open_disabled)
                     }
-                    editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                    editTextPassword.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
                 }
                 // 커서 위치를 설정
                 editTextPassword.setSelection(editTextPassword.text.length)
@@ -173,24 +168,26 @@ class SignUpStep1Fragment : Fragment() {
 
             buttonPasswordCheckShow.setOnClickListener {
                 isPasswordCheckShow = !isPasswordCheckShow
-                if(isPasswordCheckShow) {
+                if (isPasswordCheckShow) {
                     // 비밀번호 보이는 경우
-                    Log.d("스튜딩","password show : ${isPasswordCheckShow}")
-                    if(editTextPasswordCheck.text.isNotEmpty()) {
+                    Log.d("스튜딩", "password show : ${isPasswordCheckShow}")
+                    if (editTextPasswordCheck.text.isNotEmpty()) {
                         buttonPasswordCheckShow.setImageResource(R.drawable.ic_eye_close_enabled)
                     } else {
                         buttonPasswordCheckShow.setImageResource(R.drawable.ic_eye_close_disabled)
                     }
-                    editTextPasswordCheck.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    editTextPasswordCheck.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
                 } else {
                     // 비밀번호 보이지 않는 경우
-                    Log.d("스튜딩","password show : ${isPasswordCheckShow}")
-                    if(editTextPasswordCheck.text.isNotEmpty()) {
+                    Log.d("스튜딩", "password show : ${isPasswordCheckShow}")
+                    if (editTextPasswordCheck.text.isNotEmpty()) {
                         buttonPasswordCheckShow.setImageResource(R.drawable.ic_eye_open_enabled)
                     } else {
                         buttonPasswordCheckShow.setImageResource(R.drawable.ic_eye_open_disabled)
                     }
-                    editTextPasswordCheck.transformationMethod = PasswordTransformationMethod.getInstance()
+                    editTextPasswordCheck.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
                 }
                 // 커서 위치를 설정
                 editTextPasswordCheck.setSelection(editTextPasswordCheck.text.length)
@@ -216,17 +213,14 @@ class SignUpStep1Fragment : Fragment() {
     // 비밀번호 정규식 확인
     fun validatePassword(password: String): Boolean {
         // 정규식: 영문자, 숫자, 특수문자를 각각 1개 이상 포함 + 8자 ~ 16자 사이
-        val passwordPattern = Regex("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{8,16}$")
+        val passwordPattern =
+            Regex("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{8,16}$")
         return password.matches(passwordPattern)
     }
 
     fun checkEnable() {
         binding.run {
-            if(isIdValid && isPasswordValid && isPasswordCheckValid) {
-                buttonNext.isEnabled = true
-            } else {
-                buttonNext.isEnabled = false
-            }
+            buttonNext.isEnabled = isIdValid && isPasswordValid && isPasswordCheckValid
         }
     }
 

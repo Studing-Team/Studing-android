@@ -1,4 +1,4 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.content.Intent
 import android.os.Bundle
@@ -32,7 +32,7 @@ class SignUpFinishFragment : Fragment() {
                 // 로그인 후 홈화면으로 전환
 
                 val mainIntent = Intent(loginActivity, MainActivity::class.java)
-                mainIntent.putExtra("isLogin",true)
+                mainIntent.putExtra("isLogin", true)
                 startActivity(mainIntent)
             }
         }

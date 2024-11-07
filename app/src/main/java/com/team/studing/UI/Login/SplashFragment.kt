@@ -1,4 +1,4 @@
-package com.team.studing.Login
+package com.team.studing.UI.Login
 
 import android.os.Bundle
 import android.os.Handler

@@ -1,4 +1,4 @@
-package com.team.studing.Home
+package com.team.studing.UI.Home
 
 //import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import android.content.Intent

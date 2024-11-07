@@ -1,4 +1,4 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.content.Intent
 import android.net.Uri
@@ -37,26 +37,35 @@ class SignUpStep5Fragment : Fragment() {
 
             textViewAgreement1.setOnClickListener {
                 // 서비스 이용약관 노션 페이지
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://studingofficial.notion.site/11905c1258e080ee91cecfb7ff633bab"))
+                var intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://studingofficial.notion.site/11905c1258e080ee91cecfb7ff633bab")
+                )
                 startActivity(intent)
             }
 
             textViewAgreement2.setOnClickListener {
                 // 개인정보 수집 및 이용동의 노션 페이지
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://studingofficial.notion.site/11905c1258e08063bba2f82d320de454"))
+                var intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://studingofficial.notion.site/11905c1258e08063bba2f82d320de454")
+                )
                 startActivity(intent)
             }
 
             textViewAgreement3.setOnClickListener {
                 // 마케팅 정보 수신동의 노션 페이지
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://studingofficial.notion.site/12005c1258e080dbb1c2d0a2b1c1d75e"))
+                var intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://studingofficial.notion.site/12005c1258e080dbb1c2d0a2b1c1d75e")
+                )
                 startActivity(intent)
             }
 
 
             imageViewCheckboxAll.setOnClickListener {
                 isAgreementAllCheck = !isAgreementAllCheck
-                if(isAgreementAllCheck) {
+                if (isAgreementAllCheck) {
                     isAgreement1Check = true
                     isAgreement2Check = true
                     isAgreement3Check = true
@@ -66,7 +75,7 @@ class SignUpStep5Fragment : Fragment() {
                     isAgreement3Check = false
                 }
                 checkAgreement()
-                if(isAgreementAllCheck) {
+                if (isAgreementAllCheck) {
                     imageViewCheckboxAll.setImageResource(R.drawable.ic_checkbox_checked)
                     imageViewCheckbox1.setImageResource(R.drawable.ic_checkbox_checked)
                     imageViewCheckbox2.setImageResource(R.drawable.ic_checkbox_checked)
@@ -82,7 +91,7 @@ class SignUpStep5Fragment : Fragment() {
             imageViewCheckbox1.setOnClickListener {
                 isAgreement1Check = !isAgreement1Check
                 checkAgreement()
-                if(isAgreement1Check) {
+                if (isAgreement1Check) {
                     imageViewCheckbox1.setImageResource(R.drawable.ic_checkbox_checked)
                 } else {
                     imageViewCheckbox1.setImageResource(R.drawable.ic_checkbox_unchecked)
@@ -92,7 +101,7 @@ class SignUpStep5Fragment : Fragment() {
             imageViewCheckbox2.setOnClickListener {
                 isAgreement2Check = !isAgreement2Check
                 checkAgreement()
-                if(isAgreement2Check) {
+                if (isAgreement2Check) {
                     imageViewCheckbox2.setImageResource(R.drawable.ic_checkbox_checked)
                 } else {
                     imageViewCheckbox2.setImageResource(R.drawable.ic_checkbox_unchecked)
@@ -102,7 +111,7 @@ class SignUpStep5Fragment : Fragment() {
             imageViewCheckbox3.setOnClickListener {
                 isAgreement3Check = !isAgreement3Check
                 checkAgreement()
-                if(isAgreement3Check) {
+                if (isAgreement3Check) {
                     imageViewCheckbox3.setImageResource(R.drawable.ic_checkbox_checked)
                 } else {
                     imageViewCheckbox3.setImageResource(R.drawable.ic_checkbox_unchecked)
@@ -111,13 +120,19 @@ class SignUpStep5Fragment : Fragment() {
 
             textViewAgreement1.setOnClickListener {
                 // 서비스 이용약관 노션 페이지 연결
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.notion.so/11905c1258e080ee91cecfb7ff633bab?pvs=4"))
+                var intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.notion.so/11905c1258e080ee91cecfb7ff633bab?pvs=4")
+                )
                 startActivity(intent)
             }
 
             textViewAgreement2.setOnClickListener {
                 // 서비스 이용약관 노션 페이지 연결
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.notion.so/11905c1258e08063bba2f82d320de454?pvs=4"))
+                var intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.notion.so/11905c1258e08063bba2f82d320de454?pvs=4")
+                )
                 startActivity(intent)
             }
 
@@ -140,7 +155,7 @@ class SignUpStep5Fragment : Fragment() {
 
     fun checkAgreement() {
         binding.run {
-            if(isAgreement1Check && isAgreement2Check) {
+            if (isAgreement1Check && isAgreement2Check) {
                 buttonNext.isEnabled = true
             } else {
                 buttonNext.isEnabled = false

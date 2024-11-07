@@ -1,4 +1,4 @@
-package com.team.studing.Home
+package com.team.studing.UI.Home
 
 import android.content.Intent
 import android.net.Uri
@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
 
             buttonNoticeMore.setOnClickListener {
                 // 공지사항 리스트 화면으로 전환
-                val nextFragment = NoticeListFragment()
+                val nextFragment = com.team.studing.UI.Home.NoticeListFragment()
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
 
             layoutEmptyScrapNotice.buttonShowWholeNotice.setOnClickListener {
                 // 공지사항 리스트 화면으로 전환
-                val nextFragment = NoticeListFragment()
+                val nextFragment = com.team.studing.UI.Home.NoticeListFragment()
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)

@@ -1,4 +1,4 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.content.Intent
 import android.net.Uri
@@ -29,7 +29,7 @@ class SignUpStep3Fragment : Fragment() {
 
         binding.run {
             editTextMajor.addTextChangedListener {
-                if(editTextMajor.text.isNotEmpty()) {
+                if (editTextMajor.text.isNotEmpty()) {
                     editTextMajor.setTextAppearance(R.style.BodyAdd)
                     textViewMajorDescription.visibility = View.VISIBLE
                     recyclerViewMajor.visibility = View.VISIBLE
@@ -48,7 +48,7 @@ class SignUpStep3Fragment : Fragment() {
             }
 
             imageViewSearch.setOnClickListener {
-                if(editTextMajor.text.isNotEmpty()) {
+                if (editTextMajor.text.isNotEmpty()) {
                     editTextMajor.setText("")
                     // editText가 비어있을 때
                     editTextMajor.setTextAppearance(R.style.Body2)
@@ -63,7 +63,8 @@ class SignUpStep3Fragment : Fragment() {
 
             buttonRegisterMajor.setOnClickListener {
                 // 우리 학교 & 학과 등록 구글폼 연결
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/mjsYrF3FSeQUjnsC7"))
+                var intent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/mjsYrF3FSeQUjnsC7"))
                 startActivity(intent)
             }
 

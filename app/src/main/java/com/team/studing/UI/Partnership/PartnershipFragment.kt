@@ -1,4 +1,4 @@
-package com.team.studing.Partnership
+package com.team.studing.UI.Partnership
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

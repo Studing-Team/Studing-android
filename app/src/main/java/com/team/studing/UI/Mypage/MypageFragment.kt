@@ -1,4 +1,4 @@
-package com.team.studing.Mypage
+package com.team.studing.UI.Mypage
 
 import android.content.Intent
 import android.net.Uri
@@ -22,6 +22,8 @@ class MypageFragment : Fragment() {
 
         binding = FragmentMypageBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
+
+        initView()
 
         binding.run {
             buttonLogout.setOnClickListener {

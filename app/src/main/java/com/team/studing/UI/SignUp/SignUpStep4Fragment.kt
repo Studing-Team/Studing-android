@@ -1,4 +1,4 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

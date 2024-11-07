@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.team.studing.SignUp.SignUpStep6Fragment
+import com.team.studing.UI.SignUp.SignUpStep6Fragment
 import com.team.studing.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.content.Intent
 import android.os.Bundle
@@ -33,19 +33,20 @@ class SignUpStep6Fragment : Fragment() {
         initView()
 
         // Registers a photo picker activity launcher in single-select mode.
-        val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            // Callback is invoked after the user selects a media item or closes the photo picker.
-            if (uri != null) {
-                isImageUpload = true
-                Log.d("PhotoPicker", "Selected URI: $uri")
-                binding.run {
-                    imageViewStudentCard.setImageURI(uri)
-                    layoutImageUpload.visibility = View.INVISIBLE
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                // Callback is invoked after the user selects a media item or closes the photo picker.
+                if (uri != null) {
+                    isImageUpload = true
+                    Log.d("PhotoPicker", "Selected URI: $uri")
+                    binding.run {
+                        imageViewStudentCard.setImageURI(uri)
+                        layoutImageUpload.visibility = View.INVISIBLE
+                    }
+                } else {
+                    Log.d("PhotoPicker", "No media selected")
                 }
-            } else {
-                Log.d("PhotoPicker", "No media selected")
             }
-        }
 
         binding.run {
             buttonImageUpload.setOnClickListener {
@@ -62,7 +63,7 @@ class SignUpStep6Fragment : Fragment() {
 
             editTextStudentName.addTextChangedListener {
                 checkComplete()
-                if(editTextStudentName.text.isNotEmpty()) {
+                if (editTextStudentName.text.isNotEmpty()) {
                     editTextStudentName.setTextAppearance(R.style.BodyAdd)
                 } else {
                     editTextStudentName.setTextAppearance(R.style.Body2)
@@ -71,7 +72,7 @@ class SignUpStep6Fragment : Fragment() {
 
             editTextWholeStudentNumber.addTextChangedListener {
                 checkComplete()
-                if(editTextWholeStudentNumber.text.isNotEmpty()) {
+                if (editTextWholeStudentNumber.text.isNotEmpty()) {
                     editTextWholeStudentNumber.setTextAppearance(R.style.BodyAdd)
                 } else {
                     editTextWholeStudentNumber.setTextAppearance(R.style.Body2)
@@ -94,7 +95,7 @@ class SignUpStep6Fragment : Fragment() {
 
     fun checkComplete() {
         binding.run {
-            if(isImageUpload && editTextStudentName.text.isNotEmpty() && editTextWholeStudentNumber.text.isNotEmpty()) {
+            if (isImageUpload && editTextStudentName.text.isNotEmpty() && editTextWholeStudentNumber.text.isNotEmpty()) {
                 buttonNext.isEnabled = true
             } else {
                 buttonNext.isEnabled = false

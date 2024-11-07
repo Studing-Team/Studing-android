@@ -1,4 +1,4 @@
-package com.team.studing.SignUp
+package com.team.studing.UI.SignUp
 
 import android.content.Intent
 import android.net.Uri
@@ -32,7 +32,7 @@ class SignUpStep2Fragment : Fragment() {
         binding.run {
 
             editTextUniversity.addTextChangedListener {
-                if(editTextUniversity.text.isNotEmpty()) {
+                if (editTextUniversity.text.isNotEmpty()) {
                     editTextUniversity.setTextAppearance(R.style.BodyAdd)
                     textViewUniversityDescription.visibility = View.VISIBLE
                     recyclerViewUniversity.visibility = View.VISIBLE
@@ -51,7 +51,7 @@ class SignUpStep2Fragment : Fragment() {
             }
 
             imageViewSearch.setOnClickListener {
-                if(editTextUniversity.text.isNotEmpty()) {
+                if (editTextUniversity.text.isNotEmpty()) {
                     editTextUniversity.setText("")
                     // editText가 비어있을 때
                     editTextUniversity.setTextAppearance(R.style.Body2)
@@ -66,7 +66,8 @@ class SignUpStep2Fragment : Fragment() {
 
             buttonRegisterUniversity.setOnClickListener {
                 // 우리 학교 & 학과 등록 구글폼 연결
-                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/mjsYrF3FSeQUjnsC7"))
+                var intent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/mjsYrF3FSeQUjnsC7"))
                 startActivity(intent)
             }
 

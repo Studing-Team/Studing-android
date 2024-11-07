@@ -1,4 +1,4 @@
-package com.team.studing.Login
+package com.team.studing.UI.Login
 
 import android.content.Intent
 import android.net.Uri
@@ -18,7 +18,7 @@ import com.skydoves.balloon.showAlignTop
 import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.SignUp.SignUpStep1Fragment
+import com.team.studing.UI.SignUp.SignUpStep1Fragment
 import com.team.studing.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
