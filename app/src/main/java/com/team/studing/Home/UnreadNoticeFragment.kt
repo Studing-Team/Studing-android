@@ -42,18 +42,24 @@ class UnreadNoticeFragment : Fragment() {
             buttonScrap.setOnClickListener {
                 isScrap = !isScrap
                 if (isScrap) {
+                    buttonScrap.text = "저장 취소"
                     BasicToast.createToastAboveView(
                         requireContext(),
                         "저장한 공지사항에 추가했어요 ⭐",
                         binding.layoutUnreadNoticeButton
                     )
                 } else {
+                    buttonScrap.text = "저장하기"
                     BasicToast.createToastAboveView(
                         requireContext(),
                         "저장한 공지사항을 취소했어요 ⭐",
                         binding.layoutUnreadNoticeButton
                     )
                 }
+            }
+
+            buttonNext.setOnClickListener {
+                // 다음 공지사항으로 이동
             }
         }
 
