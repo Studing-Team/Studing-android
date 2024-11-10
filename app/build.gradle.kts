@@ -21,6 +21,7 @@ android {
         versionName = "1.0"
 
         buildConfigField("String", "MAP_API_KEY", "\"${properties["map_client_id"]}\"")
+        buildConfigField("String", "SERVER_URL", "\"${properties["server_url"]}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,4 +76,13 @@ dependencies {
 
 //    implementation("com.google.android.gms:play-services-maps:21.0.1")
     implementation("com.naver.maps:map-sdk:3.19.1")
+
+    // api
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0") // JSON 변환
+    implementation("com.squareup.okhttp3:okhttp:4.10.0") // OkHttp 라이브러리
+    implementation("com.squareup.okhttp3:logging-interceptor:3.11.0")
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.0")
+
 }
