@@ -1,12 +1,10 @@
 package com.team.studing.Utils
 
 import android.app.Activity
-import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import androidx.core.view.WindowCompat
 
 object MainUtil {

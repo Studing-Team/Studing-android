@@ -106,7 +106,6 @@
     <!-- Login 입력창 -->
     <style name="LoginEditText" parent="Body2">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:maxLength">15</item>
         <item name="android:inputType">text</item>
         <item name="android:textColor">@color/black_50</item>
         <item name="android:textColorHint">@color/black_50</item>
@@ -172,7 +171,7 @@
         <item name="cornerSizeBottomLeft">10dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
-  
+
     <!-- 이미지 round style -->
     <style name="RoundSector">
         <item name="cornerSizeTopLeft">20dp</item>
