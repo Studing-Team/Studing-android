@@ -10,21 +10,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.showAlignTop
 import com.team.studing.LoginActivity
-import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.SignUp.SignUpStep1Fragment
+import com.team.studing.Utils.MyApplication
+import com.team.studing.ViewModel.LoginViewModel
 import com.team.studing.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
     lateinit var binding: FragmentLoginBinding
     lateinit var loginActivity: LoginActivity
+    lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +36,15 @@ class LoginFragment : Fragment() {
 
         binding = FragmentLoginBinding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
+        viewModel = ViewModelProvider(loginActivity)[LoginViewModel::class.java]
 
         binding.run {
 
             buttonLogin.setOnClickListener {
+                MyApplication.id = editTextId.text.toString()
+                MyApplication.password = editTextPassword.text.toString()
                 // 로그인 기능 구현
-                val mainIntent = Intent(loginActivity, MainActivity::class.java)
-                mainIntent.putExtra("isLogin", true)
-                startActivity(mainIntent)
+                viewModel.login(loginActivity)
             }
 
             buttonQna.setOnClickListener {
