@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
 
                 val transaction = loginActivity.manager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_login, nextFragment)
-                transaction.addToBackStack("")
+                transaction.addToBackStack(null)
                 transaction.commit()
             }
 

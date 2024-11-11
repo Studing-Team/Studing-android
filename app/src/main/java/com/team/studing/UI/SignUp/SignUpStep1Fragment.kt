@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
+import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.SignUpViewModel
 import com.team.studing.databinding.FragmentSignUpStep1Binding
 
@@ -101,11 +102,15 @@ class SignUpStep1Fragment : Fragment() {
             }
 
             buttonNext.setOnClickListener {
+
+                MyApplication.id = editTextId.text.toString()
+                MyApplication.password = editTextPassword.text.toString()
+
                 val nextFragment = SignUpStep2Fragment()
 
                 val transaction = loginActivity.supportFragmentManager.beginTransaction()
-                transaction.add(R.id.fragmentContainerView_login, nextFragment)
-                transaction.addToBackStack("")
+                transaction.replace(R.id.fragmentContainerView_login, nextFragment)
+                transaction.addToBackStack(null)
                 transaction.commit()
                 true
             }
@@ -113,11 +118,6 @@ class SignUpStep1Fragment : Fragment() {
 
         return binding.root
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        isInit = false
-//    }
 
     // 비밀번호 정규식 확인
     fun validatePassword(password: String): Boolean {
@@ -211,7 +211,10 @@ class SignUpStep1Fragment : Fragment() {
             if (validatePassword(editTextPassword.text.toString())) {
                 isPasswordValid = true
                 textViewPasswordDescription.run {
-                    text = "사용 가능한 비밀번호에요"
+                    text = "사용 가능한 비밀번호에요\nㅤ"
+                    setLines(2)
+                    maxLines = 2
+                    minLines = 2
                     setTextColor(resources.getColor(R.color.primary_50))
                 }
                 editTextPassword.setBackgroundResource(R.drawable.background_signup_edittext_success)

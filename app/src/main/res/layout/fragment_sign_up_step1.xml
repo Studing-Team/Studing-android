@@ -44,8 +44,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:text="다음"
         android:enabled="false"
+        android:text="다음"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -174,15 +174,18 @@
 
             <TextView
                 android:id="@+id/textView_password_description"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_regular"
+                android:lines="2"
+                android:maxLines="2"
+                android:minLines="2"
                 android:text="• 영문, 숫자, 특수문자를 각각 1개 이상 포함해요\n• 8자~16자로 입력해 주세요"
                 android:textColor="@color/red"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/editText_password"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/editText_password"
                 app:layout_constraintTop_toBottomOf="@+id/editText_password" />
 
             <TextView
