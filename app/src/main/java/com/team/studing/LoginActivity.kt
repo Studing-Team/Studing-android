@@ -12,7 +12,6 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
     val manager = supportFragmentManager
-//    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
             transaction.commit()
         }
     }
-
 
     fun hideKeyboard() {
         val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

@@ -1,5 +1,9 @@
 package com.team.studing.API
 
+import com.team.studing.API.request.Login.LoginRequest
+import com.team.studing.API.request.SignUp.CheckIdRequest
+import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Login.LoginResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -10,4 +14,10 @@ interface ApiService {
     fun login(
         @Body parameters: LoginRequest
     ): Call<BaseResponse<LoginResponse>>
+
+    // 아이디 중복 확인
+    @POST("api/v1/member/checkid")
+    fun checkId(
+        @Body parameters: CheckIdRequest
+    ): Call<BaseResponse<Void>>
 }

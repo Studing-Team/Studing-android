@@ -11,15 +11,18 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
+import com.team.studing.ViewModel.SignUpViewModel
 import com.team.studing.databinding.FragmentSignUpStep1Binding
 
 class SignUpStep1Fragment : Fragment() {
 
     lateinit var binding: FragmentSignUpStep1Binding
     lateinit var loginActivity: LoginActivity
+    lateinit var viewModel: SignUpViewModel
 
     var isInit = true
     var isIdValid = false
@@ -36,8 +39,19 @@ class SignUpStep1Fragment : Fragment() {
 
         binding = FragmentSignUpStep1Binding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
+        viewModel = ViewModelProvider(loginActivity)[SignUpViewModel::class.java]
 
         initView()
+
+        viewModel.run {
+            checkIdResult.observe(loginActivity) {
+                isIdValid = it
+                if (!isInit) {
+                    checkIdResult()
+                    checkEnable()
+                }
+            }
+        }
 
         binding.run {
 
