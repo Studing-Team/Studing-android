@@ -106,6 +106,8 @@ class SignUpStep1Fragment : Fragment() {
                 MyApplication.id = editTextId.text.toString()
                 MyApplication.password = editTextPassword.text.toString()
 
+                viewModel.getUniversityList(loginActivity)
+
                 val nextFragment = SignUpStep2Fragment()
 
                 val transaction = loginActivity.supportFragmentManager.beginTransaction()

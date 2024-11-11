@@ -14,6 +14,12 @@ import retrofit2.Response
 class SignUpViewModel : ViewModel() {
 
     var checkIdResult: MutableLiveData<Boolean> = MutableLiveData()
+    var universityList = MutableLiveData<MutableList<String>>()
+
+
+    init {
+        universityList.value = mutableListOf<String>()
+    }
 
     fun checkId(activity: LoginActivity, inputId: String) {
         val apiClient = ApiClient(activity)
@@ -54,8 +60,50 @@ class SignUpViewModel : ViewModel() {
             })
     }
 
-//    fun getCheckIdResult(): MutableLiveData<Boolean> = checkIdResult
-//    fun setCheckIdResult(text: Boolean) {
-//        checkIdResult.value = text
-//    }
+    fun getUniversityList(activity: LoginActivity) {
+
+        var tempUniversityList = mutableListOf<String>()
+
+        val apiClient = ApiClient(activity)
+
+        apiClient.apiService.getUniversityList()
+            .enqueue(object :
+                Callback<BaseResponse<List<String>>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<List<String>>>,
+                    response: Response<BaseResponse<List<String>>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<List<String>>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        var university = result?.data
+                        for (i in 0 until university?.size!!) {
+                            var universityName = university[i]
+                            tempUniversityList.add(universityName)
+                        }
+
+                        universityList.value = tempUniversityList
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<List<String>>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<List<String>>>,
+                    t: Throwable
+                ) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
 }

@@ -10,16 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
+import com.team.studing.ViewModel.SignUpViewModel
 import com.team.studing.databinding.FragmentSignUpStep2Binding
 
 class SignUpStep2Fragment : Fragment() {
 
     lateinit var binding: FragmentSignUpStep2Binding
     lateinit var loginActivity: LoginActivity
+    lateinit var viewModel: SignUpViewModel
 
     var isSelected = false
 
@@ -33,8 +36,15 @@ class SignUpStep2Fragment : Fragment() {
 
         binding = FragmentSignUpStep2Binding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
+        viewModel = ViewModelProvider(loginActivity)[SignUpViewModel::class.java]
 
         initView()
+
+        viewModel.run {
+            universityList.observe(loginActivity) {
+                searchUniversityList = it
+            }
+        }
 
         binding.run {
 
