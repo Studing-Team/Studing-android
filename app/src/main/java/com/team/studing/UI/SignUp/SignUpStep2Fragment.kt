@@ -1,14 +1,16 @@
 package com.team.studing.UI.SignUp
 
+import UniversityAdapter
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.method.PasswordTransformationMethod
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
@@ -19,10 +21,15 @@ class SignUpStep2Fragment : Fragment() {
     lateinit var binding: FragmentSignUpStep2Binding
     lateinit var loginActivity: LoginActivity
 
+    var isSelected = false
+
+    var searchUniversityList = mutableListOf<String>()
+    private lateinit var universityAdapter: UniversityAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentSignUpStep2Binding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
@@ -31,15 +38,57 @@ class SignUpStep2Fragment : Fragment() {
 
         binding.run {
 
+            // Adapter 초기화 및 RecyclerView 설정
+            universityAdapter = UniversityAdapter(loginActivity, listOf(), "")
+            recyclerViewUniversity.adapter = universityAdapter
+            recyclerViewUniversity.layoutManager = LinearLayoutManager(context)
+
             editTextUniversity.addTextChangedListener {
-                if (editTextUniversity.text.isNotEmpty()) {
+                isSelected = false
+                buttonNext.isEnabled = false
+                editTextUniversity.setBackgroundResource(R.drawable.background_signup_edittext_unselected)
+
+                val query = editTextUniversity.text.toString().trim()
+                if (query.isNotEmpty()) {
                     editTextUniversity.setTextAppearance(R.style.BodyAdd)
                     textViewUniversityDescription.visibility = View.VISIBLE
                     recyclerViewUniversity.visibility = View.VISIBLE
 
                     imageViewSearch.setImageResource(R.drawable.ic_delete_disabled)
 
-                    // 검색 기능 구현
+                    // 검색어와 일치하는 대학 목록 필터링
+                    val filteredList = searchUniversityList.filter { university ->
+                        university.contains(query, ignoreCase = true)
+                    }
+
+                    if (filteredList.isEmpty()) {
+                        recyclerViewUniversity.visibility = View.INVISIBLE
+                        layoutNoUniversity.visibility = View.VISIBLE
+                        buttonRegisterUniversity.visibility = View.VISIBLE
+                        buttonNext.isEnabled = false
+                    } else {
+                        recyclerViewUniversity.visibility = View.VISIBLE
+                        layoutNoUniversity.visibility = View.INVISIBLE
+                        buttonRegisterUniversity.visibility = View.INVISIBLE
+
+                        universityAdapter.run {
+                            updateList(filteredList, query)
+                            notifyDataSetChanged()
+
+                            itemClickListener = object : UniversityAdapter.OnItemClickListener {
+                                override fun onItemClick(position: Int) {
+                                    // 클릭 시 이벤트 작성
+                                    editTextUniversity.run {
+                                        setText(filteredList[position])
+                                        setBackgroundResource(R.drawable.background_signup_edittext_success)
+                                    }
+                                    imageViewSearch.setImageResource(R.drawable.ic_delete_enabled)
+                                    isSelected = true
+                                    buttonNext.isEnabled = true
+                                }
+                            }
+                        }
+                    }
 
                 } else {
                     editTextUniversity.setTextAppearance(R.style.Body2)
@@ -76,6 +125,7 @@ class SignUpStep2Fragment : Fragment() {
 
                 val transaction = loginActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_login, nextFragment)
+                transaction.addToBackStack(null)
                 transaction.commit()
                 true
             }
