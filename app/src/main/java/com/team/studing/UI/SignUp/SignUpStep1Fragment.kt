@@ -103,8 +103,8 @@ class SignUpStep1Fragment : Fragment() {
 
             buttonNext.setOnClickListener {
 
-                MyApplication.id = editTextId.text.toString()
-                MyApplication.password = editTextPassword.text.toString()
+                MyApplication.signUpId = editTextId.text.toString()
+                MyApplication.signUpPassword = editTextPassword.text.toString()
 
                 viewModel.getUniversityList(loginActivity)
 

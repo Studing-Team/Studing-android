@@ -10,5 +10,11 @@ class MyApplication : Application() {
         // 로그인 데이터 관리
         var id = ""
         var password = ""
+
+        // 회원가입 데이터 관리
+        var signUpId = ""
+        var signUpPassword = ""
+        var signUpUniversity = ""
+        var signUpMajor = ""
     }
 }

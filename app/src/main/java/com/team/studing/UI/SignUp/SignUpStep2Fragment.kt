@@ -4,7 +4,6 @@ import UniversityAdapter
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
+import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.SignUpViewModel
 import com.team.studing.databinding.FragmentSignUpStep2Binding
 
@@ -56,6 +56,7 @@ class SignUpStep2Fragment : Fragment() {
             editTextUniversity.addTextChangedListener {
                 isSelected = false
                 buttonNext.isEnabled = false
+
                 editTextUniversity.setBackgroundResource(R.drawable.background_signup_edittext_unselected)
 
                 val query = editTextUniversity.text.toString().trim()
@@ -95,6 +96,8 @@ class SignUpStep2Fragment : Fragment() {
                                     imageViewSearch.setImageResource(R.drawable.ic_delete_enabled)
                                     isSelected = true
                                     buttonNext.isEnabled = true
+                                    recyclerViewUniversity.visibility = View.INVISIBLE
+                                    textViewUniversityDescription.visibility = View.INVISIBLE
                                 }
                             }
                         }
@@ -131,6 +134,8 @@ class SignUpStep2Fragment : Fragment() {
             }
 
             buttonNext.setOnClickListener {
+                MyApplication.signUpUniversity = editTextUniversity.text.toString()
+
                 val nextFragment = SignUpStep3Fragment()
 
                 val transaction = loginActivity.supportFragmentManager.beginTransaction()
