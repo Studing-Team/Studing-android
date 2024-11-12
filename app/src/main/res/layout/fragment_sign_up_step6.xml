@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SignUp.SignUpStep6Fragment">
 
     <include
@@ -44,8 +44,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:text="다음"
         android:enabled="false"
+        android:text="다음"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -145,13 +145,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:lineHeight="18dp"
+                    android:paddingVertical="3dp"
                     android:text="학생증 업로드"
                     android:textColor="@color/white"
-                    android:fontFamily="@font/inter_medium"
                     android:textSize="12sp"
-                    android:lineHeight="18dp"
                     app:cornerRadius="50dp"
-                    android:paddingVertical="3dp"
                     app:layout_constraintEnd_toEndOf="@+id/editText_password"
                     app:layout_constraintStart_toStartOf="@+id/editText_password"
                     app:layout_constraintTop_toBottomOf="@+id/editText_password" />
@@ -168,18 +168,19 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView_student_card"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_student_card" />
 
-            <TextView
+            <EditText
                 android:id="@+id/editText_student_name"
                 style="@style/Body2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_signup_edittext_unselected"
-                android:paddingVertical="11dp"
-                android:paddingHorizontal="15dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/background_signup_edittext_unselected"
                 android:ems="10"
-                android:text="이름을 입력해주세요"
-                android:textColor="@color/black_20"
+                android:hint="이름을 입력해주세요"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="11dp"
+                android:textColor="@color/black_50"
+                android:textColorHint="@color/black_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView_student_name"
                 app:layout_constraintTop_toBottomOf="@+id/textView_student_name" />
@@ -195,18 +196,19 @@
                 app:layout_constraintStart_toStartOf="@+id/editText_student_name"
                 app:layout_constraintTop_toBottomOf="@+id/editText_student_name" />
 
-            <TextView
+            <EditText
                 android:id="@+id/editText_whole_student_number"
                 style="@style/Body2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_signup_edittext_unselected"
-                android:paddingVertical="11dp"
-                android:paddingHorizontal="15dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/background_signup_edittext_unselected"
                 android:ems="10"
-                android:text="ex. 20201234"
+                android:hint="ex. 20201234"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="11dp"
                 android:textColor="@color/black_20"
+                android:textColorHint="@color/black_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView_whole_student_number"
                 app:layout_constraintTop_toBottomOf="@+id/textView_whole_student_number" />
