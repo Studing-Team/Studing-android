@@ -9,17 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
+import com.team.studing.ViewModel.SignUpViewModel
 import com.team.studing.databinding.FragmentSignUpStep3Binding
 
 class SignUpStep3Fragment : Fragment() {
 
     lateinit var binding: FragmentSignUpStep3Binding
     lateinit var loginActivity: LoginActivity
+    lateinit var viewModel: SignUpViewModel
 
     var isSelected = false
 
@@ -32,8 +35,15 @@ class SignUpStep3Fragment : Fragment() {
     ): View {
         binding = FragmentSignUpStep3Binding.inflate(layoutInflater)
         loginActivity = activity as LoginActivity
+        viewModel = ViewModelProvider(loginActivity)[SignUpViewModel::class.java]
 
         initView()
+
+        viewModel.run {
+            majorList.observe(loginActivity) {
+                searchMajorList = it
+            }
+        }
 
         binding.run {
             // Adapter 초기화 및 RecyclerView 설정

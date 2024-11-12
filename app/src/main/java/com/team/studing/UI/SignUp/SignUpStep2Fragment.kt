@@ -135,6 +135,7 @@ class SignUpStep2Fragment : Fragment() {
 
             buttonNext.setOnClickListener {
                 MyApplication.signUpUniversity = editTextUniversity.text.toString()
+                viewModel.getMajorList(loginActivity, MyApplication.signUpUniversity)
 
                 val nextFragment = SignUpStep3Fragment()
 
