@@ -88,7 +88,8 @@ class SignUpStep2Fragment : Fragment() {
 
                             itemClickListener = object : UniversityAdapter.OnItemClickListener {
                                 override fun onItemClick(position: Int) {
-                                    // 클릭 시 이벤트 작성
+                                    loginActivity.hideKeyboard()
+
                                     editTextUniversity.run {
                                         setText(filteredList[position])
                                         setBackgroundResource(R.drawable.background_signup_edittext_success)

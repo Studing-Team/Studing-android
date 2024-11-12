@@ -85,7 +85,8 @@ class SignUpStep3Fragment : Fragment() {
 
                             itemClickListener = object : MajorAdapter.OnItemClickListener {
                                 override fun onItemClick(position: Int) {
-                                    // 클릭 시 이벤트 작성
+                                    loginActivity.hideKeyboard()
+                                    
                                     editTextMajor.run {
                                         setText(filteredList[position])
                                         setBackgroundResource(R.drawable.background_signup_edittext_success)
@@ -132,7 +133,7 @@ class SignUpStep3Fragment : Fragment() {
 
             buttonNext.setOnClickListener {
                 MyApplication.signUpMajor = editTextMajor.text.toString()
-                
+
                 val nextFragment = SignUpStep4Fragment()
 
                 val transaction = loginActivity.supportFragmentManager.beginTransaction()
