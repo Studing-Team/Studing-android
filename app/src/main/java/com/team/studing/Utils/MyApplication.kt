@@ -16,5 +16,8 @@ class MyApplication : Application() {
         var signUpPassword = ""
         var signUpUniversity = ""
         var signUpMajor = ""
+        var signUpStudentNum = ""
+        var signUpName = ""
+        var signUpStudentIDNumber = ""
     }
 }
