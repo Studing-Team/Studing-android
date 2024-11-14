@@ -68,6 +68,9 @@ class SignUpStep4Fragment : Fragment() {
                                 imageViewArrow.setImageResource(R.drawable.ic_down_enabled)
                                 recyclerViewStudentNumber.visibility = View.INVISIBLE
                                 buttonNext.isEnabled = true
+
+                                MyApplication.signUpStudentNum =
+                                    getStudentNumber(studentNumbers)[position]
                             }
                         }
                 }
@@ -82,7 +85,6 @@ class SignUpStep4Fragment : Fragment() {
             }
 
             buttonNext.setOnClickListener {
-                MyApplication.signUpStudentNum = editTextStudentNumber.text.toString()
 
                 val nextFragment = SignUpStep5Fragment()
 
@@ -96,6 +98,15 @@ class SignUpStep4Fragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun getStudentNumber(studentNumbers: List<String>): List<String> {
+        val regex = "\\d+".toRegex()
+        val extractedNumbers = studentNumbers.mapNotNull { item ->
+            regex.find(item)?.value
+        }
+
+        return extractedNumbers
     }
 
     fun initView() {
