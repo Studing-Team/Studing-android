@@ -136,6 +136,7 @@ class SignUpStep6Fragment : Fragment() {
                 MyApplication.signUpName = editTextStudentName.text.toString()
                 MyApplication.signUpStudentIDNumber = editTextWholeStudentNumber.text.toString()
 
+                viewModel.signUp(loginActivity)
             }
 
         }

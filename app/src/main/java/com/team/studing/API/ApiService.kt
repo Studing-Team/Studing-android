@@ -38,4 +38,12 @@ interface ApiService {
     fun getMajorList(
         @Body parameters: GetMajorListRequest
     ): Call<BaseResponse<List<String>>>
+
+    // 회원가입
+    @Multipart
+    @POST("api/v1/member/signup")
+    fun signUp(
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part studentCardImage: MultipartBody.Part
+    ): Call<BaseResponse<Void>>
 }
