@@ -19,7 +19,6 @@ import com.skydoves.balloon.showAlignTop
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.UI.SignUp.SignUpStep1Fragment
-import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.LoginViewModel
 import com.team.studing.databinding.FragmentLoginBinding
 
@@ -41,10 +40,12 @@ class LoginFragment : Fragment() {
         binding.run {
 
             buttonLogin.setOnClickListener {
-                MyApplication.id = editTextId.text.toString()
-                MyApplication.password = editTextPassword.text.toString()
                 // 로그인 기능 구현
-                viewModel.login(loginActivity)
+                viewModel.login(
+                    loginActivity,
+                    editTextId.text.toString(),
+                    editTextPassword.text.toString()
+                )
             }
 
             buttonQna.setOnClickListener {

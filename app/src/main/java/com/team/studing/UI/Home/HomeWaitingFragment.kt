@@ -49,6 +49,7 @@ class HomeWaitingFragment : Fragment() {
     fun initView() {
         mainActivity.setStatusBarTransparent()
         mainActivity.hideBottomNavigation(true)
+        mainActivity.hideWriteNoticeButton(true)
 
         binding.run {
             graphWaiting.run {

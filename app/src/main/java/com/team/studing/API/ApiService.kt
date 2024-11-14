@@ -1,20 +1,26 @@
 package com.team.studing.API
 
-import com.team.studing.API.request.Login.LoginRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Login.LoginResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.PartMap
 
 interface ApiService {
     // 로그인
+    @Multipart
     @POST("api/v1/member/signin")
     fun login(
-        @Body parameters: LoginRequest
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>
     ): Call<BaseResponse<LoginResponse>>
 
     // 아이디 중복 확인
