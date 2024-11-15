@@ -1,9 +1,11 @@
 package com.team.studing.API
 
+import com.team.studing.API.request.Home.GetRecentNoticeRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Home.GetRecentNoticeResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Login.LoginResponse
@@ -69,4 +71,11 @@ interface ApiService {
     fun getUnreadStudentCouncil(
         @Header("Authorization") token: String,
     ): Call<BaseResponse<GetUnreadStudentCouncilResponse>>
+
+    // 메인 홈 카테고리별 최신 공지 리스트
+    @POST("api/v1/home/recent-notices")
+    fun getRecentNotice(
+        @Header("Authorization") token: String,
+        @Body parameters: GetRecentNoticeRequest
+    ): Call<BaseResponse<GetRecentNoticeResponse>>
 }

@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
+import com.team.studing.API.request.Home.GetRecentNoticeRequest
 import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Home.GetRecentNoticeResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
+import com.team.studing.API.response.Home.Notice
 import com.team.studing.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,11 +25,15 @@ class HomeViewModel : ViewModel() {
     // 학생회 카테고리 안읽은 공지 체크
     var unreadStudentCouncilNameList = MutableLiveData<MutableList<String>>()
 
+    // 학생회 카테고리별 최신 공지
+    var recentNoticeList = MutableLiveData<MutableList<Notice>>()
+
 
     init {
         studentCouncilNameList.value = mutableListOf<String>()
         studentCouncilLogoList.value = mutableListOf<String>()
         unreadStudentCouncilNameList.value = mutableListOf<String>()
+        recentNoticeList.value = mutableListOf<Notice>()
     }
 
     fun getStudentCouncilLogo(activity: MainActivity) {
@@ -133,6 +140,87 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<BaseResponse<GetUnreadStudentCouncilResponse>>,
+                    t: Throwable
+                ) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    fun getRecentNotice(activity: MainActivity, category: String) {
+
+        var tempRecentList = mutableListOf<Notice>()
+
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.getRecentNotice(
+            "Bearer ${tokenManager.getAccessToken()}",
+            GetRecentNoticeRequest(category)
+        )
+            .enqueue(object :
+                Callback<BaseResponse<GetRecentNoticeResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<GetRecentNoticeResponse>>,
+                    response: Response<BaseResponse<GetRecentNoticeResponse>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<GetRecentNoticeResponse>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        if (!(result?.data?.notices.isNullOrEmpty())) {
+                            for (i in 0 until result?.data?.notices?.size!!) {
+                                var id = result.data.notices[i].id
+                                var title = result.data.notices[i].title
+                                var content = result.data.notices[i].content
+                                var writerInfo = result.data.notices[i].writerInfo
+                                var likeCount = result.data.notices[i].noticeLike
+                                var saveCount = result.data.notices[i].saveCount
+                                var readCount = result.data.notices[i].viewCount
+                                var noticeDate = result.data.notices[i].createdAt
+                                var saveCheck = result.data.notices[i].saveCheck
+                                var likeCheck = result.data.notices[i].likeCheck
+                                var noticeImage = result.data.notices[i].image
+
+                                var n1 = Notice(
+                                    id,
+                                    title,
+                                    content,
+                                    writerInfo,
+                                    likeCount,
+                                    readCount,
+                                    saveCount,
+                                    noticeImage,
+                                    noticeDate,
+                                    saveCheck,
+                                    likeCheck,
+                                )
+                                tempRecentList.add(n1)
+                            }
+                        }
+
+                        recentNoticeList.value = tempRecentList
+
+                        Log.d("##", "viewModel temp : ${tempRecentList}")
+                        Log.d("##", "viewModel : ${recentNoticeList.value}")
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<GetRecentNoticeResponse>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<GetRecentNoticeResponse>>,
                     t: Throwable
                 ) {
                     // 통신 실패

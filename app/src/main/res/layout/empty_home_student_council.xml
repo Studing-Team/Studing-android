@@ -8,6 +8,8 @@
         android:id="@+id/layout_empty_student_council"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/background_home_student_council_empty"
         android:paddingHorizontal="40dp"
         android:paddingVertical="20dp"
