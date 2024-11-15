@@ -47,6 +47,16 @@ class LoginActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(this.window.decorView.applicationWindowToken, 0)
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView_login)
+        fragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
     fun setFCMToken() {
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
