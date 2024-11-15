@@ -8,6 +8,7 @@ import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
+import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import com.team.studing.LoginActivity
@@ -238,6 +239,31 @@ class SignUpViewModel : ViewModel() {
                 }
             })
     }
+
+    // FCM 토큰 저장 API
+    fun sendFcmToken(activity: LoginActivity) {
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.sendFcmToken(
+            "Bearer ${tokenManager.getAccessToken()}",
+            SendFcmTokenRequest(
+                MyApplication.preferences.getFCMToken().toString(),
+                MyApplication.memberId
+            )
+        )
+            .enqueue(object :
+                Callback<BaseResponse<Void>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Void>>,
+                    response: Response<BaseResponse<Void>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<Void>? = response.body()
@@ -249,7 +275,10 @@ class SignUpViewModel : ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<BaseResponse<Void>>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<BaseResponse<Void>>,
+                    t: Throwable
+                ) {
                     // 통신 실패
                     Log.d("##", "onFailure 에러: " + t.message.toString())
                 }

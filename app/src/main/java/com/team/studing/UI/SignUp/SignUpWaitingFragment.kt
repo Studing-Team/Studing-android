@@ -52,6 +52,7 @@ class SignUpWaitingFragment : Fragment() {
                     )
                 } else {
                     // 이미 권한이 있는 경우 바로 화면 전환
+                    viewModel.sendFcmToken(loginActivity)
                     navigateToNextFragment()
                 }
             }
@@ -75,6 +76,7 @@ class SignUpWaitingFragment : Fragment() {
         if (requestCode == 123) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 권한이 허용되었을 때 화면 전환
+                viewModel.sendFcmToken(loginActivity)
                 navigateToNextFragment()
             } else {
                 navigateToNextFragment()

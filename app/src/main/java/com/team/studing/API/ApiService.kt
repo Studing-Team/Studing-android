@@ -2,6 +2,7 @@ package com.team.studing.API
 
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
+import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Login.LoginResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
@@ -47,5 +48,11 @@ interface ApiService {
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part studentCardImage: MultipartBody.Part
     ): Call<BaseResponse<SignUpResponse>>
+
+    // FCM 토큰 저장
+    @POST("api/v1/notifications/token")
+    fun sendFcmToken(
+        @Header("Authorization") token: String,
+        @Body parameters: SendFcmTokenRequest
     ): Call<BaseResponse<Void>>
 }
