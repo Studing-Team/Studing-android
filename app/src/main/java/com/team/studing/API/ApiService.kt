@@ -5,6 +5,7 @@ import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
+import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Login.LoginResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
@@ -62,4 +63,10 @@ interface ApiService {
     fun getStudentCouncilLogo(
         @Header("Authorization") token: String,
     ): Call<BaseResponse<GetStudentCouncilLogoResponse>>
+
+    // 학생회 카테고리 안읽은 공지 체크
+    @GET("api/v1/home/unread-categories")
+    fun getUnreadStudentCouncil(
+        @Header("Authorization") token: String,
+    ): Call<BaseResponse<GetUnreadStudentCouncilResponse>>
 }

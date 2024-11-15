@@ -7,6 +7,7 @@ import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
+import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,13 +15,18 @@ import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
 
+    // 학생회 카테고리 로고
     var studentCouncilNameList = MutableLiveData<MutableList<String>>()
     var studentCouncilLogoList = MutableLiveData<MutableList<String>>()
+
+    // 학생회 카테고리 안읽은 공지 체크
+    var unreadStudentCouncilNameList = MutableLiveData<MutableList<String>>()
 
 
     init {
         studentCouncilNameList.value = mutableListOf<String>()
         studentCouncilLogoList.value = mutableListOf<String>()
+        unreadStudentCouncilNameList.value = mutableListOf<String>()
     }
 
     fun getStudentCouncilLogo(activity: MainActivity) {
@@ -74,6 +80,59 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<BaseResponse<GetStudentCouncilLogoResponse>>,
+                    t: Throwable
+                ) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    fun getUnreadStudentCouncil(activity: MainActivity) {
+
+        var tempUnreadNameList = mutableListOf<String>()
+
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.getUnreadStudentCouncil("Bearer ${tokenManager.getAccessToken()}")
+            .enqueue(object :
+                Callback<BaseResponse<GetUnreadStudentCouncilResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<GetUnreadStudentCouncilResponse>>,
+                    response: Response<BaseResponse<GetUnreadStudentCouncilResponse>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<GetUnreadStudentCouncilResponse>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        if (!(result?.data?.categories.isNullOrEmpty())) {
+                            for (i in 0 until result?.data?.categories?.size!!) {
+                                tempUnreadNameList.add(result.data.categories[i])
+                            }
+                        }
+
+                        unreadStudentCouncilNameList.value = tempUnreadNameList
+
+                        Log.d("##", "viewModel temp : ${tempUnreadNameList}")
+                        Log.d("##", "viewModel : ${unreadStudentCouncilNameList.value}")
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<GetUnreadStudentCouncilResponse>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<GetUnreadStudentCouncilResponse>>,
                     t: Throwable
                 ) {
                     // 통신 실패

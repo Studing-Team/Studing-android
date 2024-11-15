@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
+import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.databinding.FragmentHomeBinding
 
@@ -26,6 +27,7 @@ class HomeFragment : Fragment() {
 
     var getStudentCouncilLogoList = mutableListOf<String>()
     var getStudentCouncilNameList = mutableListOf<String>()
+    var getUnReadStudentCouncilNameList = mutableListOf<String>()
 
     lateinit var studentCouncilAdapter: StudentCouncilAdapter
 //    private lateinit var adapter: AnnouncementPagerAdapter
@@ -46,11 +48,15 @@ class HomeFragment : Fragment() {
             studentCouncilLogoList.observe(mainActivity) {
                 getStudentCouncilLogoList = it
                 Log.d("##", "${getStudentCouncilNameList}")
+            }
+            unreadStudentCouncilNameList.observe(mainActivity) {
+                getUnReadStudentCouncilNameList = it
                 // Adapter 초기화 및 RecyclerView 설정
                 studentCouncilAdapter = StudentCouncilAdapter(
                     mainActivity,
                     getStudentCouncilNameList,
-                    getStudentCouncilLogoList
+                    getStudentCouncilLogoList,
+                    getUnReadStudentCouncilNameList
                 )
                 binding.recyclerViewStudentCouncil.adapter = studentCouncilAdapter
                 binding.recyclerViewStudentCouncil.layoutManager =
@@ -67,6 +73,7 @@ class HomeFragment : Fragment() {
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                transaction.addToBackStack(null)
                 transaction.commit()
                 true
             }
@@ -77,6 +84,7 @@ class HomeFragment : Fragment() {
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                transaction.addToBackStack(null)
                 transaction.commit()
                 true
             }
@@ -87,6 +95,7 @@ class HomeFragment : Fragment() {
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                transaction.addToBackStack(null)
                 transaction.commit()
                 true
             }
@@ -104,6 +113,7 @@ class HomeFragment : Fragment() {
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                transaction.addToBackStack(null)
                 transaction.commit()
                 true
             }
@@ -120,6 +130,9 @@ class HomeFragment : Fragment() {
             layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
 
             viewModel.getStudentCouncilLogo(mainActivity)
+            viewModel.getUnreadStudentCouncil(mainActivity)
+
+            textViewUnreadNoticeWithNickname.text = "${MyApplication.memberData?.name}님이 놓친 공지사항"
 
             // Adapter 연결
 //            adapter = AnnouncementPagerAdapter(requireContext(), announcements)

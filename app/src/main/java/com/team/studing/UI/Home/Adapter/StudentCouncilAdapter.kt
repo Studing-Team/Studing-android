@@ -2,6 +2,7 @@ package com.team.studing.UI.Home.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,7 +13,8 @@ import com.team.studing.databinding.RowStudentCouncilBinding
 class StudentCouncilAdapter(
     private var activity: MainActivity,
     private var nameList: List<String>,
-    private var logoList: List<String>
+    private var logoList: List<String>,
+    private var unreadList: List<String>
 ) :
     RecyclerView.Adapter<StudentCouncilAdapter.ViewHolder>() {
 
@@ -56,6 +58,13 @@ class StudentCouncilAdapter(
             }
         }
 
+        // 안읽은 공지사항 체크
+        if (unreadList.any { it == nameList[position] }) {
+            holder.badge.visibility = View.VISIBLE
+        } else {
+            holder.badge.visibility = View.INVISIBLE
+        }
+
         // 배경 설정
         if (position == selectedPosition) {
             holder.layoutStudentCouncil.setBackgroundResource(R.drawable.background_student_council_selected)
@@ -71,6 +80,7 @@ class StudentCouncilAdapter(
         val name = binding.textViewStudentCouncilName
         val logo = binding.imageViewStudentCouncil
         val layoutStudentCouncil = binding.layoutStudentCouncil
+        val badge = binding.imageViewBadge
 
         init {
             binding.root.setOnClickListener {
