@@ -26,9 +26,14 @@ class StudentCouncilAdapter(
         onItemClickListener = listener
     }
 
-    fun updateList(newNameList: List<String>, newLogoList: List<String>) {
+    fun updateList(
+        newNameList: List<String>,
+        newLogoList: List<String>,
+        newUnreadList: List<String>
+    ) {
         nameList = newNameList
         logoList = newLogoList
+        unreadList = newUnreadList
         notifyDataSetChanged()
     }
 

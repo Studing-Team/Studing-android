@@ -239,7 +239,7 @@
                         style="@style/Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="27dp"
+
                         android:text="님이 놓친 공지사항"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -248,8 +248,8 @@
 
                     <ImageView
                         android:id="@+id/imageView_banner"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="105dp"
+                        android:layout_height="105dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_banner"
                         app:layout_constraintBottom_toBottomOf="parent"

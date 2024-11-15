@@ -70,6 +70,8 @@ class HomeFragment : Fragment() {
             itemClickListener = object : StudentCouncilAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     categoryPosition = position
+                    binding.textViewNoticeIntro.text =
+                        "${getStudentCouncilNameList[position]} 공지사항이에요"
                     viewModel.getRecentNotice(
                         mainActivity,
                         MyApplication.categoryList[categoryPosition]
@@ -109,7 +111,8 @@ class HomeFragment : Fragment() {
                 getStudentCouncilNameList = it
                 studentCouncilAdapter.updateList(
                     getStudentCouncilNameList,
-                    getStudentCouncilLogoList
+                    getStudentCouncilLogoList,
+                    getUnReadStudentCouncilNameList
                 )
             }
 
@@ -117,12 +120,18 @@ class HomeFragment : Fragment() {
                 getStudentCouncilLogoList = it
                 studentCouncilAdapter.updateList(
                     getStudentCouncilNameList,
-                    getStudentCouncilLogoList
+                    getStudentCouncilLogoList,
+                    getUnReadStudentCouncilNameList
                 )
             }
 
             unreadStudentCouncilNameList.observe(viewLifecycleOwner) {
                 getUnReadStudentCouncilNameList = it
+                studentCouncilAdapter.updateList(
+                    getStudentCouncilNameList,
+                    getStudentCouncilLogoList,
+                    getUnReadStudentCouncilNameList
+                )
             }
 
             recentNoticeList.observe(viewLifecycleOwner) {
@@ -146,9 +155,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() {
+        mainActivity.hideBottomNavigation(false)
+        if (MyApplication.memberData?.role != "ROLE_USER") {
+            mainActivity.hideWriteNoticeButton(false)
+        }
         binding.run {
             layoutEmptyScrapNotice.layoutEmptyHomeScrapNotice.visibility = View.GONE
             layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
+
+            textViewNoticeScrapIntro.text = "${MyApplication.memberData?.name}님이 저장한 공지사항이에요"
 
             // 리스트 데이터 초기화
             viewModel.getStudentCouncilLogo(mainActivity)
