@@ -3,23 +3,28 @@ package com.team.studing
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import com.team.studing.UI.SignUp.SignUpStep6Fragment
+import com.team.studing.Utils.MyApplication
+import com.team.studing.Utils.PreferenceUtil
 import com.team.studing.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
     val manager = supportFragmentManager
-//    private lateinit var navController: NavController
+    lateinit var sharedPreferenceManager: PreferenceUtil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
-
-//        enableEdgeToEdge()
+        MyApplication.preferences = PreferenceUtil(applicationContext)
+        
+        setFCMToken()
 
         setContentView(binding.root)
     }
@@ -37,9 +42,39 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
     fun hideKeyboard() {
         val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.window.decorView.applicationWindowToken, 0)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView_login)
+        fragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    fun setFCMToken() {
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("FCM Token", "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.d("FCM Token", "$token")
+            MyApplication.preferences.setFCMToken(token)
+            Log.d("FCM Token", "FCM 토큰 : ${MyApplication.preferences.getFCMToken()}")
+
+            if (this::sharedPreferenceManager.isInitialized) {
+                Log.d("FCM Token", "this::sharedPreferenceManager.isInitialized")
+                sharedPreferenceManager.setFCMToken(token)
+            }
+        }
     }
 }
