@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:background="@drawable/background_student_council_unselected"
+    android:layout_height="wrap_content"
     android:layout_marginRight="10dp"
-    android:layout_height="wrap_content">
+    android:background="@drawable/background_student_council_unselected">
 
     <ImageView
         android:id="@+id/imageView_badge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:translationZ="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:translationZ="1dp"
         app:srcCompat="@drawable/ic_badge" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_student_council"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/background_student_council_unselected"
@@ -46,8 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:text="학생회"
             android:maxLength="4"
+            android:text="학생회"
             android:textColor="@color/black_40"
             app:layout_constraintEnd_toEndOf="@+id/imageView_student_council"
             app:layout_constraintStart_toStartOf="@+id/imageView_student_council"

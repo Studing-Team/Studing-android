@@ -3,19 +3,31 @@ package com.team.studing.UI.Home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
+import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
     lateinit var mainActivity: MainActivity
+    lateinit var viewModel: HomeViewModel
 
+
+    var getStudentCouncilLogoList = mutableListOf<String>()
+    var getStudentCouncilNameList = mutableListOf<String>()
+
+    lateinit var studentCouncilAdapter: StudentCouncilAdapter
 //    private lateinit var adapter: AnnouncementPagerAdapter
 
     override fun onCreateView(
@@ -25,11 +37,30 @@ class HomeFragment : Fragment() {
 
         binding = FragmentHomeBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
+        viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
+
+        viewModel.run {
+            studentCouncilNameList.observe(mainActivity) {
+                getStudentCouncilNameList = it
+            }
+            studentCouncilLogoList.observe(mainActivity) {
+                getStudentCouncilLogoList = it
+                Log.d("##", "${getStudentCouncilNameList}")
+                // Adapter 초기화 및 RecyclerView 설정
+                studentCouncilAdapter = StudentCouncilAdapter(
+                    mainActivity,
+                    getStudentCouncilNameList,
+                    getStudentCouncilLogoList
+                )
+                binding.recyclerViewStudentCouncil.adapter = studentCouncilAdapter
+                binding.recyclerViewStudentCouncil.layoutManager =
+                    LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            }
+        }
 
         initView()
 
         binding.run {
-
             buttonShowUnread.setOnClickListener {
                 // 놓친 공지사항 확인하기 화면으로 전환
                 val nextFragment = UnreadNoticeFragment()
@@ -42,7 +73,7 @@ class HomeFragment : Fragment() {
 
             buttonNoticeMore.setOnClickListener {
                 // 공지사항 리스트 화면으로 전환
-                val nextFragment = com.team.studing.UI.Home.NoticeListFragment()
+                val nextFragment = NoticeListFragment()
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
@@ -69,7 +100,7 @@ class HomeFragment : Fragment() {
 
             layoutEmptyScrapNotice.buttonShowWholeNotice.setOnClickListener {
                 // 공지사항 리스트 화면으로 전환
-                val nextFragment = com.team.studing.UI.Home.NoticeListFragment()
+                val nextFragment = NoticeListFragment()
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
@@ -87,6 +118,8 @@ class HomeFragment : Fragment() {
 
             layoutEmptyScrapNotice.layoutEmptyHomeScrapNotice.visibility = View.GONE
             layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
+
+            viewModel.getStudentCouncilLogo(mainActivity)
 
             // Adapter 연결
 //            adapter = AnnouncementPagerAdapter(requireContext(), announcements)

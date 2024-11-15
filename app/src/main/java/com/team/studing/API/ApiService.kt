@@ -4,6 +4,7 @@ import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Login.LoginResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
@@ -55,4 +56,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body parameters: SendFcmTokenRequest
     ): Call<BaseResponse<Void>>
+
+    // 학생회 카테고리 로고 리스트 반환
+    @GET("api/v1/home/logo")
+    fun getStudentCouncilLogo(
+        @Header("Authorization") token: String,
+    ): Call<BaseResponse<GetStudentCouncilLogoResponse>>
 }
