@@ -4,6 +4,7 @@ import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Login.LoginResponse
+import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -45,5 +46,6 @@ interface ApiService {
     fun signUp(
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part studentCardImage: MultipartBody.Part
+    ): Call<BaseResponse<SignUpResponse>>
     ): Call<BaseResponse<Void>>
 }

@@ -1,6 +1,7 @@
 package com.team.studing.Utils
 
 import android.app.Application
+import com.team.studing.API.response.Login.MemberData
 import okhttp3.MultipartBody
 
 class MyApplication : Application() {
@@ -18,5 +19,9 @@ class MyApplication : Application() {
         var signUpStudentIDNumber = ""
         var signUpImage: MultipartBody.Part? = null
         var marketingAgreement = "false"
+
+        // 유저 정보
+        var memberData: MemberData? = null
+        var memberId = -1
     }
 }
