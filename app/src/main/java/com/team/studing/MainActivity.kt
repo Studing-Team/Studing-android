@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.team.studing.UI.Home.HomeFailFragment
 import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
@@ -54,6 +55,17 @@ class MainActivity : AppCompatActivity() {
                 hideWriteNoticeButton(true)
                 hideBottomNavigation(true)
                 val nextFragment = HomeWaitingFragment()
+
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
+            "ROLE_DENY" -> {
+                hideWriteNoticeButton(true)
+                hideBottomNavigation(true)
+                val nextFragment = HomeFailFragment()
 
                 val transaction = supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
