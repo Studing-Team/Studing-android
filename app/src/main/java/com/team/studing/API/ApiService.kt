@@ -5,9 +5,9 @@ import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
-import com.team.studing.API.response.Home.GetRecentNoticeResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
+import com.team.studing.API.response.Home.NoticeListResponse
 import com.team.studing.API.response.Login.LoginResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
@@ -77,5 +77,11 @@ interface ApiService {
     fun getRecentNotice(
         @Header("Authorization") token: String,
         @Body parameters: GetRecentNoticeRequest
-    ): Call<BaseResponse<GetRecentNoticeResponse>>
+    ): Call<BaseResponse<NoticeListResponse>>
+
+    // 전체 공지 리스트 (전체)
+    @GET("api/v1/notices/all")
+    fun getNoticeList(
+        @Header("Authorization") token: String
+    ): Call<BaseResponse<NoticeListResponse>>
 }

@@ -44,4 +44,15 @@ object MainUtil {
                     )
         }
     }
+
+    fun splitString(input: String): Pair<String, String>? {
+        val regex = Regex("(.*?)\\[(.*?)]")
+        val matchResult = regex.find(input)
+
+        return if (matchResult != null && matchResult.groupValues.size == 3) {
+            matchResult.groupValues[1] to matchResult.groupValues[2]
+        } else {
+            null
+        }
+    }
 }

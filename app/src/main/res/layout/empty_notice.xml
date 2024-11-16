@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_empty_notice_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_scrap_notice_empty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,6 +17,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:layout_marginBottom="130dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_empty_scrap_notice" />
+                app:srcCompat="@drawable/ic_empty_notice" />
 
             <TextView
                 android:id="@+id/textView_empty_scrap_notice_description"
@@ -37,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="25dp"
-                android:text="저장한 공지사항이 없어요" />
+                android:text="등록된 공지사항이 없어요" />
 
             <TextView
                 android:id="@+id/textView_empty_scrap_notice_description2"
@@ -46,7 +48,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_regular"
-                android:text="필요한 공지사항을 저장하여 빠르게 확인해보세요."
+                android:text="학생회에서 공지를 등록할 때까지 조금만 기다려주세요."
                 android:textColor="@color/black_30"
                 android:textSize="12sp" />
         </LinearLayout>
