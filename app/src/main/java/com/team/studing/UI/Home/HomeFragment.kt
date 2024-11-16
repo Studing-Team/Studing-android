@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
     private var getRecentNoticeList = mutableListOf<Notice>()
 
     private var categoryPosition = 0
+    private var isRegisterMajorStudentCouncil = false
 
     private lateinit var studentCouncilAdapter: StudentCouncilAdapter
     private lateinit var homeNoticePagerAdapter: HomeNoticePagerAdapter
@@ -54,9 +55,12 @@ class HomeFragment : Fragment() {
             layoutEmptyScrapNotice.buttonShowWholeNotice.setOnClickListener { navigateToNoticeListFragment() }
         }
 
-        initView()
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
     }
 
     private fun initAdapters() {
@@ -107,6 +111,10 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.run {
+            majorStudentCouncil.observe(viewLifecycleOwner) {
+                isRegisterMajorStudentCouncil = it
+            }
+
             studentCouncilNameList.observe(viewLifecycleOwner) {
                 getStudentCouncilNameList = it
                 studentCouncilAdapter.updateList(
@@ -139,15 +147,26 @@ class HomeFragment : Fragment() {
                 homeNoticePagerAdapter.updateList(getRecentNoticeList)
 
                 binding.run {
-                    if (getRecentNoticeList.isEmpty()) {
+                    if (!isRegisterMajorStudentCouncil && categoryPosition == 3) {
                         viewPager.visibility = View.GONE
                         dotsIndicatorNotice.visibility = View.GONE
-                        layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.VISIBLE
-                    } else {
-                        viewPager.visibility = View.VISIBLE
-                        dotsIndicatorNotice.visibility = View.VISIBLE
                         layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
-                        layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
+                        layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
+                            View.VISIBLE
+                    } else {
+                        if (getRecentNoticeList.isEmpty()) {
+                            viewPager.visibility = View.GONE
+                            dotsIndicatorNotice.visibility = View.GONE
+                            layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.VISIBLE
+                            layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
+                                View.GONE
+                        } else {
+                            viewPager.visibility = View.VISIBLE
+                            dotsIndicatorNotice.visibility = View.VISIBLE
+                            layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
+                            layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
+                                View.GONE
+                        }
                     }
                 }
             }

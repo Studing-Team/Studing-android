@@ -21,6 +21,7 @@ class HomeViewModel : ViewModel() {
     // 학생회 카테고리 로고
     var studentCouncilNameList = MutableLiveData<MutableList<String>>()
     var studentCouncilLogoList = MutableLiveData<MutableList<String>>()
+    var majorStudentCouncil: MutableLiveData<Boolean> = MutableLiveData()
 
     // 학생회 카테고리 안읽은 공지 체크
     var unreadStudentCouncilNameList = MutableLiveData<MutableList<String>>()
@@ -73,6 +74,8 @@ class HomeViewModel : ViewModel() {
 
                         studentCouncilNameList.value = tempNameList
                         studentCouncilLogoList.value = tempImageList
+
+                        majorStudentCouncil.value = result?.data?.isRegisteredDepartment
 
                         Log.d("##", "viewModel temp : ${tempNameList}")
                         Log.d("##", "viewModel : ${studentCouncilNameList.value}")

@@ -6,5 +6,6 @@ data class GetStudentCouncilLogoResponse(
     val collegeDepartmentLogoImage: String?,
     val collegeDepartmentName: String?,
     val departmentLogoImage: String?,
-    val departmentName: String?
+    val departmentName: String?,
+    val isRegisteredDepartment: Boolean
 )
