@@ -2,6 +2,7 @@ package com.team.studing.UI.Home.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.team.studing.API.response.Home.Notice
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.Utils.MainUtil.splitString
 import com.team.studing.databinding.RowHomeNoticeBinding
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -48,7 +50,23 @@ class HomeNoticePagerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.writerType.run {
-            text = notices[position].writerInfo
+            text = splitString(notices[position].writerInfo!!)?.first
+            when (splitString(notices[position].writerInfo!!)?.second) {
+                "총학생회" -> {
+                    setBackgroundResource(R.drawable.background_student_council_chip_primary10)
+                    setTextColor(resources.getColor(R.color.primary_50))
+                }
+
+                "단과대" -> {
+                    setBackgroundResource(R.drawable.background_student_council_chip_red5)
+                    setTextColor(resources.getColor(R.color.red))
+                }
+
+                else -> {
+                    setBackgroundResource(R.drawable.background_student_council_chip_mint)
+                    setTextColor(Color.parseColor("#71BDC3"))
+                }
+            }
         }
 
         holder.title.text = notices[position].title
