@@ -84,4 +84,11 @@ interface ApiService {
     fun getNoticeList(
         @Header("Authorization") token: String
     ): Call<BaseResponse<NoticeListResponse>>
+
+    // 전체 공지 리스트 (학생회)
+    @POST("api/v1/notices/all-category")
+    fun getNoticeStudentCouncilList(
+        @Header("Authorization") token: String,
+        @Body parameters: GetRecentNoticeRequest
+    ): Call<BaseResponse<NoticeListResponse>>
 }

@@ -32,6 +32,9 @@ class HomeViewModel : ViewModel() {
     // 전체 공지 리스트
     var noticeList = MutableLiveData<MutableList<Notice>>()
 
+    // 학생회별 공지 리스트
+    var studentCouncilNoticeList = MutableLiveData<MutableList<Notice>>()
+
 
     init {
         studentCouncilNameList.value = mutableListOf<String>()
@@ -39,6 +42,7 @@ class HomeViewModel : ViewModel() {
         unreadStudentCouncilNameList.value = mutableListOf<String>()
         recentNoticeList.value = mutableListOf<Notice>()
         noticeList.value = mutableListOf<Notice>()
+        studentCouncilNoticeList.value = mutableListOf<Notice>()
     }
 
     fun getStudentCouncilLogo(activity: MainActivity) {
@@ -322,6 +326,71 @@ class HomeViewModel : ViewModel() {
             })
     }
 
+    fun getStudentCouncilNoticeList(activity: MainActivity, category: String) {
+
+        var tempStudentCouncilNoticeList = mutableListOf<Notice>()
+
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.getNoticeStudentCouncilList(
+            "Bearer ${tokenManager.getAccessToken()}",
+            GetRecentNoticeRequest(category)
+        )
+            .enqueue(object :
+                Callback<BaseResponse<NoticeListResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<NoticeListResponse>>,
+                    response: Response<BaseResponse<NoticeListResponse>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<NoticeListResponse>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        if (!(result?.data?.notices.isNullOrEmpty())) {
+                            for (i in 0 until result?.data?.notices?.size!!) {
+                                var id = result.data.notices[i].id
+                                var affiliation = result.data.notices[i].affiliation
+                                var title = result.data.notices[i].title
+                                var content = result.data.notices[i].content
+                                var tag = result.data.notices[i].tag
+                                var likeCount = result.data.notices[i].noticeLike
+                                var saveCount = result.data.notices[i].saveCount
+                                var readCount = result.data.notices[i].viewCount
+                                var noticeDate = result.data.notices[i].createdAt
+                                var saveCheck = result.data.notices[i].saveCheck
+                                var likeCheck = result.data.notices[i].likeCheck
+                                var noticeImage = result.data.notices[i].image
+
+                                var n1 = Notice(
+                                    id,
+                                    affiliation,
+                                    title,
+                                    content,
+                                    tag,
+                                    null,
+                                    likeCount,
+                                    readCount,
+                                    saveCount,
+                                    noticeImage,
+                                    noticeDate,
+                                    saveCheck,
+                                    likeCheck,
+                                )
+                                tempStudentCouncilNoticeList.add(n1)
+                            }
+                        }
+
+                        studentCouncilNoticeList.value = tempStudentCouncilNoticeList
+
+                        Log.d("##", "viewModel temp : ${tempStudentCouncilNoticeList}")
+                        Log.d("##", "viewModel : ${studentCouncilNoticeList.value}")
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<NoticeListResponse>? = response.body()
                         Log.d("##", "onResponse 실패")
                         Log.d("##", "onResponse 실패: " + response.code())
                         Log.d("##", "onResponse 실패: " + response.body())
@@ -332,7 +401,7 @@ class HomeViewModel : ViewModel() {
                 }
 
                 override fun onFailure(
-                    call: Call<BaseResponse<GetRecentNoticeResponse>>,
+                    call: Call<BaseResponse<NoticeListResponse>>,
                     t: Throwable
                 ) {
                     // 통신 실패

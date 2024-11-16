@@ -33,7 +33,6 @@ class NoticeListFragment : Fragment() {
     private var getStudentCouncilNameList = mutableListOf<String>()
     private var getUnReadStudentCouncilNameList = mutableListOf<String>()
     private var getNoticeList = mutableListOf<Notice>()
-    private var getStudentCouncilNoticeList = mutableListOf<Notice>()
 
     private var categoryPosition = 0
     private var isRegisterMajorStudentCouncil = false
@@ -86,6 +85,10 @@ class NoticeListFragment : Fragment() {
                     if (categoryPosition == 0) {
                         viewModel.getNoticeList(mainActivity)
                     } else {
+                        viewModel.getStudentCouncilNoticeList(
+                            mainActivity,
+                            MyApplication.categoryList[categoryPosition]
+                        )
                     }
                 }
             }
@@ -156,6 +159,11 @@ class NoticeListFragment : Fragment() {
                 updateNoticeListVisibility()
             }
 
+            studentCouncilNoticeList.observe(viewLifecycleOwner) {
+                getNoticeList = it
+                noticeListAdapter.updateList(getNoticeList)
+                updateNoticeListVisibility()
+            }
         }
     }
 
