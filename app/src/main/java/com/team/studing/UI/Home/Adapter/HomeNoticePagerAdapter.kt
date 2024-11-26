@@ -1,6 +1,5 @@
 package com.team.studing.UI.Home.Adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -12,8 +11,6 @@ import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.Utils.MainUtil.splitString
 import com.team.studing.databinding.RowHomeNoticeBinding
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class HomeNoticePagerAdapter(
     private var activity: MainActivity,
@@ -74,7 +71,7 @@ class HomeNoticePagerAdapter(
         holder.likeCount.text = notices[position].noticeLike.toString()
         holder.saveCount.text = notices[position].saveCount.toString()
         holder.readCount.text = notices[position].viewCount.toString()
-        holder.date.text = formatDate(notices[position].createdAt)
+        holder.date.text = notices[position].createdAt
         if (notices[position].saveCheck) {
             holder.saveCheck.setImageResource(R.drawable.ic_scrap_selected)
         } else {
@@ -119,15 +116,5 @@ class HomeNoticePagerAdapter(
                 true
             }
         }
-    }
-
-    @SuppressLint("NewApi")
-    fun formatDate(dateString: String): String {
-        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-        val outputFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
-        val date = LocalDateTime.parse(dateString, inputFormatter)
-        val formattedDate = date.format(outputFormatter)
-
-        return formattedDate
     }
 }
