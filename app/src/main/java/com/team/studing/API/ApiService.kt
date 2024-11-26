@@ -7,6 +7,7 @@ import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
+import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.API.response.Home.NoticeListResponse
 import com.team.studing.API.response.Home.ScrapNoticeResponse
 import com.team.studing.API.response.Login.LoginResponse
@@ -21,6 +22,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.PartMap
+import retrofit2.http.Path
 
 interface ApiService {
     // 로그인
@@ -105,4 +107,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body parameters: NoticeListRequest
     ): Call<BaseResponse<ScrapNoticeResponse>>
+
+    // 공지사항 세부 화면
+    @GET("api/v1/notices/{noticeId}")
+    fun getNoticeDetail(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<NoticeDetailResponse>>
 }

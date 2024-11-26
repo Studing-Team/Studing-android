@@ -10,10 +10,12 @@ import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Home.Notice
+import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.API.response.Home.NoticeListResponse
 import com.team.studing.API.response.Home.ScrapNotice
 import com.team.studing.API.response.Home.ScrapNoticeResponse
 import com.team.studing.MainActivity
+import com.team.studing.Utils.SingleLiveEvent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +42,15 @@ class HomeViewModel : ViewModel() {
     // 저장한 공지 리스트
     var recentScrapNoticeList = MutableLiveData<MutableList<ScrapNotice>>()
     var scrapNoticeList = MutableLiveData<MutableList<ScrapNotice>>()
+
+    // 공지사항 세부 내용
+    var noticeDetail: MutableLiveData<NoticeDetailResponse?> = MutableLiveData()
+
+    val myEvent = SingleLiveEvent<String>()
+
+    fun triggerEvent() {
+        myEvent.value = "New Event"
+    }
 
 
     init {
@@ -554,6 +565,51 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<BaseResponse<ScrapNoticeResponse>>,
+                    t: Throwable
+                ) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    // 저장한 전체 카테고리별 공지 리스트
+    fun getNoticeDetail(activity: MainActivity, noticeId: Int) {
+
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.getNoticeDetail(
+            "Bearer ${tokenManager.getAccessToken()}",
+            noticeId
+        )
+            .enqueue(object :
+                Callback<BaseResponse<NoticeDetailResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<NoticeDetailResponse>>,
+                    response: Response<BaseResponse<NoticeDetailResponse>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<NoticeDetailResponse>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        noticeDetail.value = result?.data
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<NoticeDetailResponse>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<NoticeDetailResponse>>,
                     t: Throwable
                 ) {
                     // 통신 실패

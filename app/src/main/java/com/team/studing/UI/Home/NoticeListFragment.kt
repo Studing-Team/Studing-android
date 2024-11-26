@@ -101,6 +101,7 @@ class NoticeListFragment : Fragment() {
         ).apply {
             itemClickListener = object : NoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    viewModel.getNoticeDetail(mainActivity, getNoticeList[position].id.toInt())
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)

@@ -90,6 +90,7 @@ class ScrapNoticeListFragment : Fragment() {
         ).apply {
             itemClickListener = object : ScrapNoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    viewModel.getNoticeDetail(mainActivity, getScrapNoticeList[position].id.toInt())
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)

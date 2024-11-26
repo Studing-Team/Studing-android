@@ -94,6 +94,10 @@ class HomeFragment : Fragment() {
         ).apply {
             itemClickListener = object : HomeNoticePagerAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    viewModel.getNoticeDetail(
+                        mainActivity,
+                        getRecentNoticeList[position].id.toInt()
+                    )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)
@@ -108,6 +112,7 @@ class HomeFragment : Fragment() {
         ).apply {
             itemClickListener = object : HomeScrapNoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    viewModel.getNoticeDetail(mainActivity, getScrapNoticeList[position].id.toInt())
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)
