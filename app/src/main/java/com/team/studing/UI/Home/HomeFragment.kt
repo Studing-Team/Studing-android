@@ -15,7 +15,7 @@ import com.team.studing.API.response.Home.ScrapNotice
 import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.HomeNoticePagerAdapter
-import com.team.studing.UI.Home.Adapter.ScrapNoticeListAdapter
+import com.team.studing.UI.Home.Adapter.HomeScrapNoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var studentCouncilAdapter: StudentCouncilAdapter
     private lateinit var homeNoticePagerAdapter: HomeNoticePagerAdapter
-    private lateinit var scrapNoticeListAdapter: ScrapNoticeListAdapter
+    private lateinit var homeScrapNoticeListAdapter: HomeScrapNoticeListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,14 +102,14 @@ class HomeFragment : Fragment() {
             }
         }
 
-        scrapNoticeListAdapter = ScrapNoticeListAdapter(
+        homeScrapNoticeListAdapter = HomeScrapNoticeListAdapter(
             mainActivity,
             getScrapNoticeList
         ).apply {
-            itemClickListener = object : ScrapNoticeListAdapter.OnItemClickListener {
+            itemClickListener = object : HomeScrapNoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     mainActivity.supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainerView_main, ScrapNoticeListFragment())
+                        .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)
                         .commit()
                 }
@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.recyclerViewScrapNotice.apply {
-            adapter = scrapNoticeListAdapter
+            adapter = homeScrapNoticeListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
     }
@@ -172,9 +172,9 @@ class HomeFragment : Fragment() {
                 checkExistNoticeList()
             }
 
-            scrapNoticeList.observe(viewLifecycleOwner) {
+            recentScrapNoticeList.observe(viewLifecycleOwner) {
                 getScrapNoticeList = it
-                scrapNoticeListAdapter.updateList(getScrapNoticeList)
+                homeScrapNoticeListAdapter.updateList(getScrapNoticeList)
 
                 checkExistScrapNoticeList()
             }
@@ -196,7 +196,7 @@ class HomeFragment : Fragment() {
             viewModel.getStudentCouncilLogo(mainActivity)
             viewModel.getUnreadStudentCouncil(mainActivity)
             viewModel.getRecentNotice(mainActivity, MyApplication.categoryList[categoryPosition])
-            viewModel.getScrapNoticeList(mainActivity)
+            viewModel.getRecentScrapNotice(mainActivity)
 
             textViewUnreadNoticeWithNickname.text = "${MyApplication.memberData?.name}님이 놓친 공지사항"
         }

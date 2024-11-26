@@ -1,15 +1,13 @@
 package com.team.studing.UI.Home.Adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.team.studing.API.response.Home.ScrapNotice
 import com.team.studing.MainActivity
-import com.team.studing.R
-import com.team.studing.Utils.MainUtil.splitString
-import com.team.studing.databinding.RowScrapNoticeBinding
+import com.team.studing.databinding.RowScrapNoticeListBinding
 
 class ScrapNoticeListAdapter(
     private var activity: MainActivity,
@@ -40,49 +38,26 @@ class ScrapNoticeListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         val binding =
-            RowScrapNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            RowScrapNoticeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.writerType.run {
-            text = splitString(scrapNotices[position].affiliation)?.first
-            when (splitString(scrapNotices[position].affiliation)?.second) {
-                "총학생회" -> {
-                    setBackgroundResource(R.drawable.background_student_council_chip_primary10)
-                    setTextColor(resources.getColor(R.color.primary_50))
-                }
-
-                "단과대" -> {
-                    setBackgroundResource(R.drawable.background_student_council_chip_red5)
-                    setTextColor(resources.getColor(R.color.red))
-                }
-
-                else -> {
-                    setBackgroundResource(R.drawable.background_student_council_chip_mint)
-                    setTextColor(Color.parseColor("#71BDC3"))
-                }
-            }
-        }
-
         holder.title.text = scrapNotices[position].title
-        holder.content.text = scrapNotices[position].content
         holder.date.text = scrapNotices[position].createdAt
+
+        Glide.with(activity).load(scrapNotices[position].image)
+            .into(holder.image)
     }
 
-    override fun getItemCount() = if (scrapNotices.size >= 5) {
-        5
-    } else {
-        scrapNotices.size
-    }
+    override fun getItemCount() = scrapNotices.size
 
-    inner class ViewHolder(val binding: RowScrapNoticeBinding) :
+    inner class ViewHolder(val binding: RowScrapNoticeListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val title = binding.textViewNoticeScrapTitle
-        val content = binding.textViewNoticeScrapContent
-        val date = binding.textViewNoticeScrapDate
-        val writerType = binding.textViewStudentCouncilType
+        val title = binding.textViewNoticeTitle
+        val date = binding.textViewNoticeDate
+        val image = binding.imageViewNotice
 
         init {
             binding.root.setOnClickListener {

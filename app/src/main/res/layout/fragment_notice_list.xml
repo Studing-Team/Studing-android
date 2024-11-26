@@ -43,10 +43,10 @@
             android:layout_height="wrap_content">
 
             <include
-                android:id="@+id/emptyView_notice"
-                layout="@layout/empty_notice"
+                android:id="@+id/emptyView_student_council"
+                layout="@layout/empty_student_council"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="398dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -56,8 +56,20 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <include
-                android:id="@+id/emptyView_student_council"
-                layout="@layout/empty_student_council"
+                android:id="@+id/emptyView_notice"
+                layout="@layout/empty_notice"
+                android:layout_width="0dp"
+                android:layout_height="398dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/button_qna"
+                app:layout_constraintStart_toStartOf="@+id/button_qna"
+                app:layout_constraintTop_toBottomOf="@+id/button_qna"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_notice_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
@@ -110,19 +122,6 @@
                     app:layout_constraintTop_toTopOf="@+id/textView_qna"
                     app:srcCompat="@drawable/ic_arrow_right_black40" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_notice_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/button_qna"
-                app:layout_constraintStart_toStartOf="@+id/button_qna"
-                app:layout_constraintTop_toBottomOf="@+id/button_qna"
-                app:layout_constraintVertical_bias="0.0" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

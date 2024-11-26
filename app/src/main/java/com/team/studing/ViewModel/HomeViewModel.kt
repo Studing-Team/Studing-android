@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
-import com.team.studing.API.request.Home.GetRecentNoticeRequest
+import com.team.studing.API.request.Home.NoticeListRequest
 import com.team.studing.API.response.BaseResponse
-import com.team.studing.API.response.Home.GetScrapNoticeResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Home.Notice
 import com.team.studing.API.response.Home.NoticeListResponse
 import com.team.studing.API.response.Home.ScrapNotice
+import com.team.studing.API.response.Home.ScrapNoticeResponse
 import com.team.studing.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +38,7 @@ class HomeViewModel : ViewModel() {
     var studentCouncilNoticeList = MutableLiveData<MutableList<Notice>>()
 
     // 저장한 공지 리스트
+    var recentScrapNoticeList = MutableLiveData<MutableList<ScrapNotice>>()
     var scrapNoticeList = MutableLiveData<MutableList<ScrapNotice>>()
 
 
@@ -48,6 +49,7 @@ class HomeViewModel : ViewModel() {
         recentNoticeList.value = mutableListOf<Notice>()
         noticeList.value = mutableListOf<Notice>()
         studentCouncilNoticeList.value = mutableListOf<Notice>()
+        recentScrapNoticeList.value = mutableListOf<ScrapNotice>()
         scrapNoticeList.value = mutableListOf<ScrapNotice>()
     }
 
@@ -174,7 +176,7 @@ class HomeViewModel : ViewModel() {
 
         apiClient.apiService.getRecentNotice(
             "Bearer ${tokenManager.getAccessToken()}",
-            GetRecentNoticeRequest(category)
+            NoticeListRequest(category)
         )
             .enqueue(object :
                 Callback<BaseResponse<NoticeListResponse>> {
@@ -341,7 +343,7 @@ class HomeViewModel : ViewModel() {
 
         apiClient.apiService.getNoticeStudentCouncilList(
             "Bearer ${tokenManager.getAccessToken()}",
-            GetRecentNoticeRequest(category)
+            NoticeListRequest(category)
         )
             .enqueue(object :
                 Callback<BaseResponse<NoticeListResponse>> {
@@ -417,26 +419,26 @@ class HomeViewModel : ViewModel() {
     }
 
     // 메인 홈 저장한 공지 리스트
-    fun getScrapNoticeList(activity: MainActivity) {
+    fun getRecentScrapNotice(activity: MainActivity) {
 
         var tempScrapList = mutableListOf<ScrapNotice>()
 
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
-        apiClient.apiService.getScrapNotice(
+        apiClient.apiService.getRecentScrapNotice(
             "Bearer ${tokenManager.getAccessToken()}"
         )
             .enqueue(object :
-                Callback<BaseResponse<GetScrapNoticeResponse>> {
+                Callback<BaseResponse<ScrapNoticeResponse>> {
                 override fun onResponse(
-                    call: Call<BaseResponse<GetScrapNoticeResponse>>,
-                    response: Response<BaseResponse<GetScrapNoticeResponse>>
+                    call: Call<BaseResponse<ScrapNoticeResponse>>,
+                    response: Response<BaseResponse<ScrapNoticeResponse>>
                 ) {
                     Log.d("##", "onResponse 성공: " + response.body().toString())
                     if (response.isSuccessful) {
                         // 정상적으로 통신이 성공된 경우
-                        val result: BaseResponse<GetScrapNoticeResponse>? = response.body()
+                        val result: BaseResponse<ScrapNoticeResponse>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
 
                         if (!(result?.data?.notices.isNullOrEmpty())) {
@@ -454,6 +456,79 @@ class HomeViewModel : ViewModel() {
                                     title,
                                     content,
                                     noticeDate,
+                                    null,
+                                    saveCheck
+                                )
+                                tempScrapList.add(n1)
+                            }
+                        }
+
+                        recentScrapNoticeList.value = tempScrapList
+
+                        Log.d("##", "viewModel temp : ${tempScrapList}")
+                        Log.d("##", "viewModel : ${recentScrapNoticeList.value}")
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<ScrapNoticeResponse>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<ScrapNoticeResponse>>,
+                    t: Throwable
+                ) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    // 저장한 전체 카테고리별 공지 리스트
+    fun getScrapNoticeList(activity: MainActivity, category: String) {
+
+        var tempScrapList = mutableListOf<ScrapNotice>()
+
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.getScrapNoticeListByCategory(
+            "Bearer ${tokenManager.getAccessToken()}",
+            NoticeListRequest(category)
+        )
+            .enqueue(object :
+                Callback<BaseResponse<ScrapNoticeResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ScrapNoticeResponse>>,
+                    response: Response<BaseResponse<ScrapNoticeResponse>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<ScrapNoticeResponse>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        if (!(result?.data?.notices.isNullOrEmpty())) {
+                            for (i in 0 until result?.data?.notices?.size!!) {
+                                var id = result.data.notices[i].id
+                                var title = result.data.notices[i].title
+                                var noticeDate = result.data.notices[i].createdAt
+                                var image = result.data.notices[i].image
+                                var saveCheck = result.data.notices[i].saveCheck
+
+                                var n1 = ScrapNotice(
+                                    id,
+                                    null,
+                                    title,
+                                    null,
+                                    noticeDate,
+                                    image,
                                     saveCheck
                                 )
                                 tempScrapList.add(n1)
@@ -467,7 +542,7 @@ class HomeViewModel : ViewModel() {
 
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-                        var result: BaseResponse<GetScrapNoticeResponse>? = response.body()
+                        var result: BaseResponse<ScrapNoticeResponse>? = response.body()
                         Log.d("##", "onResponse 실패")
                         Log.d("##", "onResponse 실패: " + response.code())
                         Log.d("##", "onResponse 실패: " + response.body())
@@ -478,7 +553,7 @@ class HomeViewModel : ViewModel() {
                 }
 
                 override fun onFailure(
-                    call: Call<BaseResponse<GetScrapNoticeResponse>>,
+                    call: Call<BaseResponse<ScrapNoticeResponse>>,
                     t: Throwable
                 ) {
                     // 통신 실패

@@ -1,5 +1,5 @@
 package com.team.studing.API.request.Home
 
-data class GetRecentNoticeRequest(
+data class NoticeListRequest(
     val categorie: String
 )

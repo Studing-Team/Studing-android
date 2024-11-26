@@ -1,14 +1,14 @@
 package com.team.studing.API
 
-import com.team.studing.API.request.Home.GetRecentNoticeRequest
+import com.team.studing.API.request.Home.NoticeListRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
-import com.team.studing.API.response.Home.GetScrapNoticeResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Home.NoticeListResponse
+import com.team.studing.API.response.Home.ScrapNoticeResponse
 import com.team.studing.API.response.Login.LoginResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
@@ -77,7 +77,7 @@ interface ApiService {
     @POST("api/v1/home/recent-notices")
     fun getRecentNotice(
         @Header("Authorization") token: String,
-        @Body parameters: GetRecentNoticeRequest
+        @Body parameters: NoticeListRequest
     ): Call<BaseResponse<NoticeListResponse>>
 
     // 전체 공지 리스트 (전체)
@@ -90,12 +90,19 @@ interface ApiService {
     @POST("api/v1/notices/all-category")
     fun getNoticeStudentCouncilList(
         @Header("Authorization") token: String,
-        @Body parameters: GetRecentNoticeRequest
+        @Body parameters: NoticeListRequest
     ): Call<BaseResponse<NoticeListResponse>>
 
     // 메인 홈 저장한 공지 리스트
     @GET("api/v1/home/save")
-    fun getScrapNotice(
+    fun getRecentScrapNotice(
         @Header("Authorization") token: String
-    ): Call<BaseResponse<GetScrapNoticeResponse>>
+    ): Call<BaseResponse<ScrapNoticeResponse>>
+
+    // 저장한 전체 카테고리별 공지 리스트
+    @POST("api/v1/notices/save-category")
+    fun getScrapNoticeListByCategory(
+        @Header("Authorization") token: String,
+        @Body parameters: NoticeListRequest
+    ): Call<BaseResponse<ScrapNoticeResponse>>
 }

@@ -90,6 +90,7 @@ class NoticeListFragment : Fragment() {
                             MyApplication.categoryList[categoryPosition]
                         )
                     }
+                    updateNoticeListVisibility()
                 }
             }
         }
