@@ -16,6 +16,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -114,4 +115,18 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int
     ): Call<BaseResponse<NoticeDetailResponse>>
+
+    // 공지사항 좋아요
+    @POST("api/v1/notices/like/{noticeId}")
+    fun likeNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 좋아요 취소
+    @DELETE("api/v1/notices/like/{noticeId}")
+    fun cancelLikeNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
 }

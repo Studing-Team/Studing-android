@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -14,6 +13,7 @@ import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.NoticeImagePagerAdapter
 import com.team.studing.Utils.BasicToast
 import com.team.studing.ViewModel.HomeViewModel
+import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentNoticeDetailBinding
 
 class NoticeDetailFragment : Fragment() {
@@ -21,6 +21,7 @@ class NoticeDetailFragment : Fragment() {
     lateinit var binding: FragmentNoticeDetailBinding
     lateinit var mainActivity: MainActivity
     lateinit var viewModel: HomeViewModel
+    lateinit var noticeViewModel: NoticeViewModel
 
     var isLike = false
     var isScrap = false
@@ -36,6 +37,7 @@ class NoticeDetailFragment : Fragment() {
         binding = FragmentNoticeDetailBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
+        noticeViewModel = ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
 
         observeViewModel()
         initView()
@@ -66,20 +68,15 @@ class NoticeDetailFragment : Fragment() {
                     )
                     layoutNoticeDetail.imageViewScrap.setImageResource(R.drawable.ic_scrap_black30)
                     buttonScrap.text = "저장하기"
-                    layoutNoticeDetail.textViewScrapNum.text = "${getNoticeDetail?.saveCount}"
+                    layoutNoticeDetail.textViewScrapNum.text = "${getNoticeDetail?.saveCount!! - 1}"
                 }
             }
 
             buttonLikeNotice.setOnClickListener {
-                isLike = !isLike
-                if (isLike) {
-                    buttonLikeNotice.setImageResource(R.drawable.ic_like_primary50)
-                    layoutNoticeDetail.imageViewLike.setImageResource(R.drawable.ic_like_red)
-                    layoutNoticeDetail.textViewLikeNum.text = "${getNoticeDetail?.likeCount!! + 1}"
+                if (!isLike) {
+                    noticeViewModel.likeNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
-                    buttonLikeNotice.setImageResource(R.drawable.ic_like_primary20)
-                    layoutNoticeDetail.imageViewLike.setImageResource(R.drawable.ic_like_black30)
-                    layoutNoticeDetail.textViewLikeNum.text = "${getNoticeDetail?.likeCount}"
+                    noticeViewModel.cancelLikeNotice(mainActivity, getNoticeDetail?.id!!)
                 }
             }
         }
@@ -100,6 +97,25 @@ class NoticeDetailFragment : Fragment() {
                 setData()
             }
         }
+
+        noticeViewModel.run {
+            isLiked.observe(viewLifecycleOwner) {
+                isLike = it
+                binding.run {
+                    if (it == true) {
+                        buttonLikeNotice.setImageResource(R.drawable.ic_like_primary50)
+                        layoutNoticeDetail.imageViewLike.setImageResource(R.drawable.ic_like_red)
+                        layoutNoticeDetail.textViewLikeNum.text =
+                            "${getNoticeDetail?.likeCount!! + 1}"
+                    } else {
+                        buttonLikeNotice.setImageResource(R.drawable.ic_like_primary20)
+                        layoutNoticeDetail.imageViewLike.setImageResource(R.drawable.ic_like_black30)
+                        layoutNoticeDetail.textViewLikeNum.text =
+                            "${getNoticeDetail?.likeCount!! - 1}"
+                    }
+                }
+            }
+        }
     }
 
     fun setData() {
@@ -108,16 +124,22 @@ class NoticeDetailFragment : Fragment() {
                 textViewNoticeTitle.text = getNoticeDetail?.title
                 textViewNoticeContent.text = getNoticeDetail?.content
                 textViewLikeNum.text = getNoticeDetail?.likeCount.toString()
+                isLike = getNoticeDetail?.likeCheck!!
                 if (getNoticeDetail?.likeCheck == true) {
                     imageViewLike.setImageResource(R.drawable.ic_like_red)
+                    buttonLikeNotice.setImageResource(R.drawable.ic_like_primary50)
                 } else {
                     imageViewLike.setImageResource(R.drawable.ic_like_black30)
+                    buttonLikeNotice.setImageResource(R.drawable.ic_like_primary20)
                 }
                 textViewScrapNum.text = getNoticeDetail?.saveCount.toString()
+                isScrap = getNoticeDetail?.saveCheck!!
                 if (getNoticeDetail?.saveCheck == true) {
                     imageViewScrap.setImageResource(R.drawable.ic_scrap_selected)
+                    buttonScrap.text = "저장 취소"
                 } else {
                     imageViewScrap.setImageResource(R.drawable.ic_scrap_black30)
+                    buttonScrap.text = "저장하기"
                 }
                 textViewShowNum.text = getNoticeDetail?.readCount.toString()
                 textViewDate.text = getNoticeDetail?.createdAt
