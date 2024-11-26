@@ -11,9 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.team.studing.API.response.Home.Notice
+import com.team.studing.API.response.Home.ScrapNotice
 import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.HomeNoticePagerAdapter
+import com.team.studing.UI.Home.Adapter.ScrapNoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
@@ -29,12 +31,14 @@ class HomeFragment : Fragment() {
     private var getStudentCouncilNameList = mutableListOf<String>()
     private var getUnReadStudentCouncilNameList = mutableListOf<String>()
     private var getRecentNoticeList = mutableListOf<Notice>()
+    private var getScrapNoticeList = mutableListOf<ScrapNotice>()
 
     private var categoryPosition = 0
     private var isRegisterMajorStudentCouncil = false
 
     private lateinit var studentCouncilAdapter: StudentCouncilAdapter
     private lateinit var homeNoticePagerAdapter: HomeNoticePagerAdapter
+    private lateinit var scrapNoticeListAdapter: ScrapNoticeListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +55,7 @@ class HomeFragment : Fragment() {
             buttonShowUnread.setOnClickListener { navigateToUnreadNoticeFragment() }
             buttonNoticeMore.setOnClickListener { navigateToNoticeListFragment() }
             buttonNoticeScrapMore.setOnClickListener { navigateToScrapNoticeListFragment() }
-            layoutEmptyNotice.buttonRegisterStudentCouncil.setOnClickListener { openGoogleForm() }
+            layoutEmptyStudentCouncil.buttonRegisterStudentCouncil.setOnClickListener { openStudentCouncilRegisterGoogleForm() }
             layoutEmptyScrapNotice.buttonShowWholeNotice.setOnClickListener { navigateToNoticeListFragment() }
         }
 
@@ -98,6 +102,20 @@ class HomeFragment : Fragment() {
             }
         }
 
+        scrapNoticeListAdapter = ScrapNoticeListAdapter(
+            mainActivity,
+            getScrapNoticeList
+        ).apply {
+            itemClickListener = object : ScrapNoticeListAdapter.OnItemClickListener {
+                override fun onItemClick(position: Int) {
+                    mainActivity.supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView_main, ScrapNoticeListFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }
+            }
+        }
+
         binding.recyclerViewStudentCouncil.apply {
             adapter = studentCouncilAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -106,6 +124,11 @@ class HomeFragment : Fragment() {
         binding.viewPager.apply {
             adapter = homeNoticePagerAdapter
             binding.dotsIndicatorNotice.attachTo(this)
+        }
+
+        binding.recyclerViewScrapNotice.apply {
+            adapter = scrapNoticeListAdapter
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
     }
 
@@ -146,29 +169,14 @@ class HomeFragment : Fragment() {
                 getRecentNoticeList = it
                 homeNoticePagerAdapter.updateList(getRecentNoticeList)
 
-                binding.run {
-                    if (!isRegisterMajorStudentCouncil && categoryPosition == 3) {
-                        viewPager.visibility = View.GONE
-                        dotsIndicatorNotice.visibility = View.GONE
-                        layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
-                        layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
-                            View.VISIBLE
-                    } else {
-                        if (getRecentNoticeList.isEmpty()) {
-                            viewPager.visibility = View.GONE
-                            dotsIndicatorNotice.visibility = View.GONE
-                            layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.VISIBLE
-                            layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
-                                View.GONE
-                        } else {
-                            viewPager.visibility = View.VISIBLE
-                            dotsIndicatorNotice.visibility = View.VISIBLE
-                            layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
-                            layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
-                                View.GONE
-                        }
-                    }
-                }
+                checkExistNoticeList()
+            }
+
+            scrapNoticeList.observe(viewLifecycleOwner) {
+                getScrapNoticeList = it
+                scrapNoticeListAdapter.updateList(getScrapNoticeList)
+
+                checkExistScrapNoticeList()
             }
         }
     }
@@ -188,6 +196,7 @@ class HomeFragment : Fragment() {
             viewModel.getStudentCouncilLogo(mainActivity)
             viewModel.getUnreadStudentCouncil(mainActivity)
             viewModel.getRecentNotice(mainActivity, MyApplication.categoryList[categoryPosition])
+            viewModel.getScrapNoticeList(mainActivity)
 
             textViewUnreadNoticeWithNickname.text = "${MyApplication.memberData?.name}님이 놓친 공지사항"
         }
@@ -214,8 +223,45 @@ class HomeFragment : Fragment() {
             .commit()
     }
 
-    private fun openGoogleForm() {
+    private fun openStudentCouncilRegisterGoogleForm() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/cCyRaN41xGuqQffM6"))
         startActivity(intent)
+    }
+
+    fun checkExistNoticeList() {
+        binding.run {
+            if (!isRegisterMajorStudentCouncil && categoryPosition == 3) {
+                viewPager.visibility = View.GONE
+                dotsIndicatorNotice.visibility = View.GONE
+                layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
+                layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
+                    View.VISIBLE
+            } else {
+                if (getRecentNoticeList.isEmpty()) {
+                    viewPager.visibility = View.GONE
+                    dotsIndicatorNotice.visibility = View.GONE
+                    layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.VISIBLE
+                    layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility =
+                        View.GONE
+                } else {
+                    viewPager.visibility = View.VISIBLE
+                    dotsIndicatorNotice.visibility = View.VISIBLE
+                    layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
+                    layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    fun checkExistScrapNoticeList() {
+        binding.run {
+            if (getScrapNoticeList.isEmpty()) {
+                recyclerViewScrapNotice.visibility = View.GONE
+                layoutEmptyScrapNotice.layoutEmptyHomeScrapNotice.visibility = View.VISIBLE
+            } else {
+                recyclerViewScrapNotice.visibility = View.VISIBLE
+                layoutEmptyScrapNotice.layoutEmptyHomeScrapNotice.visibility = View.GONE
+            }
+        }
     }
 }

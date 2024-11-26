@@ -48,9 +48,7 @@
                 android:layout_marginEnd="1dp"
                 app:layout_constraintEnd_toEndOf="@+id/banner"
                 app:layout_constraintStart_toStartOf="@+id/textView_student_council_intro"
-                app:layout_constraintTop_toBottomOf="@+id/textView_student_council_intro">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/textView_student_council_intro"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/textView_notice_intro"
@@ -212,6 +210,7 @@
                     android:id="@+id/recyclerView_scrap_notice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -239,7 +238,6 @@
                         style="@style/Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:text="님이 놓친 공지사항"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -248,8 +246,8 @@
 
                     <ImageView
                         android:id="@+id/imageView_banner"
-                        android:layout_width="105dp"
-                        android:layout_height="105dp"
+                        android:layout_width="86dp"
+                        android:layout_height="86dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_banner"
                         app:layout_constraintBottom_toBottomOf="parent"

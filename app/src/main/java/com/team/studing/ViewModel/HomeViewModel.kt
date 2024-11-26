@@ -7,10 +7,12 @@ import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
 import com.team.studing.API.request.Home.GetRecentNoticeRequest
 import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Home.GetScrapNoticeResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Home.Notice
 import com.team.studing.API.response.Home.NoticeListResponse
+import com.team.studing.API.response.Home.ScrapNotice
 import com.team.studing.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +37,9 @@ class HomeViewModel : ViewModel() {
     // 학생회별 공지 리스트
     var studentCouncilNoticeList = MutableLiveData<MutableList<Notice>>()
 
+    // 저장한 공지 리스트
+    var scrapNoticeList = MutableLiveData<MutableList<ScrapNotice>>()
+
 
     init {
         studentCouncilNameList.value = mutableListOf<String>()
@@ -43,6 +48,7 @@ class HomeViewModel : ViewModel() {
         recentNoticeList.value = mutableListOf<Notice>()
         noticeList.value = mutableListOf<Notice>()
         studentCouncilNoticeList.value = mutableListOf<Notice>()
+        scrapNoticeList.value = mutableListOf<ScrapNotice>()
     }
 
     fun getStudentCouncilLogo(activity: MainActivity) {
@@ -402,6 +408,77 @@ class HomeViewModel : ViewModel() {
 
                 override fun onFailure(
                     call: Call<BaseResponse<NoticeListResponse>>,
+                    t: Throwable
+                ) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    // 메인 홈 저장한 공지 리스트
+    fun getScrapNoticeList(activity: MainActivity) {
+
+        var tempScrapList = mutableListOf<ScrapNotice>()
+
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.getScrapNotice(
+            "Bearer ${tokenManager.getAccessToken()}"
+        )
+            .enqueue(object :
+                Callback<BaseResponse<GetScrapNoticeResponse>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<GetScrapNoticeResponse>>,
+                    response: Response<BaseResponse<GetScrapNoticeResponse>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<GetScrapNoticeResponse>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        if (!(result?.data?.notices.isNullOrEmpty())) {
+                            for (i in 0 until result?.data?.notices?.size!!) {
+                                var id = result.data.notices[i].id
+                                var affiliation = result.data.notices[i].affiliation
+                                var title = result.data.notices[i].title
+                                var content = result.data.notices[i].content
+                                var noticeDate = result.data.notices[i].createdAt
+                                var saveCheck = result.data.notices[i].saveCheck
+
+                                var n1 = ScrapNotice(
+                                    id,
+                                    affiliation,
+                                    title,
+                                    content,
+                                    noticeDate,
+                                    saveCheck
+                                )
+                                tempScrapList.add(n1)
+                            }
+                        }
+
+                        scrapNoticeList.value = tempScrapList
+
+                        Log.d("##", "viewModel temp : ${tempScrapList}")
+                        Log.d("##", "viewModel : ${scrapNoticeList.value}")
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<GetScrapNoticeResponse>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<GetScrapNoticeResponse>>,
                     t: Throwable
                 ) {
                     // 통신 실패

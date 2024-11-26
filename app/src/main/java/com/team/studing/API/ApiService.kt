@@ -5,6 +5,7 @@ import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Home.GetScrapNoticeResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Home.NoticeListResponse
@@ -91,4 +92,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body parameters: GetRecentNoticeRequest
     ): Call<BaseResponse<NoticeListResponse>>
+
+    // 메인 홈 저장한 공지 리스트
+    @GET("api/v1/home/save")
+    fun getScrapNotice(
+        @Header("Authorization") token: String
+    ): Call<BaseResponse<GetScrapNoticeResponse>>
 }
