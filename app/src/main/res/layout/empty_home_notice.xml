@@ -50,22 +50,5 @@
             app:layout_constraintEnd_toEndOf="@+id/textView_empty_notice_description"
             app:layout_constraintStart_toStartOf="@+id/textView_empty_notice_description"
             app:layout_constraintTop_toBottomOf="@+id/textView_empty_notice_description" />
-
-        <Button
-            android:id="@+id/button_register_student_council"
-            style="@style/Body2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="59dp"
-            android:paddingVertical="3dp"
-            android:text="학생회 등록하기"
-            android:textColor="@color/white"
-            android:visibility="gone"
-            app:cornerRadius="50dp"
-            app:layout_constraintEnd_toEndOf="@+id/textView_empty_notice_description2"
-            app:layout_constraintStart_toStartOf="@+id/textView_empty_notice_description2"
-            app:layout_constraintTop_toBottomOf="@+id/textView_empty_notice_description2" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
