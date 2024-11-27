@@ -158,4 +158,13 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int
     ): Call<BaseResponse<Void>>
+
+    // 공지사항 등록하기
+    @Multipart
+    @POST("api/v1/notices/create")
+    fun viewCheckNotice(
+        @Header("Authorization") token: String,
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part studentCardImage: List<MultipartBody.Part>
+    ): Call<BaseResponse<Void>>
 }

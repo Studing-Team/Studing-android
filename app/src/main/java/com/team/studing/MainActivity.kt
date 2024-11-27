@@ -1,5 +1,6 @@
 package com.team.studing
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -41,6 +42,19 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setPadding(0, 0, 0, 0)
 
         setBottomNavigationView()
+
+        binding.run {
+            buttonWriteNotice.setOnClickListener {
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fragmentContainerView_main, RegisterNoticeFragment())
+//                    .addToBackStack(null)
+//                    .commit()
+
+                val mainIntent = Intent(this@MainActivity, RegisterNoticeActivity::class.java)
+                mainIntent.putExtra("register", true)
+                startActivity(mainIntent)
+            }
+        }
 
 
         setContentView(binding.root)

@@ -8,6 +8,11 @@ import com.team.studing.API.TokenManager
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.MainActivity
+import com.team.studing.RegisterNoticeActivity
+import com.team.studing.Utils.MyApplication
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -238,6 +243,59 @@ class NoticeViewModel : ViewModel() {
 
                         isViewed.value = result?.status == 201
 
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<Void>>, t: Throwable) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    fun registerNotice(
+        activity: RegisterNoticeActivity,
+        title: String,
+        content: String,
+        tag: String
+    ) {
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        // DTO의 각 필드를 RequestBody로 변환하고 Map에 추가
+        val params = HashMap<String, RequestBody>()
+        params["title"] =
+            title.toRequestBody("text/plain".toMediaTypeOrNull())
+        params["content"] =
+            content.toRequestBody("text/plain".toMediaTypeOrNull())
+        params["tag"] =
+            tag.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        apiClient.apiService.viewCheckNotice(
+            "Bearer ${tokenManager.getAccessToken()}",
+            params,
+            MyApplication.noticeImages!!
+        )
+            .enqueue(object :
+                Callback<BaseResponse<Void>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Void>>,
+                    response: Response<BaseResponse<Void>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+                        activity.finish()
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<Void>? = response.body()

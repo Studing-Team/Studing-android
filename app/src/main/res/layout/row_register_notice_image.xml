@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/example" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

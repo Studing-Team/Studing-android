@@ -29,5 +29,8 @@ class MyApplication : Application() {
 
         // 현재 공지사항
         var noticeId = 0
+
+        // 공지사항 등록 이미지
+        var noticeImages: List<MultipartBody.Part>? = null
     }
 }
