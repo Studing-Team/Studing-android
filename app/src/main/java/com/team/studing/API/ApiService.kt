@@ -58,6 +58,15 @@ interface ApiService {
         @Part studentCardImage: MultipartBody.Part
     ): Call<BaseResponse<SignUpResponse>>
 
+    // 학생증 재제출
+    @Multipart
+    @POST("api/v1/member/resubmit")
+    fun reSubmit(
+        @Header("Authorization") token: String,
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part studentCardImage: MultipartBody.Part
+    ): Call<BaseResponse<Void>>
+
     // FCM 토큰 저장
     @POST("api/v1/notifications/token")
     fun sendFcmToken(

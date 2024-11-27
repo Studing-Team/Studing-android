@@ -23,6 +23,10 @@ class MyApplication : Application() {
         var signUpImage: MultipartBody.Part? = null
         var marketingAgreement = "false"
 
+        // 학생증 재제출 이미지
+        var reSubmitImage: MultipartBody.Part? = null
+        var reSubmit = false
+
         // 유저 정보
         var memberData: MemberData? = null
         var memberId = -1

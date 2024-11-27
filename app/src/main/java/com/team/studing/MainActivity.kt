@@ -12,6 +12,7 @@ import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
 import com.team.studing.UI.Partnership.PartnershipFragment
+import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.MyApplication.Companion.memberData
 import com.team.studing.ViewModel.LoginViewModel
 import com.team.studing.databinding.ActivityMainBinding
@@ -45,11 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.run {
             buttonWriteNotice.setOnClickListener {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.fragmentContainerView_main, RegisterNoticeFragment())
-//                    .addToBackStack(null)
-//                    .commit()
-
                 val mainIntent = Intent(this@MainActivity, RegisterNoticeActivity::class.java)
                 mainIntent.putExtra("register", true)
                 startActivity(mainIntent)
@@ -106,6 +102,14 @@ class MainActivity : AppCompatActivity() {
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
+        }
+
+        if (MyApplication.reSubmit) {
+            val nextFragment = HomeWaitingFragment()
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+            transaction.commit()
         }
     }
 
