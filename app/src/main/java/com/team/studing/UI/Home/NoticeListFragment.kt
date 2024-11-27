@@ -18,6 +18,7 @@ import com.team.studing.UI.Home.Adapter.NoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
+import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentNoticeListBinding
 
 class NoticeListFragment : Fragment() {
@@ -25,6 +26,7 @@ class NoticeListFragment : Fragment() {
     lateinit var binding: FragmentNoticeListBinding
     lateinit var mainActivity: MainActivity
     lateinit var viewModel: HomeViewModel
+    lateinit var noticeViewModel: NoticeViewModel
 
     private lateinit var studentCouncilAdapter: StudentCouncilAdapter
     private lateinit var noticeListAdapter: NoticeListAdapter
@@ -45,6 +47,7 @@ class NoticeListFragment : Fragment() {
         binding = FragmentNoticeListBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
+        noticeViewModel = ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
 
         initAdapter()
         observeViewModel()
@@ -101,7 +104,11 @@ class NoticeListFragment : Fragment() {
         ).apply {
             itemClickListener = object : NoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    viewModel.getNoticeDetail(mainActivity, getNoticeList[position].id.toInt())
+                    MyApplication.noticeId = getNoticeList[position].id
+                    noticeViewModel.getNoticeDetail(
+                        mainActivity,
+                        getNoticeList[position].id.toInt()
+                    )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)

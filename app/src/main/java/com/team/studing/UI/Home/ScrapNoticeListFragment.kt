@@ -18,6 +18,7 @@ import com.team.studing.UI.Home.Adapter.ScrapNoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
+import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentScrapNoticeListBinding
 
 class ScrapNoticeListFragment : Fragment() {
@@ -25,6 +26,7 @@ class ScrapNoticeListFragment : Fragment() {
     lateinit var binding: FragmentScrapNoticeListBinding
     lateinit var mainActivity: MainActivity
     lateinit var viewModel: HomeViewModel
+    lateinit var noticeViewModel: NoticeViewModel
 
     private lateinit var studentCouncilAdapter: StudentCouncilAdapter
     private lateinit var scrapNoticeListAdapter: ScrapNoticeListAdapter
@@ -45,6 +47,7 @@ class ScrapNoticeListFragment : Fragment() {
         binding = FragmentScrapNoticeListBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
+        noticeViewModel = ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
 
         initAdapter()
         observeViewModel()
@@ -90,7 +93,11 @@ class ScrapNoticeListFragment : Fragment() {
         ).apply {
             itemClickListener = object : ScrapNoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    viewModel.getNoticeDetail(mainActivity, getScrapNoticeList[position].id.toInt())
+                    MyApplication.noticeId = getScrapNoticeList[position].id.toInt()
+                    noticeViewModel.getNoticeDetail(
+                        mainActivity,
+                        getScrapNoticeList[position].id.toInt()
+                    )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)

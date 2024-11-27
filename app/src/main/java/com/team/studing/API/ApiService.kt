@@ -143,4 +143,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int
     ): Call<BaseResponse<Void>>
+
+    // 공지사항 조회수
+    @POST("api/v1/notices/view-check/{noticeId}")
+    fun viewCheckNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
 }

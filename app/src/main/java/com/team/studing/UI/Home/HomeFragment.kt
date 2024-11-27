@@ -17,8 +17,10 @@ import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.HomeNoticePagerAdapter
 import com.team.studing.UI.Home.Adapter.HomeScrapNoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
+import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
+import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -26,6 +28,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var viewModel: HomeViewModel
+    private lateinit var noticeViewModel: NoticeViewModel
 
     private var getStudentCouncilLogoList = mutableListOf<String>()
     private var getStudentCouncilNameList = mutableListOf<String>()
@@ -47,6 +50,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
+        noticeViewModel = ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
 
         initAdapters()
         observeViewModel()
@@ -79,7 +83,7 @@ class HomeFragment : Fragment() {
                 override fun onItemClick(position: Int) {
                     categoryPosition = position
                     binding.textViewNoticeIntro.text =
-                        "${getStudentCouncilNameList[position]} 공지사항이에요"
+                        "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
                     viewModel.getRecentNotice(
                         mainActivity,
                         MyApplication.categoryList[categoryPosition]
@@ -94,7 +98,8 @@ class HomeFragment : Fragment() {
         ).apply {
             itemClickListener = object : HomeNoticePagerAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    viewModel.getNoticeDetail(
+                    MyApplication.noticeId = getRecentNoticeList[position].id
+                    noticeViewModel.getNoticeDetail(
                         mainActivity,
                         getRecentNoticeList[position].id.toInt()
                     )
@@ -112,7 +117,11 @@ class HomeFragment : Fragment() {
         ).apply {
             itemClickListener = object : HomeScrapNoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    viewModel.getNoticeDetail(mainActivity, getScrapNoticeList[position].id.toInt())
+                    MyApplication.noticeId = getScrapNoticeList[position].id.toInt()
+                    noticeViewModel.getNoticeDetail(
+                        mainActivity,
+                        getScrapNoticeList[position].id.toInt()
+                    )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)
@@ -188,6 +197,7 @@ class HomeFragment : Fragment() {
 
     private fun initView() {
         mainActivity.hideBottomNavigation(false)
+        mainActivity.setStatusBarTransparent()
         if (MyApplication.memberData?.role != "ROLE_USER") {
             mainActivity.hideWriteNoticeButton(false)
         }
