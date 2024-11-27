@@ -88,6 +88,10 @@ class HomeFragment : Fragment() {
                         mainActivity,
                         MyApplication.categoryList[categoryPosition]
                     )
+                    viewModel.getUnreadNoticeCount(
+                        mainActivity,
+                        MyApplication.categoryList[categoryPosition]
+                    )
                 }
             }
         }
@@ -152,6 +156,10 @@ class HomeFragment : Fragment() {
                 isRegisterMajorStudentCouncil = it
             }
 
+            unreadNoticeCount.observe(viewLifecycleOwner) {
+                binding.textViewUnreadNoticeNumber.text = "${it}개"
+            }
+
             studentCouncilNameList.observe(viewLifecycleOwner) {
                 getStudentCouncilNameList = it
                 studentCouncilAdapter.updateList(
@@ -210,6 +218,10 @@ class HomeFragment : Fragment() {
             // 리스트 데이터 초기화
             viewModel.getStudentCouncilLogo(mainActivity)
             viewModel.getUnreadStudentCouncil(mainActivity)
+            viewModel.getUnreadNoticeCount(
+                mainActivity,
+                MyApplication.categoryList[categoryPosition]
+            )
             viewModel.getRecentNotice(mainActivity, MyApplication.categoryList[categoryPosition])
             viewModel.getRecentScrapNotice(mainActivity)
 

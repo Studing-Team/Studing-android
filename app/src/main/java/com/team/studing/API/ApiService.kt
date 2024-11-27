@@ -6,6 +6,7 @@ import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
+import com.team.studing.API.response.Home.GetUnreadNoticeCountResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
 import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.API.response.Home.NoticeListResponse
@@ -75,6 +76,13 @@ interface ApiService {
     fun getUnreadStudentCouncil(
         @Header("Authorization") token: String,
     ): Call<BaseResponse<GetUnreadStudentCouncilResponse>>
+
+    // 카테고리별 안읽은 공지 개수 확인
+    @POST("api/v1/home/unread-notice-count")
+    fun getUnreadNoticeCount(
+        @Header("Authorization") token: String,
+        @Body parameters: CategoryRequest
+    ): Call<BaseResponse<GetUnreadNoticeCountResponse>>
 
     // 메인 홈 카테고리별 최신 공지 리스트
     @POST("api/v1/home/recent-notices")
