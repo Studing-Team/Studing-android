@@ -129,4 +129,18 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int
     ): Call<BaseResponse<Void>>
+
+    // 공지사항 저장하기
+    @POST("api/v1/notices/save/{noticeId}")
+    fun scrapNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 저장 취소
+    @DELETE("api/v1/notices/save/{noticeId}")
+    fun cancelScrapNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
 }

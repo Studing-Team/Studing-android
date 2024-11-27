@@ -26,5 +26,8 @@ class MyApplication : Application() {
         // 유저 정보
         var memberData: MemberData? = null
         var memberId = -1
+
+        // 현재 공지사항
+        var noticeId = 0
     }
 }

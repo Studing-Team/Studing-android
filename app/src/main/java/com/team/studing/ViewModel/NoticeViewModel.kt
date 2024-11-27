@@ -13,7 +13,14 @@ import retrofit2.Response
 
 class NoticeViewModel : ViewModel() {
 
-    var isLiked: MutableLiveData<Boolean> = MutableLiveData()
+    var isLiked: MutableLiveData<Boolean?> = MutableLiveData()
+    var isScraped: MutableLiveData<Boolean?> = MutableLiveData()
+
+    fun clearData() {
+        isLiked.value = null
+        isScraped.value = null
+        isViewed.value = null
+    }
 
     fun likeNotice(activity: MainActivity, noticeId: Int) {
         val apiClient = ApiClient(activity)
@@ -69,6 +76,78 @@ class NoticeViewModel : ViewModel() {
                         Log.d("##", "onResponse 성공: " + result?.toString())
 
                         isLiked.value = false
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<Void>>, t: Throwable) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    fun scrapNotice(activity: MainActivity, noticeId: Int) {
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.scrapNotice("Bearer ${tokenManager.getAccessToken()}", noticeId)
+            .enqueue(object :
+                Callback<BaseResponse<Void>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Void>>,
+                    response: Response<BaseResponse<Void>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        isScraped.value = true
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<Void>>, t: Throwable) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    fun cancelScrapNotice(activity: MainActivity, noticeId: Int) {
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.cancelScrapNotice("Bearer ${tokenManager.getAccessToken()}", noticeId)
+            .enqueue(object :
+                Callback<BaseResponse<Void>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Void>>,
+                    response: Response<BaseResponse<Void>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        isScraped.value = false
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<Void>? = response.body()

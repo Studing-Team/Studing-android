@@ -20,11 +20,17 @@ class NoticeDetailFragment : Fragment() {
 
     lateinit var binding: FragmentNoticeDetailBinding
     lateinit var mainActivity: MainActivity
-    lateinit var viewModel: HomeViewModel
-    lateinit var noticeViewModel: NoticeViewModel
 
-    var isLike = false
-    var isScrap = false
+    private val viewModel: HomeViewModel by lazy {
+        ViewModelProvider(mainActivity)[HomeViewModel::class.java]
+    }
+    private val noticeViewModel: NoticeViewModel by lazy {
+        ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
+    }
+
+    var isLike: Boolean? = false
+    var isScrap: Boolean? = false
+    var isView: Boolean? = false
 
     private var getNoticeDetail: NoticeDetailResponse? = null
     private lateinit var noticeImageAdapter: NoticeImagePagerAdapter
@@ -36,8 +42,6 @@ class NoticeDetailFragment : Fragment() {
 
         binding = FragmentNoticeDetailBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
-        viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
-        noticeViewModel = ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
 
         observeViewModel()
         initView()
@@ -50,30 +54,25 @@ class NoticeDetailFragment : Fragment() {
             )
 
             buttonScrap.setOnClickListener {
-                isScrap = !isScrap
-                if (isScrap) {
+                if (!isScrap!!) {
+                    noticeViewModel.scrapNotice(mainActivity, getNoticeDetail?.id!!)
                     BasicToast.createToastAboveView(
                         requireContext(),
                         "저장한 공지사항에 추가했어요 ⭐",
                         binding.buttonScrap
                     )
-                    layoutNoticeDetail.imageViewScrap.setImageResource(R.drawable.ic_scrap_selected)
-                    buttonScrap.text = "저장 취소"
-                    layoutNoticeDetail.textViewScrapNum.text = "${getNoticeDetail?.saveCount!! + 1}"
                 } else {
+                    noticeViewModel.cancelScrapNotice(mainActivity, getNoticeDetail?.id!!)
                     BasicToast.createToastAboveView(
                         requireContext(),
                         "저장한 공지사항을 취소했어요 ⭐",
                         binding.buttonScrap
                     )
-                    layoutNoticeDetail.imageViewScrap.setImageResource(R.drawable.ic_scrap_black30)
-                    buttonScrap.text = "저장하기"
-                    layoutNoticeDetail.textViewScrapNum.text = "${getNoticeDetail?.saveCount!! - 1}"
                 }
             }
 
             buttonLikeNotice.setOnClickListener {
-                if (!isLike) {
+                if (!isLike!!) {
                     noticeViewModel.likeNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
                     noticeViewModel.cancelLikeNotice(mainActivity, getNoticeDetail?.id!!)
@@ -89,30 +88,66 @@ class NoticeDetailFragment : Fragment() {
         getNoticeDetail = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModelStore.clear() // Fragment 전체 소멸 시 초기화
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        noticeViewModel.clearData() // ViewModel 데이터 초기화
+    }
+
     fun observeViewModel() {
-        viewModel.run {
+        noticeViewModel.run {
             noticeDetail.observe(viewLifecycleOwner) {
                 getNoticeDetail = it
-
                 setData()
             }
-        }
 
-        noticeViewModel.run {
             isLiked.observe(viewLifecycleOwner) {
                 isLike = it
                 binding.run {
-                    if (it == true) {
+                    if (isLike == true) {
+                        getNoticeDetail?.likeCount = getNoticeDetail?.likeCount!! + 1
                         buttonLikeNotice.setImageResource(R.drawable.ic_like_primary50)
                         layoutNoticeDetail.imageViewLike.setImageResource(R.drawable.ic_like_red)
                         layoutNoticeDetail.textViewLikeNum.text =
-                            "${getNoticeDetail?.likeCount!! + 1}"
+                            "${getNoticeDetail?.likeCount!!}"
                     } else {
+                        getNoticeDetail?.likeCount = getNoticeDetail?.likeCount!! - 1
                         buttonLikeNotice.setImageResource(R.drawable.ic_like_primary20)
                         layoutNoticeDetail.imageViewLike.setImageResource(R.drawable.ic_like_black30)
                         layoutNoticeDetail.textViewLikeNum.text =
-                            "${getNoticeDetail?.likeCount!! - 1}"
+                            "${getNoticeDetail?.likeCount!!}"
                     }
+                }
+            }
+
+            isScraped.observe(viewLifecycleOwner) {
+                isScrap = it
+                binding.run {
+                    if (isScrap == true) {
+                        getNoticeDetail?.saveCount = getNoticeDetail?.saveCount!! + 1
+                        layoutNoticeDetail.imageViewScrap.setImageResource(R.drawable.ic_scrap_selected)
+                        buttonScrap.text = "저장 취소"
+                    } else {
+                        getNoticeDetail?.saveCount = getNoticeDetail?.saveCount!! - 1
+                        layoutNoticeDetail.imageViewScrap.setImageResource(R.drawable.ic_scrap_black30)
+                        buttonScrap.text = "저장하기"
+                    }
+                    layoutNoticeDetail.textViewScrapNum.text = "${getNoticeDetail?.saveCount!!}"
+                }
+            }
+
+            isViewed.observe(viewLifecycleOwner) {
+                isView = it
+                if (isView == true) {
+                    binding.layoutNoticeDetail.textViewShowNum.text =
+                        "${getNoticeDetail?.readCount!! + 1}"
+                } else {
+                    binding.layoutNoticeDetail.textViewShowNum.text =
+                        getNoticeDetail?.readCount.toString()
                 }
             }
         }
@@ -150,13 +185,13 @@ class NoticeDetailFragment : Fragment() {
                 chipNoticeType.text = getNoticeDetail?.tag
                 if (getNoticeDetail?.tag == "공지") {
                     chipNoticeType.run {
-                        setBackgroundResource(R.drawable.background_notice_type_chip_red)
-                        setTextColor(resources.getColor(R.color.red))
+                        setBackgroundResource(R.drawable.background_notice_type_chip_primary20)
+                        setTextColor(resources.getColor(R.color.primary_50))
                     }
                 } else {
                     chipNoticeType.run {
-                        setBackgroundResource(R.drawable.background_notice_type_chip_primary20)
-                        setTextColor(resources.getColor(R.color.primary_50))
+                        setBackgroundResource(R.drawable.background_notice_type_chip_red)
+                        setTextColor(resources.getColor(R.color.red))
                     }
                 }
 
