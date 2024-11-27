@@ -1,6 +1,6 @@
 package com.team.studing.API
 
-import com.team.studing.API.request.Home.NoticeListRequest
+import com.team.studing.API.request.Home.CategoryRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
@@ -80,7 +80,7 @@ interface ApiService {
     @POST("api/v1/home/recent-notices")
     fun getRecentNotice(
         @Header("Authorization") token: String,
-        @Body parameters: NoticeListRequest
+        @Body parameters: CategoryRequest
     ): Call<BaseResponse<NoticeListResponse>>
 
     // 전체 공지 리스트 (전체)
@@ -93,7 +93,7 @@ interface ApiService {
     @POST("api/v1/notices/all-category")
     fun getNoticeStudentCouncilList(
         @Header("Authorization") token: String,
-        @Body parameters: NoticeListRequest
+        @Body parameters: CategoryRequest
     ): Call<BaseResponse<NoticeListResponse>>
 
     // 메인 홈 저장한 공지 리스트
@@ -106,7 +106,7 @@ interface ApiService {
     @POST("api/v1/notices/save-category")
     fun getScrapNoticeListByCategory(
         @Header("Authorization") token: String,
-        @Body parameters: NoticeListRequest
+        @Body parameters: CategoryRequest
     ): Call<BaseResponse<ScrapNoticeResponse>>
 
     // 공지사항 세부 화면

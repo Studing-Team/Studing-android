@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
-import com.team.studing.API.request.Home.NoticeListRequest
+import com.team.studing.API.request.Home.CategoryRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
@@ -187,7 +187,7 @@ class HomeViewModel : ViewModel() {
 
         apiClient.apiService.getRecentNotice(
             "Bearer ${tokenManager.getAccessToken()}",
-            NoticeListRequest(category)
+            CategoryRequest(category)
         )
             .enqueue(object :
                 Callback<BaseResponse<NoticeListResponse>> {
@@ -354,7 +354,7 @@ class HomeViewModel : ViewModel() {
 
         apiClient.apiService.getNoticeStudentCouncilList(
             "Bearer ${tokenManager.getAccessToken()}",
-            NoticeListRequest(category)
+            CategoryRequest(category)
         )
             .enqueue(object :
                 Callback<BaseResponse<NoticeListResponse>> {
@@ -511,7 +511,7 @@ class HomeViewModel : ViewModel() {
 
         apiClient.apiService.getScrapNoticeListByCategory(
             "Bearer ${tokenManager.getAccessToken()}",
-            NoticeListRequest(category)
+            CategoryRequest(category)
         )
             .enqueue(object :
                 Callback<BaseResponse<ScrapNoticeResponse>> {
