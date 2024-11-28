@@ -10,6 +10,7 @@ import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.MainActivity
 import com.team.studing.RegisterNoticeActivity
 import com.team.studing.Utils.MyApplication
+import com.team.studing.Utils.SingleLiveEvent
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -19,9 +20,9 @@ import retrofit2.Response
 
 class NoticeViewModel : ViewModel() {
 
-    var isLiked: MutableLiveData<Boolean?> = MutableLiveData()
-    var isScraped: MutableLiveData<Boolean?> = MutableLiveData()
-    var isViewed: MutableLiveData<Boolean?> = MutableLiveData()
+    var isLiked = SingleLiveEvent<Boolean>()
+    var isScraped = SingleLiveEvent<Boolean>()
+    var isViewed = SingleLiveEvent<Boolean>()
 
     // 공지사항 세부 내용
     var noticeDetail: MutableLiveData<NoticeDetailResponse?> = MutableLiveData()
