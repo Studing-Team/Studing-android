@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.ReSubmitActivity
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.databinding.FragmentHomeFailBinding
 
@@ -18,7 +18,6 @@ class HomeFailFragment : Fragment() {
 
     lateinit var binding: FragmentHomeFailBinding
     lateinit var mainActivity: MainActivity
-    lateinit var loginActivity: LoginActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,22 +26,16 @@ class HomeFailFragment : Fragment() {
 
         binding = FragmentHomeFailBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
-        loginActivity = LoginActivity()
 
         initView()
 
         binding.run {
 
             buttonReupload.setOnClickListener {
-                // 회원가입 - 학생증 제출 (step6) 화면으로 전환
-                mainActivity.finish()
-
-                // loginActivity로 돌아가면서 추가 정보 전달
-                val intent = Intent(mainActivity, LoginActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT // loginActivity를 포그라운드로 가져옴
-                    putExtra("openFragment", "SignUpStep6Fragment")
-                }
-                mainActivity.startActivity(intent)
+                // 학생증 재제출 화면으로 전환
+                val mainIntent = Intent(mainActivity, ReSubmitActivity::class.java)
+                mainIntent.putExtra("reSubmit", true)
+                startActivity(mainIntent)
             }
 
             buttonQna.setOnClickListener {

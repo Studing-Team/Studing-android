@@ -145,7 +145,6 @@
     <!-- 회원가입 입력창 -->
     <style name="SignUpEditText" parent="Body2">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:maxLength">16</item>
         <item name="android:inputType">text</item>
         <item name="android:textColor">@color/black_50</item>
         <item name="android:textColorHint">@color/black_20</item>

@@ -8,6 +8,8 @@
         android:id="@+id/layout_empty_home_scrap_notice"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/background_home_notice_scrap_empty"
         android:paddingHorizontal="37dp"
         android:paddingVertical="22.5dp"

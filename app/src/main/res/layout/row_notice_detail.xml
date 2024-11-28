@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -147,74 +148,78 @@
                     android:text="0"
                     android:textColor="@color/black_30"
                     android:textSize="11sp" />
+
             </LinearLayout>
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_student_council" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView_student_council"
+                tools:layout_editor_absoluteX="360dp"
+                tools:layout_editor_absoluteY="42dp">
 
-            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                android:id="@+id/dots_indicator_notice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:dotsColor="@color/black_10"
-                app:dotsCornerRadius="8dp"
-                app:dotsSize="10dp"
-                app:dotsSpacing="10dp"
-                app:dotsWidthFactor="2.5"
-                app:layout_constraintEnd_toEndOf="@+id/viewPager"
-                app:layout_constraintStart_toStartOf="@+id/viewPager"
-                app:layout_constraintTop_toBottomOf="@+id/viewPager"
-                app:progressMode="true"
-                app:selectedDotColor="@color/primary_50" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="335dp"
+                    android:layout_marginHorizontal="0.5dp"
+                    app:layout_constraintDimensionRatio="1:1" />
 
-            <TextView
-                android:id="@+id/chip_notice_type"
-                style="@style/StudentCouncilChip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/background_notice_type_chip_primary20"
-                android:text="공지"
-                android:textColor="@color/primary_50"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dots_indicator_notice" />
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    app:dotsColor="@color/black_10"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="10dp"
+                    app:dotsSpacing="10dp"
+                    app:dotsWidthFactor="2.5"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/primary_50" />
 
-            <TextView
-                android:id="@+id/textView_notice_title"
-                style="@style/Subtitle2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="10dp"
-                android:maxLines="2"
-                android:text="공지 제목"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chip_notice_type" />
+                <TextView
+                    android:id="@+id/chip_notice_type"
+                    style="@style/StudentCouncilChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/background_notice_type_chip_primary20"
+                    android:text="공지"
+                    android:textColor="@color/primary_50" />
 
-            <TextView
-                android:id="@+id/textView_notice_content"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:layout_marginBottom="13dp"
-                android:fontFamily="@font/inter_medium"
-                android:text="공지 내용"
-                android:textColor="@color/black_50"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/textView_notice_title"
-                app:layout_constraintStart_toStartOf="@+id/textView_notice_title"
-                app:layout_constraintTop_toBottomOf="@+id/textView_notice_title" />
+                <TextView
+                    android:id="@+id/textView_notice_title"
+                    style="@style/Subtitle2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:minLines="2"
+                    android:text="공지 제목" />
 
+                <TextView
+                    android:id="@+id/textView_notice_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginBottom="13dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="공지 내용"
+                    android:textColor="@color/black_50"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

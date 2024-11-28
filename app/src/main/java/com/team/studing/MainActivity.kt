@@ -1,15 +1,18 @@
 package com.team.studing
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.team.studing.UI.Home.HomeFailFragment
 import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
 import com.team.studing.UI.Partnership.PartnershipFragment
+import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.MyApplication.Companion.memberData
 import com.team.studing.ViewModel.LoginViewModel
 import com.team.studing.databinding.ActivityMainBinding
@@ -41,6 +44,14 @@ class MainActivity : AppCompatActivity() {
 
         setBottomNavigationView()
 
+        binding.run {
+            buttonWriteNotice.setOnClickListener {
+                val mainIntent = Intent(this@MainActivity, RegisterNoticeActivity::class.java)
+                mainIntent.putExtra("register", true)
+                startActivity(mainIntent)
+            }
+        }
+
 
         setContentView(binding.root)
     }
@@ -54,6 +65,17 @@ class MainActivity : AppCompatActivity() {
                 hideWriteNoticeButton(true)
                 hideBottomNavigation(true)
                 val nextFragment = HomeWaitingFragment()
+
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
+            "ROLE_DENY" -> {
+                hideWriteNoticeButton(true)
+                hideBottomNavigation(true)
+                val nextFragment = HomeFailFragment()
 
                 val transaction = supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
@@ -80,6 +102,14 @@ class MainActivity : AppCompatActivity() {
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
+        }
+
+        if (MyApplication.reSubmit) {
+            val nextFragment = HomeWaitingFragment()
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+            transaction.commit()
         }
     }
 

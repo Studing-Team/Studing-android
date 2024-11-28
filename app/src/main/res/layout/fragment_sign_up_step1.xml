@@ -107,6 +107,7 @@
                 android:layout_marginRight="10dp"
                 android:ems="10"
                 android:hint="ex. studing24"
+                android:maxLength="12"
                 app:layout_constraintEnd_toStartOf="@+id/button_double_check"
                 app:layout_constraintStart_toStartOf="@+id/textView_id"
                 app:layout_constraintTop_toBottomOf="@+id/textView_id" />
@@ -168,6 +169,7 @@
                 android:ems="10"
                 android:hint="8자리 이상 입력해주세요"
                 android:inputType="text|textPassword"
+                android:maxLength="16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView_password"
                 app:layout_constraintTop_toBottomOf="@+id/textView_password" />
@@ -207,6 +209,7 @@
                 android:ems="10"
                 android:hint="비밀번호를 다시 한 번 확인할게요"
                 android:inputType="text|textPassword"
+                android:maxLength="16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView_password_check"
                 app:layout_constraintTop_toBottomOf="@+id/textView_password_check" />

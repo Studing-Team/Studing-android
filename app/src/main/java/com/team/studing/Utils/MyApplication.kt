@@ -9,6 +9,10 @@ class MyApplication : Application() {
 
         lateinit var preferences: PreferenceUtil
 
+        // 카테고리 리스트
+        var categoryList = listOf("전체", "총학생회", "단과대", "학과")
+        var unreadNoticeCategory = "전체"
+
         // 회원가입 데이터 관리
         var signUpId = ""
         var signUpPassword = ""
@@ -20,8 +24,18 @@ class MyApplication : Application() {
         var signUpImage: MultipartBody.Part? = null
         var marketingAgreement = "false"
 
+        // 학생증 재제출 이미지
+        var reSubmitImage: MultipartBody.Part? = null
+        var reSubmit = false
+
         // 유저 정보
         var memberData: MemberData? = null
         var memberId = -1
+
+        // 현재 공지사항
+        var noticeId = 0
+
+        // 공지사항 등록 이미지
+        var noticeImages: List<MultipartBody.Part>? = null
     }
 }

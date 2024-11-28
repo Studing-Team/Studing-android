@@ -19,6 +19,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -47,9 +48,7 @@
                 android:layout_marginEnd="1dp"
                 app:layout_constraintEnd_toEndOf="@+id/banner"
                 app:layout_constraintStart_toStartOf="@+id/textView_student_council_intro"
-                app:layout_constraintTop_toBottomOf="@+id/textView_student_council_intro">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/textView_student_council_intro"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/textView_notice_intro"
@@ -92,50 +91,57 @@
                     android:src="@drawable/ic_arrow_right_black30" />
             </LinearLayout>
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_notice"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="@+id/banner"
                 app:layout_constraintStart_toStartOf="@+id/textView_notice_intro"
-                app:layout_constraintTop_toBottomOf="@+id/textView_notice_intro" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_notice_intro">
 
-            <include
-                android:id="@+id/layout_empty_notice"
-                layout="@layout/empty_home_notice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:layout_constraintEnd_toEndOf="@+id/banner"
-                app:layout_constraintStart_toStartOf="@+id/textView_notice_intro"
-                app:layout_constraintTop_toBottomOf="@+id/textView_notice_intro" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/layout_empty_student_council"
-                layout="@layout/empty_home_student_council"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:layout_constraintEnd_toEndOf="@+id/banner"
-                app:layout_constraintStart_toStartOf="@+id/textView_notice_intro"
-                app:layout_constraintTop_toBottomOf="@+id/textView_notice_intro" />
+                <include
+                    android:id="@+id/layout_empty_notice"
+                    layout="@layout/empty_home_notice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                android:id="@+id/dots_indicator_notice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                app:dotsColor="@color/white"
-                app:dotsCornerRadius="8dp"
-                app:dotsSize="10dp"
-                app:dotsSpacing="10dp"
-                app:dotsWidthFactor="2.5"
-                app:layout_constraintEnd_toEndOf="@+id/viewPager"
-                app:layout_constraintStart_toStartOf="@+id/viewPager"
-                app:layout_constraintTop_toBottomOf="@+id/viewPager"
-                app:progressMode="true"
-                app:selectedDotColor="@color/primary_50" />
+                <include
+                    android:id="@+id/layout_empty_student_council"
+                    layout="@layout/empty_home_student_council"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    app:dotsColor="@color/white"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="10dp"
+                    app:dotsSpacing="10dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="@+id/viewPager"
+                    app:layout_constraintStart_toStartOf="@+id/viewPager"
+                    app:layout_constraintTop_toBottomOf="@+id/viewPager"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/primary_50" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView_notice_scrap_intro"
@@ -146,7 +152,7 @@
                 android:text="님이 저장한 공지사항이에요"
                 android:textColor="@color/black_50"
                 app:layout_constraintStart_toStartOf="@+id/textView_notice_intro"
-                app:layout_constraintTop_toBottomOf="@+id/dots_indicator_notice" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_notice" />
 
             <LinearLayout
                 android:id="@+id/button_notice_scrap_more"
@@ -176,41 +182,51 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@drawable/ic_arrow_right_black30" />
+
             </LinearLayout>
 
-            <include
-                android:id="@+id/layout_empty_scrap_notice"
-                layout="@layout/empty_home_scrap_notice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
-                app:layout_constraintEnd_toEndOf="@+id/banner"
-                app:layout_constraintStart_toStartOf="@+id/textView_notice_scrap_intro"
-                app:layout_constraintTop_toBottomOf="@+id/textView_notice_scrap_intro" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_scrap_notice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="130dp"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/banner"
                 app:layout_constraintStart_toStartOf="@+id/textView_notice_scrap_intro"
-                app:layout_constraintTop_toBottomOf="@+id/textView_notice_scrap_intro" />
+                app:layout_constraintTop_toBottomOf="@+id/textView_notice_scrap_intro">
+
+                <include
+                    android:id="@+id/layout_empty_scrap_notice"
+                    layout="@layout/empty_home_scrap_notice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_scrap_notice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -223,7 +239,6 @@
                         style="@style/Subtitle1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="27dp"
                         android:text="님이 놓친 공지사항"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -232,8 +247,8 @@
 
                     <ImageView
                         android:id="@+id/imageView_banner"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="86dp"
+                        android:layout_height="86dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_banner"
                         app:layout_constraintBottom_toBottomOf="parent"

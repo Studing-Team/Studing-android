@@ -52,6 +52,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button_scrap"
         app:layout_constraintEnd_toEndOf="@+id/button_scrap"
         app:maxImageSize="36dp"
+        app:rippleColor="@color/transparent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
         app:tint="@null" />
 

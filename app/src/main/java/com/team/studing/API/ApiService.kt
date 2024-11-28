@@ -1,21 +1,31 @@
 package com.team.studing.API
 
+import com.team.studing.API.request.Home.CategoryRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
+import com.team.studing.API.response.Home.GetUnreadNoticeCountResponse
+import com.team.studing.API.response.Home.GetUnreadNoticeListResponse
+import com.team.studing.API.response.Home.GetUnreadStudentCouncilResponse
+import com.team.studing.API.response.Home.NoticeDetailResponse
+import com.team.studing.API.response.Home.NoticeListResponse
+import com.team.studing.API.response.Home.ScrapNoticeResponse
 import com.team.studing.API.response.Login.LoginResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.PartMap
+import retrofit2.http.Path
 
 interface ApiService {
     // 로그인
@@ -49,10 +59,129 @@ interface ApiService {
         @Part studentCardImage: MultipartBody.Part
     ): Call<BaseResponse<SignUpResponse>>
 
+    // 학생증 재제출
+    @Multipart
+    @POST("api/v1/member/resubmit")
+    fun reSubmit(
+        @Header("Authorization") token: String,
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part studentCardImage: MultipartBody.Part
+    ): Call<BaseResponse<Void>>
+
     // FCM 토큰 저장
     @POST("api/v1/notifications/token")
     fun sendFcmToken(
         @Header("Authorization") token: String,
         @Body parameters: SendFcmTokenRequest
+    ): Call<BaseResponse<Void>>
+
+    // 학생회 카테고리 로고 리스트 반환
+    @GET("api/v1/home/logo")
+    fun getStudentCouncilLogo(
+        @Header("Authorization") token: String,
+    ): Call<BaseResponse<GetStudentCouncilLogoResponse>>
+
+    // 학생회 카테고리 안읽은 공지 체크
+    @GET("api/v1/home/unread-categories")
+    fun getUnreadStudentCouncil(
+        @Header("Authorization") token: String,
+    ): Call<BaseResponse<GetUnreadStudentCouncilResponse>>
+
+    // 카테고리별 안읽은 공지 개수 확인
+    @POST("api/v1/home/unread-notice-count")
+    fun getUnreadNoticeCount(
+        @Header("Authorization") token: String,
+        @Body parameters: CategoryRequest
+    ): Call<BaseResponse<GetUnreadNoticeCountResponse>>
+
+    // 카테고리별 놓친 공지 리스트
+    @POST("api/v1/notices/unread/all")
+    fun getUnreadNoticeList(
+        @Header("Authorization") token: String,
+        @Body parameters: CategoryRequest
+    ): Call<BaseResponse<GetUnreadNoticeListResponse>>
+
+    // 메인 홈 카테고리별 최신 공지 리스트
+    @POST("api/v1/home/recent-notices")
+    fun getRecentNotice(
+        @Header("Authorization") token: String,
+        @Body parameters: CategoryRequest
+    ): Call<BaseResponse<NoticeListResponse>>
+
+    // 전체 공지 리스트 (전체)
+    @GET("api/v1/notices/all")
+    fun getNoticeList(
+        @Header("Authorization") token: String
+    ): Call<BaseResponse<NoticeListResponse>>
+
+    // 전체 공지 리스트 (학생회)
+    @POST("api/v1/notices/all-category")
+    fun getNoticeStudentCouncilList(
+        @Header("Authorization") token: String,
+        @Body parameters: CategoryRequest
+    ): Call<BaseResponse<NoticeListResponse>>
+
+    // 메인 홈 저장한 공지 리스트
+    @GET("api/v1/home/save")
+    fun getRecentScrapNotice(
+        @Header("Authorization") token: String
+    ): Call<BaseResponse<ScrapNoticeResponse>>
+
+    // 저장한 전체 카테고리별 공지 리스트
+    @POST("api/v1/notices/save-category")
+    fun getScrapNoticeListByCategory(
+        @Header("Authorization") token: String,
+        @Body parameters: CategoryRequest
+    ): Call<BaseResponse<ScrapNoticeResponse>>
+
+    // 공지사항 세부 화면
+    @GET("api/v1/notices/{noticeId}")
+    fun getNoticeDetail(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<NoticeDetailResponse>>
+
+    // 공지사항 좋아요
+    @POST("api/v1/notices/like/{noticeId}")
+    fun likeNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 좋아요 취소
+    @DELETE("api/v1/notices/like/{noticeId}")
+    fun cancelLikeNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 저장하기
+    @POST("api/v1/notices/save/{noticeId}")
+    fun scrapNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 저장 취소
+    @DELETE("api/v1/notices/save/{noticeId}")
+    fun cancelScrapNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 조회수
+    @POST("api/v1/notices/view-check/{noticeId}")
+    fun viewCheckNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 등록하기
+    @Multipart
+    @POST("api/v1/notices/create")
+    fun viewCheckNotice(
+        @Header("Authorization") token: String,
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part studentCardImage: List<MultipartBody.Part>
     ): Call<BaseResponse<Void>>
 }
