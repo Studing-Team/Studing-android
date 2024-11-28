@@ -62,7 +62,30 @@ class MypageFragment : Fragment() {
 
         binding.run {
             buttonLogout.setOnClickListener {
+                var tokenManager = TokenManager(mainActivity)
                 // 로그아웃 dialog
+                val dialog = DialogLogout()
+
+                dialog.setSignUpDialogInterface(object : LogoutDialogInterface {
+                    override fun onClickYesButton() {
+                        // 탈퇴하기 기능 구현
+                        tokenManager.deleteAccessToken()
+
+                        mainActivity.supportFragmentManager.popBackStack(
+                            null,
+                            FragmentManager.POP_BACK_STACK_INCLUSIVE
+                        )
+
+                        mainActivity.supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragmentContainerView_main, LoginFragment())
+                            .addToBackStack(null)
+                            .commit()
+
+                    }
+                })
+
+                dialog.show(parentFragmentManager, "DialogWithdrawal")
+
             }
 
             buttonWithdrawal.setOnClickListener {
