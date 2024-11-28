@@ -16,8 +16,7 @@
         android:layout_marginRight="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView_category"
         app:layout_constraintEnd_toStartOf="@+id/textView_category"
-        app:layout_constraintTop_toTopOf="@+id/textView_category"
-        app:srcCompat="@drawable/ic_category_restaurant" />
+        app:layout_constraintTop_toTopOf="@+id/textView_category" />
 
     <TextView
         android:id="@+id/textView_category"

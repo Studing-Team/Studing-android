@@ -13,4 +13,24 @@
         <item>15학번</item>
         <item>14학번 이하</item>
     </array>
+
+    <array name="partnership_category_name">
+        <item>전체</item>
+        <item>음식점</item>
+        <item>카페</item>
+        <item>주점</item>
+        <item>운동</item>
+        <item>병원</item>
+        <item>문화</item>
+    </array>
+
+    <array name="partnership_category_image">
+        <item>null</item>
+        <item>R.drawable.ic_category_restaurant</item>
+        <item>R.drawable.ic_category_coffee</item>
+        <item>R.drawable.ic_category_drink</item>
+        <item>R.drawable.ic_category_exercise</item>
+        <item>R.drawable.ic_category_hospital</item>
+        <item>R.drawable.ic_category_culture</item>
+    </array>
 </resources>
