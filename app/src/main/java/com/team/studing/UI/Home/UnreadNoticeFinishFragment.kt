@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.databinding.FragmentUnreadNoticeFinishBinding
@@ -17,13 +18,18 @@ class UnreadNoticeFinishFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentUnreadNoticeFinishBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
 
         binding.run {
             buttonFinish.setOnClickListener {
+                mainActivity.supportFragmentManager.popBackStack(
+                    null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
+
                 val nextFragment = HomeFragment()
 
                 val transaction = mainActivity.supportFragmentManager.beginTransaction()

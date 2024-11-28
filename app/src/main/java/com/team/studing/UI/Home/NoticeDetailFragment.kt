@@ -56,18 +56,8 @@ class NoticeDetailFragment : Fragment() {
             buttonScrap.setOnClickListener {
                 if (!isScrap!!) {
                     noticeViewModel.scrapNotice(mainActivity, getNoticeDetail?.id!!)
-                    BasicToast.createToastAboveView(
-                        requireContext(),
-                        "저장한 공지사항에 추가했어요 ⭐",
-                        binding.buttonScrap
-                    )
                 } else {
                     noticeViewModel.cancelScrapNotice(mainActivity, getNoticeDetail?.id!!)
-                    BasicToast.createToastAboveView(
-                        requireContext(),
-                        "저장한 공지사항을 취소했어요 ⭐",
-                        binding.buttonScrap
-                    )
                 }
             }
 
@@ -95,7 +85,7 @@ class NoticeDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        noticeViewModel.clearData() // ViewModel 데이터 초기화
+        viewModelStore.clear()
     }
 
     fun observeViewModel() {
@@ -130,10 +120,20 @@ class NoticeDetailFragment : Fragment() {
                     if (isScrap == true) {
                         getNoticeDetail?.saveCount = getNoticeDetail?.saveCount!! + 1
                         layoutNoticeDetail.imageViewScrap.setImageResource(R.drawable.ic_scrap_selected)
+                        BasicToast.createToastAboveView(
+                            requireContext(),
+                            "저장한 공지사항에 추가했어요 ⭐",
+                            binding.buttonScrap
+                        )
                         buttonScrap.text = "저장 취소"
                     } else {
                         getNoticeDetail?.saveCount = getNoticeDetail?.saveCount!! - 1
                         layoutNoticeDetail.imageViewScrap.setImageResource(R.drawable.ic_scrap_black30)
+                        BasicToast.createToastAboveView(
+                            requireContext(),
+                            "저장한 공지사항을 취소했어요 ⭐",
+                            binding.buttonScrap
+                        )
                         buttonScrap.text = "저장하기"
                     }
                     layoutNoticeDetail.textViewScrapNum.text = "${getNoticeDetail?.saveCount!!}"

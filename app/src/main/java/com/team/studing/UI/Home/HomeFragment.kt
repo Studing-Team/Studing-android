@@ -39,6 +39,8 @@ class HomeFragment : Fragment() {
     private var categoryPosition = 0
     private var isRegisterMajorStudentCouncil = false
 
+    private var getUnreadNoticeCount = 0
+
     private lateinit var studentCouncilAdapter: StudentCouncilAdapter
     private lateinit var homeNoticePagerAdapter: HomeNoticePagerAdapter
     private lateinit var homeScrapNoticeListAdapter: HomeScrapNoticeListAdapter
@@ -92,6 +94,7 @@ class HomeFragment : Fragment() {
                         mainActivity,
                         MyApplication.categoryList[categoryPosition]
                     )
+                    viewModel.getUnreadStudentCouncil(mainActivity)
                 }
             }
         }
@@ -157,6 +160,7 @@ class HomeFragment : Fragment() {
             }
 
             unreadNoticeCount.observe(viewLifecycleOwner) {
+                getUnreadNoticeCount = it
                 binding.textViewUnreadNoticeNumber.text = "${it}개"
             }
 
@@ -230,10 +234,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToUnreadNoticeFragment() {
-        mainActivity.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView_main, UnreadNoticeFragment())
-            .addToBackStack(null)
-            .commit()
+        if (getUnreadNoticeCount != 0) {
+            MyApplication.unreadNoticeCategory = "${MyApplication.categoryList[categoryPosition]}"
+            mainActivity.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView_main, UnreadNoticeFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun navigateToNoticeListFragment() {

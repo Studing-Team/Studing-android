@@ -27,12 +27,6 @@ class NoticeViewModel : ViewModel() {
     var noticeDetail: MutableLiveData<NoticeDetailResponse?> = MutableLiveData()
 
 
-    fun clearData() {
-        isLiked.value = null
-        isScraped.value = null
-        isViewed.value = null
-    }
-
     // 공지사항 세부 화면 조회
     fun getNoticeDetail(activity: MainActivity, noticeId: Int) {
 

@@ -105,11 +105,8 @@ class NoticeListAdapter(
             .into(holder.noticeImage)
     }
 
-    override fun getItemCount() = if (notices.size >= 5) {
-        5
-    } else {
-        notices.size
-    }
+    override fun getItemCount() = notices.size
+
 
     inner class ViewHolder(val binding: RowNoticeListBinding) :
         RecyclerView.ViewHolder(binding.root) {
