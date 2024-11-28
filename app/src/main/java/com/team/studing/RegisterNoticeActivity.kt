@@ -179,12 +179,12 @@ class RegisterNoticeActivity : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
 
             val resizedBitmap =
-                Bitmap.createScaledBitmap(bitmap, bitmap.width / 2, bitmap.height / 2, true)
+                Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
 
             val tempFile = File.createTempFile("resized_image", ".jpg", this.cacheDir)
 
             val byteArrayOutputStream = ByteArrayOutputStream()
-            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream)
+            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
 
             FileOutputStream(tempFile).use { outputStream ->
                 outputStream.write(byteArrayOutputStream.toByteArray())
@@ -212,7 +212,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
                     compressedFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
 
                 val imagePart = MultipartBody.Part.createFormData(
-                    "images",  // 서버에서 기대하는 필드 이름
+                    "noticeImages",  // 서버에서 기대하는 필드 이름
                     compressedFile.name, // 파일 이름
                     requestFile
                 )
