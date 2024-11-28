@@ -89,7 +89,10 @@ class MypageFragment : Fragment() {
             }
 
             buttonWithdrawal.setOnClickListener {
-
+                mainActivity.supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView_main, MypageWithdrawalFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
 
             layoutQna.setOnClickListener {

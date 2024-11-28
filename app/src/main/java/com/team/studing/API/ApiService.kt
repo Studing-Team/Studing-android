@@ -200,4 +200,10 @@ interface ApiService {
     fun getMypageInfo(
         @Header("Authorization") token: String,
     ): Call<BaseResponse<MyPageInfoResponse>>
+
+    // 회원 탈퇴
+    @DELETE("api/v1/member/withdraw")
+    fun withdrawal(
+        @Header("Authorization") token: String,
+    ): Call<BaseResponse<Void>>
 }

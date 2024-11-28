@@ -57,4 +57,49 @@ class MypageViewModel : ViewModel() {
             })
     }
 
+    fun withdrawal(activity: MainActivity) {
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.withdrawal("Bearer ${tokenManager.getAccessToken()}")
+            .enqueue(object :
+                Callback<BaseResponse<Void>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Void>>,
+                    response: Response<BaseResponse<Void>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        activity.supportFragmentManager.popBackStack(
+                            null,
+                            FragmentManager.POP_BACK_STACK_INCLUSIVE
+                        )
+
+                        activity.supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragmentContainerView_main, LoginFragment())
+                            .addToBackStack(null)
+                            .commit()
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<Void>>, t: Throwable) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
 }
