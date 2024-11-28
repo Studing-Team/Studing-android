@@ -2,6 +2,7 @@ package com.team.studing.Utils
 
 import android.app.Application
 import com.team.studing.API.response.Login.MemberData
+import com.team.studing.API.response.PartnerShip.Partner
 import okhttp3.MultipartBody
 
 class MyApplication : Application() {
@@ -31,6 +32,9 @@ class MyApplication : Application() {
         // 유저 정보
         var memberData: MemberData? = null
         var memberId = -1
+
+        // 선택한 제휴업체 정보
+        var selectedPartnerShip: Partner? = null
 
         // 현재 공지사항
         var noticeId = 0

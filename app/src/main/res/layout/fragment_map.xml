@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_write_notice"
+        android:id="@+id/button_my_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="25dp"
@@ -56,6 +56,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="주소"
             android:textColor="@color/black_50"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -90,6 +93,7 @@
             android:id="@+id/imageView_store"
             android:layout_width="92dp"
             android:layout_height="92dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundSector10"
@@ -99,7 +103,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="27dp"
+            android:layout_marginEnd="7dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/imageView_store"
             app:layout_constraintEnd_toStartOf="@+id/imageView_store"
@@ -109,7 +113,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
@@ -118,27 +122,32 @@
                     style="@style/BodyAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
+                    android:layout_gravity="top"
+                    android:ellipsize="end"
+                    android:maxLength="9"
+                    android:maxLines="2"
+                    android:minLines="2"
                     android:text="가게명"
                     android:textColor="@color/black_50" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top"
                     android:layout_marginLeft="8dp"
                     app:srcCompat="@drawable/ic_category_drink" />
 
                 <TextView
                     android:id="@+id/textView_store_category"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
                     android:layout_marginLeft="2dp"
                     android:fontFamily="@font/inter_medium"
                     android:text="술집"
-                    android:textColor="#84878E" />
+                    android:textColor="#84878E"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <TextView

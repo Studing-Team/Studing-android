@@ -1,6 +1,7 @@
 package com.team.studing.API
 
 import com.team.studing.API.request.Home.CategoryRequest
+import com.team.studing.API.request.PartnerShip.GetPartnerShipInfoRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
@@ -13,6 +14,7 @@ import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.API.response.Home.NoticeListResponse
 import com.team.studing.API.response.Home.ScrapNoticeResponse
 import com.team.studing.API.response.Login.LoginResponse
+import com.team.studing.API.response.PartnerShip.GetPartnerShipInfoResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -184,4 +186,11 @@ interface ApiService {
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part studentCardImage: List<MultipartBody.Part>
     ): Call<BaseResponse<Void>>
+
+    // 제휴 업체 데이터 리스트 반환
+    @POST("api/v1/partner")
+    fun getPartnerShipInfo(
+        @Header("Authorization") token: String,
+        @Body parameters: GetPartnerShipInfoRequest
+    ): Call<BaseResponse<GetPartnerShipInfoResponse>>
 }

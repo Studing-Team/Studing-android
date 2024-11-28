@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_card_partnership"
@@ -19,33 +19,76 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
-            android:id="@+id/button_show_promotion"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_promotion"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <TextView
-                android:id="@+id/textView_show_promotion"
+            <LinearLayout
+                android:id="@+id/button_show_promotion"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/inter_semi_bold"
-                android:text="제휴 혜택"
-                android:textColor="@color/black_20"
-                android:textSize="12sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageView_down"
+                <TextView
+                    android:id="@+id/textView_show_promotion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/inter_semi_bold"
+                    android:text="제휴 혜택"
+                    android:textColor="@color/black_20"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/imageView_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_arrow_down" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textView_promotion_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_arrow_down" />
-        </LinearLayout>
+                android:layout_marginTop="4dp"
+                android:text="🍀제휴 혜택 🍀"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_promotion"
+                android:layout_width="0dp"
+                android:layout_height="109dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_partnership_benefit_card"
+                android:fontFamily="@font/inter_medium"
+                android:isScrollContainer="true"
+                android:lineSpacingExtra="10dp"
+                android:nestedScrollingEnabled="true"
+                android:overScrollMode="ifContentScrolls"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="15dp"
+                android:scrollbarThumbVertical="@color/primary_50"
+                android:text="제휴 혜택"
+                android:textColor="@color/black_50"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_promotion_intro" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -53,7 +96,6 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="27dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView_store"
             app:layout_constraintEnd_toStartOf="@+id/imageView_store"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView_store">
@@ -69,7 +111,11 @@
                     style="@style/BodyAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLength="9"
+                    android:maxLines="1"
                     android:text="가게명"
+                    android:textAlignment="textStart"
                     android:textColor="@color/black_50" />
 
                 <ImageView
@@ -88,7 +134,8 @@
                     android:layout_marginLeft="2dp"
                     android:fontFamily="@font/inter_medium"
                     android:text="술집"
-                    android:textColor="#84878E" />
+                    android:textColor="#84878E"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <TextView
@@ -97,6 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/inter_medium"
                 android:maxLines="2"
                 android:minLines="2"
@@ -133,54 +181,25 @@
             android:id="@+id/imageView_store"
             android:layout_width="92dp"
             android:layout_height="92dp"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout"
             app:shapeAppearanceOverlay="@style/RoundSector10"
             app:srcCompat="@drawable/example" />
 
-        <TextView
-            android:id="@+id/textView_promotion_intro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="🍀제휴 혜택 🍀"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-        <TextView
-            android:id="@+id/textView_promotion"
-            android:layout_width="0dp"
-            android:layout_height="109dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/background_partnership_benefit_card"
-            android:fontFamily="@font/inter_medium"
-            android:isScrollContainer="true"
-            android:lineSpacingExtra="10dp"
-            android:nestedScrollingEnabled="true"
-            android:overScrollMode="ifContentScrolls"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="15dp"
-            android:scrollbarThumbVertical="@color/primary_50"
-            android:text="제휴 혜택"
-            android:textColor="@color/black_50"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_promotion_intro" />
-
         <LinearLayout
+            android:id="@+id/layout_map_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/textView_promotion"
-            app:layout_constraintStart_toStartOf="@+id/textView_promotion"
-            app:layout_constraintTop_toBottomOf="@+id/textView_promotion">
+            app:layout_constraintEnd_toEndOf="@+id/layout_promotion"
+            app:layout_constraintStart_toStartOf="@+id/layout_promotion"
+            app:layout_constraintTop_toBottomOf="@+id/layout_promotion">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/button_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/black_20"
