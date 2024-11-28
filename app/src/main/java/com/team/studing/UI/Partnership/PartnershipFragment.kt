@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +43,8 @@ class PartnershipFragment : Fragment() {
 
     private var categoryPosition = 0
 
+    private var filteredPartnerShipList: List<Partner> = emptyList() // 필터링된 리스트
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +57,7 @@ class PartnershipFragment : Fragment() {
             resources.getStringArray(R.array.partnership_category_name).toMutableList()
 
         binding.run {
-
+            setupSearchBar() // 검색 기능 추가
         }
 
         return binding.root
@@ -116,11 +119,48 @@ class PartnershipFragment : Fragment() {
         }
     }
 
+    // 검색 기능 초기화
+    private fun setupSearchBar() {
+        binding.editTextSearch.run {
+            addTextChangedListener {
+                filterPartnerShipList(text.toString())
+            }
+        }
+    }
+
+    // 검색어로 필터링 로직
+    private fun filterPartnerShipList(query: String) {
+        if (query.isNullOrEmpty()) {
+            // 검색어가 없으면 전체 리스트를 표시
+            filteredPartnerShipList = getPartnerShipList
+            binding.recyclerViewStore.visibility = View.VISIBLE
+            binding.emptyStore.layoutEmptyStore.visibility = View.GONE
+            partnerShipListAdapter.updateList(filteredPartnerShipList) // 어댑터 갱신
+        } else {
+            // 검색어가 포함된 항목만 필터링
+            filteredPartnerShipList = getPartnerShipList.filter { partner ->
+                partner.partnerName.contains(query, ignoreCase = true) // 대소문자 무시
+            }
+
+            if (filteredPartnerShipList.isEmpty()) {
+                // 필터링 결과가 없을 때 빈 뷰 표시
+                binding.recyclerViewStore.visibility = View.GONE
+                binding.emptyStore.layoutEmptyStore.visibility = View.VISIBLE
+            } else {
+                // 결과가 있을 때 RecyclerView 표시
+                binding.recyclerViewStore.visibility = View.VISIBLE
+                binding.emptyStore.layoutEmptyStore.visibility = View.GONE
+                partnerShipListAdapter.updateList(filteredPartnerShipList) // 어댑터 갱신
+            }
+        }
+    }
+
     private fun observeViewModel() {
         viewModel.run {
             partners.observe(viewLifecycleOwner) {
                 getPartnerShipList = it
-                partnerShipListAdapter.updateList(getPartnerShipList) // 데이터 업데이트
+                filteredPartnerShipList = getPartnerShipList // 초기값 설정
+                partnerShipListAdapter.updateList(filteredPartnerShipList) // 어댑터 업데이트
             }
         }
     }
@@ -130,5 +170,9 @@ class PartnershipFragment : Fragment() {
 
         mainActivity.hideBottomNavigation(false)
         mainActivity.hideWriteNoticeButton(true)
+
+        binding.run {
+            emptyStore.layoutEmptyStore.visibility = View.GONE
+        }
     }
 }

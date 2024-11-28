@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_empty_student_council"
+        android:id="@+id/layout_empty_store"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_scrap_notice_empty"
