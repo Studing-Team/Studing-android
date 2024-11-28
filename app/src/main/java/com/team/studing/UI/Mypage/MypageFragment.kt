@@ -3,17 +3,28 @@ package com.team.studing.UI.Mypage
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
+import com.team.studing.API.TokenManager
+import com.team.studing.API.response.Mypage.MyPageInfoResponse
 import com.team.studing.MainActivity
+import com.team.studing.R
+import com.team.studing.UI.Login.LoginFragment
+import com.team.studing.ViewModel.MypageViewModel
 import com.team.studing.databinding.FragmentMypageBinding
 
 class MypageFragment : Fragment() {
 
     lateinit var binding: FragmentMypageBinding
     lateinit var mainActivity: MainActivity
+    lateinit var viewModel: MypageViewModel
+
+    var userInfo: MyPageInfoResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +33,30 @@ class MypageFragment : Fragment() {
 
         binding = FragmentMypageBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
+        viewModel = ViewModelProvider(this)[MypageViewModel::class.java]
+
+        viewModel.run {
+            user.value?.let { member ->
+                Log.d("##", "userInfo : ${member}")
+                binding.run {
+                    textViewName.text = member.name
+                    textViewUniversity.text = member.memberUniversity
+                    textViewMajor.text = member.memberDepartment
+                    textViewStudentnum.text = "${member.admissionNumber}학번"
+                }
+            }
+            user.observe(mainActivity) {
+                userInfo = it
+                Log.d("##", "userInfo change : ${userInfo}")
+
+                binding.run {
+                    textViewName.text = userInfo?.name
+                    textViewUniversity.text = userInfo?.memberUniversity
+                    textViewMajor.text = userInfo?.memberDepartment
+                    textViewStudentnum.text = "${userInfo?.admissionNumber}학번"
+                }
+            }
+        }
 
         initView()
 
@@ -64,5 +99,6 @@ class MypageFragment : Fragment() {
 
     fun initView() {
         mainActivity.hideWriteNoticeButton(true)
+        viewModel.getUserInfo(mainActivity)
     }
 }

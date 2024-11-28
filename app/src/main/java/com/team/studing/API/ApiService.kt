@@ -14,6 +14,7 @@ import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.API.response.Home.NoticeListResponse
 import com.team.studing.API.response.Home.ScrapNoticeResponse
 import com.team.studing.API.response.Login.LoginResponse
+import com.team.studing.API.response.Mypage.MyPageInfoResponse
 import com.team.studing.API.response.PartnerShip.GetPartnerShipInfoResponse
 import com.team.studing.API.response.SignUp.SignUpResponse
 import okhttp3.MultipartBody
@@ -193,4 +194,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body parameters: GetPartnerShipInfoRequest
     ): Call<BaseResponse<GetPartnerShipInfoResponse>>
+
+    // 사용자 정보 조회 (마이페이지)
+    @GET("api/v1/home/mydata")
+    fun getMypageInfo(
+        @Header("Authorization") token: String,
+    ): Call<BaseResponse<MyPageInfoResponse>>
 }
