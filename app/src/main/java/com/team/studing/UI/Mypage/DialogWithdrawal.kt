@@ -52,8 +52,12 @@ class DialogWithdrawal : DialogFragment() {
         }
 
         // 다이얼로그 텍스트 설정
-        binding.textViewTitle.text = "잠깐만요"
-        binding.textViewDescription.text = "모든 안내사항을 확인해주세요.\n탈퇴를 진행할까요?"
+        binding.run {
+            textViewTitle.text = "잠깐만요"
+            textViewDescription.text = "모든 안내사항을 확인해주세요.\n탈퇴를 진행할까요?"
+            buttonAccept.text = "아니요"
+            buttonCancel.text = "탈퇴하기"
+        }
 
         return binding.root
     }
