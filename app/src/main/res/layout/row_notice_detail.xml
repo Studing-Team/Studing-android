@@ -193,6 +193,7 @@
                     android:layout_marginTop="25dp"
                     android:background="@drawable/background_notice_type_chip_primary20"
                     android:text="공지"
+                    android:textAlignment="center"
                     android:textColor="@color/primary_50" />
 
                 <TextView
