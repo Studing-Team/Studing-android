@@ -87,7 +87,13 @@ class UnreadNoticePagerAdapter(
             holder.dotsIndicator.visibility = View.GONE
         } else {
             holder.noticeImage.visibility = View.VISIBLE
-            holder.dotsIndicator.visibility = View.VISIBLE
+            if (notices[position].images.size == 1) {
+                holder.dotsIndicator.visibility = View.GONE
+                holder.noticeImage.isUserInputEnabled = false // 슬라이드 동작 비활성화
+            } else {
+                holder.dotsIndicator.visibility = View.VISIBLE
+                holder.noticeImage.isUserInputEnabled = true // 슬라이드 동작 활성화
+            }
             Log.d("##", "viewpager : ${notices[position].images}")
             val imageAdapter = UnreadNoticeImageAdapter(activity, notices[position].images)
             holder.noticeImage.adapter = imageAdapter

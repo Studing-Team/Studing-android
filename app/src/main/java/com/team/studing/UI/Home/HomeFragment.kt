@@ -289,7 +289,13 @@ class HomeFragment : Fragment() {
                         View.GONE
                 } else {
                     viewPager.visibility = View.VISIBLE
-                    dotsIndicatorNotice.visibility = View.VISIBLE
+                    if (getRecentNoticeList.size > 1) {
+                        dotsIndicatorNotice.visibility = View.VISIBLE
+                        viewPager.isUserInputEnabled = true // 슬라이드 동작 활성화
+                    } else {
+                        dotsIndicatorNotice.visibility = View.GONE
+                        viewPager.isUserInputEnabled = false // 슬라이드 동작 비활성화
+                    }
                     layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
                     layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
                 }
