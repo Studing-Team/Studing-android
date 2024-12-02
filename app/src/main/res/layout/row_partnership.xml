@@ -100,43 +100,69 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView_store">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <!-- 가게명 TextView -->
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textView_store_name"
                     style="@style/BodyAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:ellipsize="end"
-                    android:maxLength="9"
+                    android:lines="1"
                     android:maxLines="1"
+                    android:minLines="1"
+                    android:singleLine="true"
                     android:text="가게명"
                     android:textAlignment="textStart"
-                    android:textColor="@color/black_50" />
+                    android:textColor="@color/black_50"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/layout_category"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView_category"
+                <!-- 카테고리 ImageView -->
+                <LinearLayout
+                    android:id="@+id/layout_category"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    app:srcCompat="@drawable/ic_category_drink" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView_store_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView_store_name"
+                    app:layout_constraintTop_toTopOf="@+id/textView_store_name">
 
-                <TextView
-                    android:id="@+id/textView_store_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="2dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="술집"
-                    android:textColor="#84878E"
-                    android:textSize="10sp" />
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageView_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+                        app:srcCompat="@drawable/ic_category_drink" />
+
+                    <TextView
+                        android:id="@+id/textView_store_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:singleLine="true"
+                        android:text="술집"
+                        android:textColor="#84878E"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/textView_store_description"

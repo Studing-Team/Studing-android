@@ -52,8 +52,12 @@ class DialogLogout : DialogFragment() {
         }
 
         // 다이얼로그 텍스트 설정
-        binding.textViewTitle.text = "로그아웃"
-        binding.textViewDescription.text = "로그아웃 하시겠습니까?"
+        binding.run {
+            textViewTitle.text = "로그아웃"
+            textViewDescription.text = "로그아웃 하시겠습니까?"
+            buttonAccept.text = "확인"
+            buttonCancel.text = "취소"
+        }
 
         return binding.root
     }
