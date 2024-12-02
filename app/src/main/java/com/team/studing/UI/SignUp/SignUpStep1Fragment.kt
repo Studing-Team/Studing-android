@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -43,6 +46,13 @@ class SignUpStep1Fragment : Fragment() {
         viewModel = ViewModelProvider(loginActivity)[SignUpViewModel::class.java]
 
         initView()
+
+        ViewCompat.setOnApplyWindowInsetsListener(requireActivity().window.decorView.rootView) { _, insets ->
+            val sysBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            updateViewPositionForKeyboard(imeHeight - sysBarInsets.bottom)
+            insets
+        }
 
         viewModel.run {
             checkIdResult.observe(loginActivity) {
@@ -125,6 +135,18 @@ class SignUpStep1Fragment : Fragment() {
 
         return binding.root
     }
+
+    private fun updateViewPositionForKeyboard(keyboardHeight: Int) {
+        val layoutParams =
+            binding.scrollView.layoutParams as ConstraintLayout.LayoutParams
+        if (keyboardHeight > 0) {
+            layoutParams.bottomMargin = keyboardHeight
+        } else {
+            layoutParams.bottomMargin = 0
+        }
+        binding.scrollView.layoutParams = layoutParams
+    }
+
 
     // 비밀번호 정규식 확인
     fun validatePassword(password: String): Boolean {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SignUp.SignUpStep4Fragment">
 
     <include
@@ -44,13 +44,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:text="다음"
         android:enabled="false"
+        android:text="다음"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="22dp"
@@ -103,11 +104,11 @@
                 style="@style/Body2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_signup_edittext_unselected"
-                android:paddingVertical="11dp"
-                android:paddingHorizontal="15dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/background_signup_edittext_unselected"
                 android:ems="10"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="11dp"
                 android:text="학번을 선택해주세요"
                 android:textColor="@color/black_20"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -118,8 +119,8 @@
                 android:id="@+id/imageView_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_down_disabled"
                 android:layout_marginRight="15dp"
+                android:src="@drawable/ic_down_disabled"
                 app:layout_constraintBottom_toBottomOf="@+id/editText_student_number"
                 app:layout_constraintEnd_toEndOf="@+id/editText_student_number"
                 app:layout_constraintTop_toTopOf="@+id/editText_student_number" />
@@ -128,8 +129,8 @@
                 android:id="@+id/recyclerView_student_number"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_signup_edittext_unselected"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/background_signup_edittext_unselected"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText_student_number" />

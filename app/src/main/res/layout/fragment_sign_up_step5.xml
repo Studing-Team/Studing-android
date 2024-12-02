@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SignUp.SignUpStep5Fragment">
 
     <include
@@ -44,13 +44,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:text="다음"
         android:enabled="false"
+        android:text="다음"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="22dp"
@@ -92,12 +93,12 @@
                 style="@style/BodyAdd"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/background_signup_edittext_success"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="13dp"
                 android:text="전체동의"
                 android:textColor="@color/primary_50"
-                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView_intro"
                 app:layout_constraintTop_toBottomOf="@+id/textView_intro" />
@@ -115,10 +116,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_signup_edittext_unselected"
-                android:paddingBottom="20dp"
-                android:paddingHorizontal="15dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/background_signup_edittext_unselected"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_agreement_all">
@@ -141,9 +142,9 @@
                     android:fontFamily="@font/inter_regular"
                     android:paddingHorizontal="10.5dp"
                     android:paddingVertical="1dp"
-                    android:textSize="10sp"
                     android:text="필수"
                     android:textColor="@color/black_40"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/space" />
 
@@ -151,11 +152,11 @@
                     android:id="@+id/textView_agreement1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/agreement1"
+                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/inter_semi_bold"
+                    android:text="@string/agreement1"
                     android:textColor="@color/black_50"
                     android:textSize="12sp"
-                    android:layout_marginLeft="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/chip_agreement1"
                     app:layout_constraintStart_toEndOf="@+id/chip_agreement1"
                     app:layout_constraintTop_toTopOf="@+id/chip_agreement1" />
@@ -173,14 +174,14 @@
                     android:id="@+id/chip_agreement2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
                     android:background="@drawable/background_agreement_essential"
                     android:fontFamily="@font/inter_regular"
                     android:paddingHorizontal="10.5dp"
                     android:paddingVertical="1dp"
-                    android:textSize="10sp"
                     android:text="필수"
                     android:textColor="@color/black_40"
-                    android:layout_marginTop="19dp"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="@+id/chip_agreement1"
                     app:layout_constraintTop_toBottomOf="@+id/chip_agreement1" />
 
@@ -188,11 +189,11 @@
                     android:id="@+id/textView_agreement2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/agreement2"
+                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/inter_semi_bold"
+                    android:text="@string/agreement2"
                     android:textColor="@color/black_50"
                     android:textSize="12sp"
-                    android:layout_marginLeft="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/chip_agreement2"
                     app:layout_constraintStart_toEndOf="@+id/chip_agreement2"
                     app:layout_constraintTop_toTopOf="@+id/chip_agreement2" />
@@ -210,14 +211,14 @@
                     android:id="@+id/chip_agreement3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
                     android:background="@drawable/background_agreement_optional"
                     android:fontFamily="@font/inter_regular"
                     android:paddingHorizontal="10.5dp"
                     android:paddingVertical="1dp"
-                    android:textSize="10sp"
                     android:text="선택"
                     android:textColor="@color/white"
-                    android:layout_marginTop="19dp"
+                    android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="@+id/chip_agreement2"
                     app:layout_constraintTop_toBottomOf="@+id/chip_agreement2" />
 
@@ -225,11 +226,11 @@
                     android:id="@+id/textView_agreement3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/agreement3"
+                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/inter_semi_bold"
+                    android:text="@string/agreement3"
                     android:textColor="@color/black_50"
                     android:textSize="12sp"
-                    android:layout_marginLeft="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/chip_agreement3"
                     app:layout_constraintStart_toEndOf="@+id/chip_agreement3"
                     app:layout_constraintTop_toTopOf="@+id/chip_agreement3" />
