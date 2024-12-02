@@ -51,6 +51,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="22dp"
@@ -205,6 +206,7 @@
                 android:background="@drawable/background_signup_edittext_unselected"
                 android:ems="10"
                 android:hint="ex. 20201234"
+                android:inputType="number"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="11dp"
                 android:textColor="@color/black_20"
