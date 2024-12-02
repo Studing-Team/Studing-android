@@ -84,13 +84,13 @@ class PartnerShipListAdapter(
         val layoutCardPartnerShip = binding.layoutCardPartnership
 
         init {
-            binding.buttonShowPromotion.setOnClickListener {
+            binding.root.setOnClickListener {
                 binding.run {
                     textViewPromotion.visibility = View.VISIBLE
                     textViewPromotionIntro.visibility = View.VISIBLE
                     layoutMapButton.visibility = View.VISIBLE
                     buttonShowPromotion.visibility = View.GONE
-//                    layoutCardPartnership.setBackgroundResource(R.drawable.background_partnership_selected)
+                    layoutCardPartnership.setBackgroundResource(R.drawable.background_partnership_selected)
                 }
             }
             binding.buttonMap.setOnClickListener {
