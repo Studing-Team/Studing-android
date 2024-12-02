@@ -51,6 +51,11 @@ class SignUpStep3Fragment : Fragment() {
             recyclerViewMajor.adapter = majorAdapter
             recyclerViewMajor.layoutManager = LinearLayoutManager(context)
 
+            scrollView.setOnTouchListener { v, event ->
+                loginActivity.hideKeyboard()
+                false
+            }
+
             editTextMajor.addTextChangedListener {
                 isSelected = false
                 buttonNext.isEnabled = false
@@ -86,7 +91,7 @@ class SignUpStep3Fragment : Fragment() {
                             itemClickListener = object : MajorAdapter.OnItemClickListener {
                                 override fun onItemClick(position: Int) {
                                     loginActivity.hideKeyboard()
-                                    
+
                                     editTextMajor.run {
                                         setText(filteredList[position])
                                         setBackgroundResource(R.drawable.background_signup_edittext_success)
@@ -105,6 +110,7 @@ class SignUpStep3Fragment : Fragment() {
                     editTextMajor.setTextAppearance(R.style.Body2)
                     textViewMajorDescription.visibility = View.INVISIBLE
                     recyclerViewMajor.visibility = View.INVISIBLE
+                    layoutNoMajor.visibility = View.INVISIBLE
 
                     imageViewSearch.setImageResource(R.drawable.ic_search)
                 }

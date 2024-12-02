@@ -1,6 +1,5 @@
 package com.team.studing
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,12 +17,14 @@ class LoginActivity : AppCompatActivity() {
     val manager = supportFragmentManager
     lateinit var sharedPreferenceManager: PreferenceUtil
 
+    lateinit var imm: InputMethodManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         MyApplication.preferences = PreferenceUtil(applicationContext)
-        
+
         setFCMToken()
 
         setContentView(binding.root)
@@ -43,8 +44,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun hideKeyboard() {
-        val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.window.decorView.applicationWindowToken, 0)
+        val currentFocusView = currentFocus
+        if (currentFocusView != null) {
+            val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(
+                currentFocusView.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+        }
     }
 
     override fun onRequestPermissionsResult(

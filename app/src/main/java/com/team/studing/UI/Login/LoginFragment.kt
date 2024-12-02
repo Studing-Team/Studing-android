@@ -38,6 +38,10 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(loginActivity)[LoginViewModel::class.java]
 
         binding.run {
+            root.setOnTouchListener { v, event ->
+                loginActivity.hideKeyboard()
+                false
+            }
 
             buttonLogin.setOnClickListener {
                 // 로그인 기능 구현

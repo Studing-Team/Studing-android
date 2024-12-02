@@ -56,6 +56,11 @@ class SignUpStep1Fragment : Fragment() {
 
         binding.run {
 
+            scrollView.setOnTouchListener { v, event ->
+                loginActivity.hideKeyboard()
+                false
+            }
+
             buttonPasswordShow.bringToFront()
 
             // 아이디 정규식 확인 및 중복 확인 버튼 활성화 여부 체크

@@ -53,6 +53,11 @@ class SignUpStep2Fragment : Fragment() {
             recyclerViewUniversity.adapter = universityAdapter
             recyclerViewUniversity.layoutManager = LinearLayoutManager(context)
 
+            scrollView.setOnTouchListener { v, event ->
+                loginActivity.hideKeyboard()
+                false
+            }
+
             editTextUniversity.addTextChangedListener {
                 isSelected = false
                 buttonNext.isEnabled = false
@@ -108,6 +113,7 @@ class SignUpStep2Fragment : Fragment() {
                     editTextUniversity.setTextAppearance(R.style.Body2)
                     textViewUniversityDescription.visibility = View.INVISIBLE
                     recyclerViewUniversity.visibility = View.INVISIBLE
+                    layoutNoUniversity.visibility = View.INVISIBLE
 
                     imageViewSearch.setImageResource(R.drawable.ic_search)
                 }

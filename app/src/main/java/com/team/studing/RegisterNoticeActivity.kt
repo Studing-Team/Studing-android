@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -68,6 +69,11 @@ class RegisterNoticeActivity : AppCompatActivity() {
             }
 
         binding.run {
+            scrollView.setOnTouchListener { v, event ->
+                hideKeyboard()
+                false
+            }
+
             buttonGallery.setOnClickListener {
                 pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
@@ -229,6 +235,17 @@ class RegisterNoticeActivity : AppCompatActivity() {
         }
 
         return compressedImages
+    }
+
+    fun hideKeyboard() {
+        val currentFocusView = currentFocus
+        if (currentFocusView != null) {
+            val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(
+                currentFocusView.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+        }
     }
 
     private fun initView() {

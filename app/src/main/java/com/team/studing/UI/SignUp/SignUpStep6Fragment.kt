@@ -90,6 +90,12 @@ class SignUpStep6Fragment : Fragment() {
             }
 
         binding.run {
+
+            scrollView.setOnTouchListener { v, event ->
+                loginActivity.hideKeyboard()
+                false
+            }
+
             buttonImageUpload.setOnClickListener {
                 // 이미지 업로드 (갤러리)
                 // Launch the photo picker and let the user choose only images.
