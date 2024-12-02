@@ -197,10 +197,17 @@ class NoticeDetailFragment : Fragment() {
 
                 if (getNoticeDetail?.images.isNullOrEmpty()) {
                     viewPager.visibility = View.GONE
+                    viewPager.isUserInputEnabled = true // 슬라이드 동작 활성화
                     dotsIndicatorNotice.visibility = View.GONE
                 } else {
                     viewPager.visibility = View.VISIBLE
-                    dotsIndicatorNotice.visibility = View.VISIBLE
+                    if (getNoticeDetail?.images?.size == 1) {
+                        dotsIndicatorNotice.visibility = View.GONE
+                        viewPager.isUserInputEnabled = false // 슬라이드 동작 비활성화
+                    } else {
+                        dotsIndicatorNotice.visibility = View.VISIBLE
+                        viewPager.isUserInputEnabled = true // 슬라이드 동작 활성화
+                    }
                     noticeImageAdapter.updateList(getNoticeDetail?.images)
                     viewPager.apply {
                         adapter = noticeImageAdapter

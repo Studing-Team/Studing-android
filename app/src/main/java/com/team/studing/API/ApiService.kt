@@ -185,7 +185,7 @@ interface ApiService {
     fun viewCheckNotice(
         @Header("Authorization") token: String,
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part studentCardImage: List<MultipartBody.Part>
+        @Part studentCardImage: List<MultipartBody.Part>?
     ): Call<BaseResponse<Void>>
 
     // 제휴 업체 데이터 리스트 반환

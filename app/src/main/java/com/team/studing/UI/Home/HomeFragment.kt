@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         observeViewModel()
 
         binding.run {
-            buttonShowUnread.setOnClickListener { navigateToUnreadNoticeFragment() }
+            banner.setOnClickListener { navigateToUnreadNoticeFragment() }
             buttonNoticeMore.setOnClickListener { navigateToNoticeListFragment() }
             buttonNoticeScrapMore.setOnClickListener { navigateToScrapNoticeListFragment() }
             layoutEmptyStudentCouncil.buttonRegisterStudentCouncil.setOnClickListener { openStudentCouncilRegisterGoogleForm() }
@@ -87,10 +87,6 @@ class HomeFragment : Fragment() {
                     binding.textViewNoticeIntro.text =
                         "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
                     viewModel.getRecentNotice(
-                        mainActivity,
-                        MyApplication.categoryList[categoryPosition]
-                    )
-                    viewModel.getUnreadNoticeCount(
                         mainActivity,
                         MyApplication.categoryList[categoryPosition]
                     )
@@ -162,6 +158,12 @@ class HomeFragment : Fragment() {
             unreadNoticeCount.observe(viewLifecycleOwner) {
                 getUnreadNoticeCount = it
                 binding.textViewUnreadNoticeNumber.text = "${it}개"
+
+                if (getUnreadNoticeCount == 0) {
+                    binding.banner.visibility = View.GONE
+                } else {
+                    binding.banner.visibility = View.VISIBLE
+                }
             }
 
             studentCouncilNameList.observe(viewLifecycleOwner) {
@@ -224,18 +226,25 @@ class HomeFragment : Fragment() {
             viewModel.getUnreadStudentCouncil(mainActivity)
             viewModel.getUnreadNoticeCount(
                 mainActivity,
-                MyApplication.categoryList[categoryPosition]
+                "전체"
             )
             viewModel.getRecentNotice(mainActivity, MyApplication.categoryList[categoryPosition])
             viewModel.getRecentScrapNotice(mainActivity)
 
+            // 카테고리 초기 선택 및 스크롤
+            binding.recyclerViewStudentCouncil.post {
+                studentCouncilAdapter.updateSelectedPosition(categoryPosition) // 어댑터에 선택 상태 전달
+                binding.recyclerViewStudentCouncil.smoothScrollToPosition(categoryPosition)
+            }
+
+            binding.textViewNoticeIntro.text =
+                "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
             textViewUnreadNoticeWithNickname.text = "${MyApplication.memberData?.name}님이 놓친 공지사항"
         }
     }
 
     private fun navigateToUnreadNoticeFragment() {
         if (getUnreadNoticeCount != 0) {
-            MyApplication.unreadNoticeCategory = "${MyApplication.categoryList[categoryPosition]}"
             mainActivity.supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerView_main, UnreadNoticeFragment())
                 .addToBackStack(null)
@@ -244,6 +253,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToNoticeListFragment() {
+        MyApplication.noticeCategory = categoryPosition
         mainActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView_main, NoticeListFragment())
             .addToBackStack(null)
@@ -279,7 +289,13 @@ class HomeFragment : Fragment() {
                         View.GONE
                 } else {
                     viewPager.visibility = View.VISIBLE
-                    dotsIndicatorNotice.visibility = View.VISIBLE
+                    if (getRecentNoticeList.size > 1) {
+                        dotsIndicatorNotice.visibility = View.VISIBLE
+                        viewPager.isUserInputEnabled = true // 슬라이드 동작 활성화
+                    } else {
+                        dotsIndicatorNotice.visibility = View.GONE
+                        viewPager.isUserInputEnabled = false // 슬라이드 동작 비활성화
+                    }
                     layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
                     layoutEmptyStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
                 }

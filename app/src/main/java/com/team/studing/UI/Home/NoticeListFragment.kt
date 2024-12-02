@@ -49,8 +49,6 @@ class NoticeListFragment : Fragment() {
         viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
         noticeViewModel = ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
 
-        initAdapter()
-        observeViewModel()
 
         binding.run {
             buttonQna.setOnClickListener {
@@ -82,9 +80,11 @@ class NoticeListFragment : Fragment() {
             getStudentCouncilLogoList,
             getUnReadStudentCouncilNameList
         ).apply {
+            updateSelectedPosition(categoryPosition)
             itemClickListener = object : StudentCouncilAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     categoryPosition = position
+                    MyApplication.noticeCategory = categoryPosition
                     if (categoryPosition == 0) {
                         viewModel.getNoticeList(mainActivity)
                     } else {
@@ -205,15 +205,29 @@ class NoticeListFragment : Fragment() {
         mainActivity.hideBottomNavigation(true)
         mainActivity.hideWriteNoticeButton(true)
 
-        viewModel.getNoticeList(mainActivity)
+        categoryPosition = MyApplication.noticeCategory
+        // 카테고리 초기 선택 및 스크롤
+        binding.recyclerViewStudentCouncil.post {
+            studentCouncilAdapter.updateSelectedPosition(categoryPosition) // 어댑터에 선택 상태 전달
+            binding.recyclerViewStudentCouncil.smoothScrollToPosition(categoryPosition)
+        }
+        if (categoryPosition == 0) {
+            viewModel.getNoticeList(mainActivity)
+        } else {
+            viewModel.getStudentCouncilNoticeList(
+                mainActivity,
+                MyApplication.categoryList[categoryPosition]
+            )
+        }
+
+        initAdapter()
+        observeViewModel()
 
         binding.run {
             recyclerViewNoticeList.visibility = View.VISIBLE
             emptyViewNotice.layoutEmptyNoticeList.visibility = View.GONE
             emptyViewStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
-        }
 
-        binding.run {
             toolbar.run {
                 textViewTitle.text = "학생회 공지 리스트"
                 buttonBack.setOnClickListener {
