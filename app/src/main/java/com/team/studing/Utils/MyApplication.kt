@@ -12,7 +12,8 @@ class MyApplication : Application() {
 
         // 카테고리 리스트
         var categoryList = listOf("전체", "총학생회", "단과대", "학과")
-        var unreadNoticeCategory = "전체"
+        var noticeCategory = 0
+
 
         // 회원가입 데이터 관리
         var signUpId = ""

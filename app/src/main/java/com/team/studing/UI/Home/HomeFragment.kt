@@ -229,13 +229,20 @@ class HomeFragment : Fragment() {
             viewModel.getRecentNotice(mainActivity, MyApplication.categoryList[categoryPosition])
             viewModel.getRecentScrapNotice(mainActivity)
 
+            // 카테고리 초기 선택 및 스크롤
+            binding.recyclerViewStudentCouncil.post {
+                studentCouncilAdapter.updateSelectedPosition(categoryPosition) // 어댑터에 선택 상태 전달
+                binding.recyclerViewStudentCouncil.smoothScrollToPosition(categoryPosition)
+            }
+
+            binding.textViewNoticeIntro.text =
+                "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
             textViewUnreadNoticeWithNickname.text = "${MyApplication.memberData?.name}님이 놓친 공지사항"
         }
     }
 
     private fun navigateToUnreadNoticeFragment() {
         if (getUnreadNoticeCount != 0) {
-            MyApplication.unreadNoticeCategory = "${MyApplication.categoryList[categoryPosition]}"
             mainActivity.supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerView_main, UnreadNoticeFragment())
                 .addToBackStack(null)
@@ -244,6 +251,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToNoticeListFragment() {
+        MyApplication.noticeCategory = categoryPosition
         mainActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView_main, NoticeListFragment())
             .addToBackStack(null)

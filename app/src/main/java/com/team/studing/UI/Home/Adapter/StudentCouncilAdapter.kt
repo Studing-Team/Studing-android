@@ -37,6 +37,13 @@ class StudentCouncilAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateSelectedPosition(position: Int) {
+        val previousPosition = selectedPosition
+        selectedPosition = position
+        notifyItemChanged(previousPosition) // 이전 선택 상태 갱신
+        notifyItemChanged(selectedPosition) // 현재 선택 상태 갱신
+    }
+
     interface OnItemClickListener {
         fun onItemClick(position: Int) {}
     }
