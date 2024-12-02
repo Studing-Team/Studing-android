@@ -277,7 +277,7 @@ class NoticeViewModel : ViewModel() {
         apiClient.apiService.viewCheckNotice(
             "Bearer ${tokenManager.getAccessToken()}",
             params,
-            MyApplication.noticeImages!!
+            MyApplication.noticeImages
         )
             .enqueue(object :
                 Callback<BaseResponse<Void>> {

@@ -103,6 +103,11 @@ class RegisterNoticeActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    override fun onResume() {
+        super.onResume()
+        MyApplication.noticeImages = null
+    }
+
     private fun initRecyclerView() {
         noticeImageAdapter = RegisterNoticeImageAdapter(selectedImages.toMutableList()).apply {
             setOnItemClickListener { position ->
