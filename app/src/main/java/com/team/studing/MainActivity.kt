@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
+        initView()
+
         viewModel.run {
             user.observe(this@MainActivity) {
                 memberData = it
@@ -59,6 +61,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        if (MyApplication.reSubmit) {
+            val nextFragment = HomeWaitingFragment()
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+            transaction.commit()
+        }
+    }
+
+    fun initView() {
         Log.d("##", "member : ${memberData?.role}")
         when (memberData?.role) {
             "ROLE_UNUSER" -> {
@@ -102,14 +114,6 @@ class MainActivity : AppCompatActivity() {
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
-        }
-
-        if (MyApplication.reSubmit) {
-            val nextFragment = HomeWaitingFragment()
-
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainerView_main, nextFragment)
-            transaction.commit()
         }
     }
 
