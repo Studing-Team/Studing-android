@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
         observeViewModel()
 
         binding.run {
-            buttonShowUnread.setOnClickListener { navigateToUnreadNoticeFragment() }
+            banner.setOnClickListener { navigateToUnreadNoticeFragment() }
             buttonNoticeMore.setOnClickListener { navigateToNoticeListFragment() }
             buttonNoticeScrapMore.setOnClickListener { navigateToScrapNoticeListFragment() }
             layoutEmptyStudentCouncil.buttonRegisterStudentCouncil.setOnClickListener { openStudentCouncilRegisterGoogleForm() }
@@ -87,10 +87,6 @@ class HomeFragment : Fragment() {
                     binding.textViewNoticeIntro.text =
                         "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
                     viewModel.getRecentNotice(
-                        mainActivity,
-                        MyApplication.categoryList[categoryPosition]
-                    )
-                    viewModel.getUnreadNoticeCount(
                         mainActivity,
                         MyApplication.categoryList[categoryPosition]
                     )
@@ -162,6 +158,12 @@ class HomeFragment : Fragment() {
             unreadNoticeCount.observe(viewLifecycleOwner) {
                 getUnreadNoticeCount = it
                 binding.textViewUnreadNoticeNumber.text = "${it}개"
+
+                if (getUnreadNoticeCount == 0) {
+                    binding.banner.visibility = View.GONE
+                } else {
+                    binding.banner.visibility = View.VISIBLE
+                }
             }
 
             studentCouncilNameList.observe(viewLifecycleOwner) {
@@ -224,7 +226,7 @@ class HomeFragment : Fragment() {
             viewModel.getUnreadStudentCouncil(mainActivity)
             viewModel.getUnreadNoticeCount(
                 mainActivity,
-                MyApplication.categoryList[categoryPosition]
+                "전체"
             )
             viewModel.getRecentNotice(mainActivity, MyApplication.categoryList[categoryPosition])
             viewModel.getRecentScrapNotice(mainActivity)

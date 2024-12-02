@@ -11,7 +11,6 @@ import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.UnreadNoticePagerAdapter
 import com.team.studing.Utils.BasicToast
-import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentUnreadNoticeBinding
@@ -72,7 +71,7 @@ class UnreadNoticeFragment : Fragment() {
                 currentItem = binding.viewPager2.currentItem + 1
                 val totalItems = unreadNoticePagerAdapter.itemCount
 
-                toolbar.textViewTitle.text = "${totalItems - currentItem - 1}개 남음"
+                toolbar.textViewTitle.text = "${totalItems - currentItem}개 남음"
                 if (currentItem < totalItems - 1) {
                     // 현재 페이지가 마지막 페이지가 아니면 다음 페이지로 이동
                     noticeViewModel.viewNotice(mainActivity, getUnreadNotices[currentItem].id)
@@ -118,7 +117,7 @@ class UnreadNoticeFragment : Fragment() {
         viewModel.unreadNoticeList.observe(viewLifecycleOwner) { unreadNotices ->
             getUnreadNotices = unreadNotices.toMutableList()
             currentItem = 0 // 초기화
-            binding.toolbar.textViewTitle.text = "${getUnreadNotices.size - 1}개 남음"
+            binding.toolbar.textViewTitle.text = "${getUnreadNotices.size}개 남음"
 
             unreadNoticePagerAdapter = UnreadNoticePagerAdapter(mainActivity, getUnreadNotices)
 
@@ -195,23 +194,15 @@ class UnreadNoticeFragment : Fragment() {
 
         viewModel.getUnreadNoticeList(
             mainActivity,
-            MyApplication.unreadNoticeCategory
+            "전체"
         )
 
         binding.run {
 
             toolbar.run {
                 buttonBack.setOnClickListener {
-                    if (currentItem != 0) {
-                        currentItem -= 1
-                        toolbar.textViewTitle.text =
-                            "${getUnreadNotices.size - currentItem - 1}개 남음"
-                        if (currentItem < getUnreadNotices.size - 1) {
-                            viewPager2.setCurrentItem(currentItem, true)
-                        }
-                    } else {
-                        fragmentManager?.popBackStack()
-                    }
+                    // 홈화면으로 이동
+                    fragmentManager?.popBackStack()
                 }
             }
         }
