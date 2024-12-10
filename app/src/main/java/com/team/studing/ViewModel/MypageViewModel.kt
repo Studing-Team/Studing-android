@@ -11,6 +11,7 @@ import com.team.studing.API.response.Mypage.MyPageInfoResponse
 import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Login.LoginFragment
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,6 +74,8 @@ class MypageViewModel : ViewModel() {
                         // 정상적으로 통신이 성공된 경우
                         val result: BaseResponse<Void>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        amplitude.reset()
 
                         activity.supportFragmentManager.popBackStack(
                             null,
