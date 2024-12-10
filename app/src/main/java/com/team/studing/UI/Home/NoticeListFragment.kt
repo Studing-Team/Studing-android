@@ -78,7 +78,7 @@ class NoticeListFragment : Fragment() {
         initView()
     }
 
-    private fun getAmplitudeData(position: Int) {
+    private fun setAmplitudeData(position: Int) {
         when (position) {
             0 -> {
                 amplitude.track("click_category_all_list")
@@ -108,7 +108,7 @@ class NoticeListFragment : Fragment() {
             updateSelectedPosition(categoryPosition)
             itemClickListener = object : StudentCouncilAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    getAmplitudeData(position)
+                    setAmplitudeData(position)
 
                     categoryPosition = position
                     MyApplication.noticeCategory = categoryPosition

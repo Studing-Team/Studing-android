@@ -99,7 +99,8 @@ class HomeFragment : Fragment() {
         ).apply {
             itemClickListener = object : StudentCouncilAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    getAmplitudeData(position)
+                    setAmplitudeData(position)
+
                     categoryPosition = position
                     binding.textViewNoticeIntro.text =
                         "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
@@ -261,7 +262,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getAmplitudeData(position: Int) {
+    private fun setAmplitudeData(position: Int) {
         when (position) {
             0 -> {
                 amplitude.track("click_category_all_home")
