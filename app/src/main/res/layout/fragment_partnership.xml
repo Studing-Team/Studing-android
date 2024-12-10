@@ -19,6 +19,7 @@
         android:ems="10"
         android:hint="우리대학 제휴업체를 찾아보세요 :)"
         android:inputType="text"
+        android:onClick="onEditTextClick"
         android:paddingHorizontal="15dp"
         android:paddingVertical="11dp"
         android:textColorHint="@color/black_40"

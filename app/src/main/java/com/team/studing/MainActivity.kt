@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.run {
             buttonWriteNotice.setOnClickListener {
                 amplitude.track("click_post_notice_home")
-                
+
                 val mainIntent = Intent(this@MainActivity, RegisterNoticeActivity::class.java)
                 mainIntent.putExtra("register", true)
                 startActivity(mainIntent)
@@ -155,6 +156,17 @@ class MainActivity : AppCompatActivity() {
 
                 else -> false
             }
+        }
+    }
+
+    fun hideKeyboard() {
+        val currentFocusView = currentFocus
+        if (currentFocusView != null) {
+            val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(
+                currentFocusView.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
         }
     }
 
