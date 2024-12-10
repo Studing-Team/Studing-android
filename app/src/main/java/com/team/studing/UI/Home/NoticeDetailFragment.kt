@@ -12,6 +12,7 @@ import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.NoticeImagePagerAdapter
 import com.team.studing.Utils.BasicToast
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentNoticeDetailBinding
@@ -54,6 +55,8 @@ class NoticeDetailFragment : Fragment() {
             )
 
             buttonScrap.setOnClickListener {
+                amplitude.track("click_save_post_detail")
+
                 if (!isScrap!!) {
                     noticeViewModel.scrapNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
@@ -62,6 +65,8 @@ class NoticeDetailFragment : Fragment() {
             }
 
             buttonLikeNotice.setOnClickListener {
+                amplitude.track("click_like_post_detail")
+
                 if (!isLike!!) {
                     noticeViewModel.likeNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
