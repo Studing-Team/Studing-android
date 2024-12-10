@@ -11,6 +11,7 @@ import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.UnreadNoticePagerAdapter
 import com.team.studing.Utils.BasicToast
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentUnreadNoticeBinding
@@ -45,6 +46,7 @@ class UnreadNoticeFragment : Fragment() {
 
         binding.run {
             buttonLikeNotice.setOnClickListener {
+                amplitude.track("click_like_post_unread")
                 isLike = getUnreadNotices[currentItem].likeCheck
                 if (!isLike) {
                     noticeViewModel.likeNotice(mainActivity, getUnreadNotices[currentItem].id)
@@ -54,6 +56,7 @@ class UnreadNoticeFragment : Fragment() {
             }
 
             buttonScrap.setOnClickListener {
+                amplitude.track("click_save_post_unread")
                 isScrap = getUnreadNotices[currentItem].saveCheck
                 if (!isScrap) {
                     noticeViewModel.scrapNotice(mainActivity, getUnreadNotices[currentItem].id)
@@ -66,6 +69,7 @@ class UnreadNoticeFragment : Fragment() {
             }
 
             buttonNext.setOnClickListener {
+                amplitude.track("click_next_notice_unread")
                 // 다음 공지사항으로 이동
                 var previousItem = binding.viewPager2.currentItem
                 currentItem = binding.viewPager2.currentItem + 1
@@ -201,6 +205,7 @@ class UnreadNoticeFragment : Fragment() {
 
             toolbar.run {
                 buttonBack.setOnClickListener {
+                    amplitude.track("click_back_unread")
                     // 홈화면으로 이동
                     fragmentManager?.popBackStack()
                 }
