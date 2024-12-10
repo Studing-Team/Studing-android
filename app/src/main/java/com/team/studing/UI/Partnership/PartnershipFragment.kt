@@ -58,7 +58,9 @@ class PartnershipFragment : Fragment() {
             resources.getStringArray(R.array.partnership_category_name).toMutableList()
 
         binding.run {
-            editTextSearch.setOnClickListener { amplitude.track("click_search_affiliate") }
+            editTextSearch.setOnFocusChangeListener { v, hasFocus ->
+                amplitude.track("click_search_affiliate")
+            }
             setupSearchBar() // 검색 기능 추가
         }
 
@@ -208,6 +210,11 @@ class PartnershipFragment : Fragment() {
         mainActivity.hideWriteNoticeButton(true)
 
         binding.run {
+            root.setOnTouchListener { v, event ->
+                mainActivity.hideKeyboard()
+                false
+            }
+
             emptyStore.layoutEmptyStore.visibility = View.GONE
         }
     }
