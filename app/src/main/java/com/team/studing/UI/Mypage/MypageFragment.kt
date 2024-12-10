@@ -15,6 +15,7 @@ import com.team.studing.API.response.Mypage.MyPageInfoResponse
 import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Login.LoginFragment
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.MypageViewModel
 import com.team.studing.databinding.FragmentMypageBinding
 
@@ -70,6 +71,7 @@ class MypageFragment : Fragment() {
                     override fun onClickYesButton() {
                         // 탈퇴하기 기능 구현
                         tokenManager.deleteAccessToken()
+                        amplitude.reset()
 
                         mainActivity.supportFragmentManager.popBackStack(
                             null,
