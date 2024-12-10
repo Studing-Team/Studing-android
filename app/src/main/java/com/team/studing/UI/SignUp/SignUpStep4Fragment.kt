@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
 import com.team.studing.databinding.FragmentSignUpStep4Binding
@@ -85,6 +86,7 @@ class SignUpStep4Fragment : Fragment() {
             }
 
             buttonNext.setOnClickListener {
+                amplitude.track("click_next_signup_step4")
 
                 val nextFragment = SignUpStep5Fragment()
 

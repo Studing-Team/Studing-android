@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.team.studing.API.response.PartnerShip.Partner
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.databinding.RowPartnershipBinding
 
 class PartnerShipListAdapter(
@@ -85,6 +86,8 @@ class PartnerShipListAdapter(
 
         init {
             binding.root.setOnClickListener {
+                amplitude.track("click_view_content_affiliate")
+
                 binding.run {
                     textViewPromotion.visibility = View.VISIBLE
                     textViewPromotionIntro.visibility = View.VISIBLE
@@ -94,6 +97,8 @@ class PartnerShipListAdapter(
                 }
             }
             binding.buttonMap.setOnClickListener {
+                amplitude.track("click_view_location_affiliate")
+
                 itemClickListener?.onItemClick(adapterPosition)
 
                 // 클릭 리스너 호출

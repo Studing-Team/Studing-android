@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.databinding.DialogLoginBinding
 
 interface SignUpDialogInterface {
@@ -33,8 +34,8 @@ class DialogLogin : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
-
         binding.buttonTryAgain.setOnClickListener {
+            amplitude.track("click_login_error")
             dismiss()
         }
 

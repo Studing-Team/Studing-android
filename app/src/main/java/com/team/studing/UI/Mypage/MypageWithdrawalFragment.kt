@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.team.studing.MainActivity
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.MypageViewModel
 import com.team.studing.databinding.FragmentMypageWithdrawalBinding
 
@@ -36,8 +37,10 @@ class MypageWithdrawalFragment : Fragment() {
                 // 회원 탈퇴 dialog
                 val dialog = DialogWithdrawal()
 
-                dialog.setSignUpDialogInterface(object : WithdrawalDialogInterface {
+                dialog.setWithdrawalDialogInterface(object : WithdrawalDialogInterface {
                     override fun onClickYesButton() {
+                        amplitude.track("click_signout_complete_mypage")
+                        
                         // 탈퇴하기 기능 구현
                         viewModel.withdrawal(mainActivity)
                     }

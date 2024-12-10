@@ -12,6 +12,7 @@ import com.team.studing.API.response.Login.MemberData
 import com.team.studing.LoginActivity
 import com.team.studing.MainActivity
 import com.team.studing.UI.Login.DialogLogin
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -54,6 +55,8 @@ class LoginViewModel : ViewModel() {
                         val mainIntent = Intent(activity, MainActivity::class.java)
                         mainIntent.putExtra("isLogin", true)
                         activity.startActivity(mainIntent)
+
+                        amplitude.setUserId(id)
 
                         MyApplication.memberData = result.data.memberData
                         user.value = result.data.memberData

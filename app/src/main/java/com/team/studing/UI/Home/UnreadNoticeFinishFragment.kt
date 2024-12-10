@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.databinding.FragmentUnreadNoticeFinishBinding
 
 class UnreadNoticeFinishFragment : Fragment() {
@@ -25,6 +26,8 @@ class UnreadNoticeFinishFragment : Fragment() {
 
         binding.run {
             buttonFinish.setOnClickListener {
+                amplitude.track("click_complete_unread")
+
                 mainActivity.supportFragmentManager.popBackStack(
                     null,
                     FragmentManager.POP_BACK_STACK_INCLUSIVE

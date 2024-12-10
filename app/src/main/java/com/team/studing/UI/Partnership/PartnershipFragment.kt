@@ -15,6 +15,7 @@ import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Partnership.Adapter.PartnerShipCategoryAdapter
 import com.team.studing.UI.Partnership.Adapter.PartnerShipListAdapter
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.PartnerShipViewModel
 import com.team.studing.databinding.FragmentPartnershipBinding
@@ -57,6 +58,7 @@ class PartnershipFragment : Fragment() {
             resources.getStringArray(R.array.partnership_category_name).toMutableList()
 
         binding.run {
+            editTextSearch.setOnClickListener { amplitude.track("click_search_affiliate") }
             setupSearchBar() // 검색 기능 추가
         }
 
@@ -70,6 +72,38 @@ class PartnershipFragment : Fragment() {
         observeViewModel()
     }
 
+    private fun setAmplitudeData(position: Int) {
+        when (position) {
+            0 -> {
+                amplitude.track("click_category_all_affiliate")
+            }
+
+            1 -> {
+                amplitude.track("click_category_food_affiliate")
+            }
+
+            2 -> {
+                amplitude.track("click_category_cafe_affiliate")
+            }
+
+            3 -> {
+                amplitude.track("click_category_drink_affiliate")
+            }
+
+            4 -> {
+                amplitude.track("click_category_gym_affiliate")
+            }
+
+            5 -> {
+                amplitude.track("click_category_hospital_affiliate")
+            }
+
+            6 -> {
+                amplitude.track("click_category_culture_affiliate")
+            }
+        }
+    }
+
     private fun initAdapters() {
         // 카테고리 어댑터 초기화
         partnerShipCategoryAdapter = PartnerShipCategoryAdapter(
@@ -79,6 +113,8 @@ class PartnershipFragment : Fragment() {
         ).apply {
             itemClickListener = object : PartnerShipCategoryAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    setAmplitudeData(position)
+
                     categoryPosition = position
                     viewModel.getPartnerShipInfo(
                         mainActivity,

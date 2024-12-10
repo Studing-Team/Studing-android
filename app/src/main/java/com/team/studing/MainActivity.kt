@@ -12,6 +12,7 @@ import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
 import com.team.studing.UI.Partnership.PartnershipFragment
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.MyApplication.Companion.memberData
 import com.team.studing.ViewModel.LoginViewModel
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.run {
             buttonWriteNotice.setOnClickListener {
+                amplitude.track("click_post_notice_home")
+                
                 val mainIntent = Intent(this@MainActivity, RegisterNoticeActivity::class.java)
                 mainIntent.putExtra("register", true)
                 startActivity(mainIntent)

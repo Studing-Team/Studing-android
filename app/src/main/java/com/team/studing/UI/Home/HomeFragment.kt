@@ -17,6 +17,7 @@ import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.HomeNoticePagerAdapter
 import com.team.studing.UI.Home.Adapter.HomeScrapNoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
@@ -58,11 +59,26 @@ class HomeFragment : Fragment() {
         observeViewModel()
 
         binding.run {
-            banner.setOnClickListener { navigateToUnreadNoticeFragment() }
-            buttonNoticeMore.setOnClickListener { navigateToNoticeListFragment() }
-            buttonNoticeScrapMore.setOnClickListener { navigateToScrapNoticeListFragment() }
-            layoutEmptyStudentCouncil.buttonRegisterStudentCouncil.setOnClickListener { openStudentCouncilRegisterGoogleForm() }
-            layoutEmptyScrapNotice.buttonShowWholeNotice.setOnClickListener { navigateToNoticeListFragment() }
+            banner.setOnClickListener {
+                amplitude.track("click_unread_notice_home")
+                navigateToUnreadNoticeFragment()
+            }
+            buttonNoticeMore.setOnClickListener {
+                amplitude.track("click_notice_list_home")
+                navigateToNoticeListFragment()
+            }
+            buttonNoticeScrapMore.setOnClickListener {
+                amplitude.track("click_save_list_home")
+                navigateToScrapNoticeListFragment()
+            }
+            layoutEmptyStudentCouncil.buttonRegisterStudentCouncil.setOnClickListener {
+                amplitude.track("click_register_form_home")
+                openStudentCouncilRegisterGoogleForm()
+            }
+            layoutEmptyScrapNotice.buttonShowWholeNotice.setOnClickListener {
+                amplitude.track("click_next_notice_list_save_home")
+                navigateToNoticeListFragment()
+            }
         }
 
         return binding.root
@@ -83,6 +99,8 @@ class HomeFragment : Fragment() {
         ).apply {
             itemClickListener = object : StudentCouncilAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    setAmplitudeData(position)
+
                     categoryPosition = position
                     binding.textViewNoticeIntro.text =
                         "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
@@ -101,6 +119,7 @@ class HomeFragment : Fragment() {
         ).apply {
             itemClickListener = object : HomeNoticePagerAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    amplitude.track("click_detail_notice_home")
                     MyApplication.noticeId = getRecentNoticeList[position].id
                     noticeViewModel.getNoticeDetail(
                         mainActivity,
@@ -240,6 +259,26 @@ class HomeFragment : Fragment() {
             binding.textViewNoticeIntro.text =
                 "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
             textViewUnreadNoticeWithNickname.text = "${MyApplication.memberData?.name}님이 놓친 공지사항"
+        }
+    }
+
+    private fun setAmplitudeData(position: Int) {
+        when (position) {
+            0 -> {
+                amplitude.track("click_category_all_home")
+            }
+
+            1 -> {
+                amplitude.track("click_category_university_home")
+            }
+
+            2 -> {
+                amplitude.track("click_category_college_home")
+            }
+
+            3 -> {
+                amplitude.track("click_category_department_home")
+            }
         }
     }
 

@@ -23,6 +23,7 @@ android {
 
         buildConfigField("String", "MAP_API_KEY", "\"${properties["map_client_id"]}\"")
         buildConfigField("String", "SERVER_URL", "\"${properties["server_url"]}\"")
+        buildConfigField("String", "AMPLITUDE_KEY", "\"${properties["amplitude_api_key"]}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -89,4 +90,6 @@ dependencies {
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.0")
 
+    // amplitude
+    implementation("com.amplitude:analytics-android:1.+")
 }
