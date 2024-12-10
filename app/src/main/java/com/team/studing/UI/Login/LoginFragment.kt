@@ -19,6 +19,7 @@ import com.skydoves.balloon.showAlignTop
 import com.team.studing.LoginActivity
 import com.team.studing.R
 import com.team.studing.UI.SignUp.SignUpStep1Fragment
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.LoginViewModel
 import com.team.studing.databinding.FragmentLoginBinding
 
@@ -44,6 +45,7 @@ class LoginFragment : Fragment() {
             }
 
             buttonLogin.setOnClickListener {
+                amplitude.track("click_next_login")
                 // 로그인 기능 구현
                 viewModel.login(
                     loginActivity,
@@ -53,12 +55,14 @@ class LoginFragment : Fragment() {
             }
 
             buttonQna.setOnClickListener {
+                amplitude.track("click_contact_kakao_login")
                 // 스튜딩 카카오톡 채널
                 var intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_BzmZn"))
                 startActivity(intent)
             }
 
             buttonSignUp.setOnClickListener {
+                amplitude.track("click_next_signup")
                 val nextFragment = SignUpStep1Fragment()
 
                 val transaction = loginActivity.manager.beginTransaction()
