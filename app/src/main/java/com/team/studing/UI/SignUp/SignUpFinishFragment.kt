@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.team.studing.LoginActivity
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.LoginViewModel
@@ -31,6 +32,7 @@ class SignUpFinishFragment : Fragment() {
 
         binding.run {
             buttonStart.setOnClickListener {
+                amplitude.track("click_next_signup_end")
                 // 로그인 후 홈화면으로 전환
                 viewModel.login(
                     loginActivity,

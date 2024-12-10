@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.ViewModel.SignUpViewModel
 import com.team.studing.databinding.FragmentSignUpWaitingBinding
@@ -37,6 +38,7 @@ class SignUpWaitingFragment : Fragment() {
         binding.run {
 
             buttonNotification.setOnClickListener {
+                amplitude.track("click_next_signup_alarm")
                 // 알림 권한 설정
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                     PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
@@ -58,6 +60,7 @@ class SignUpWaitingFragment : Fragment() {
             }
 
             buttonStart.setOnClickListener {
+                amplitude.track("click_next_signup_start")
                 navigateToNextFragment()
             }
 

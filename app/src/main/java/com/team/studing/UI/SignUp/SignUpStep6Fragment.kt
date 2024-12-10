@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.SignUpViewModel
@@ -108,12 +109,14 @@ class SignUpStep6Fragment : Fragment() {
 
             buttonImageUpload.setOnClickListener {
                 // 이미지 업로드 (갤러리)
+                amplitude.track("click_next_signup_step6_upload")
                 // Launch the photo picker and let the user choose only images.
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 checkComplete()
             }
 
             imageViewStudentCard.setOnClickListener {
+                amplitude.track("click_next_signup_step6_upload")
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 checkComplete()
             }

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.team.studing.LoginActivity
 import com.team.studing.R
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.SignUpViewModel
@@ -138,6 +139,8 @@ class SignUpStep3Fragment : Fragment() {
             }
 
             buttonNext.setOnClickListener {
+                amplitude.track("click_next_signup_step3")
+
                 MyApplication.signUpMajor = editTextMajor.text.toString()
 
                 val nextFragment = SignUpStep4Fragment()
