@@ -27,7 +27,7 @@ class DialogLogout : DialogFragment() {
     private var listener: LogoutDialogInterface? = null
 
     // 리스너 설정 메서드
-    fun setSignUpDialogInterface(listener: LogoutDialogInterface) {
+    fun setLogoutDialogInterface(listener: LogoutDialogInterface) {
         this.listener = listener
     }
 

@@ -27,7 +27,7 @@ class DialogWithdrawal : DialogFragment() {
     private var listener: WithdrawalDialogInterface? = null
 
     // 리스너 설정 메서드
-    fun setSignUpDialogInterface(listener: WithdrawalDialogInterface) {
+    fun setWithdrawalDialogInterface(listener: WithdrawalDialogInterface) {
         this.listener = listener
     }
 

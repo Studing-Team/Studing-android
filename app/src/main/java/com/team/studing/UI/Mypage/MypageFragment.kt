@@ -63,13 +63,17 @@ class MypageFragment : Fragment() {
 
         binding.run {
             buttonLogout.setOnClickListener {
+                amplitude.track("click_logout_mypage")
+
                 var tokenManager = TokenManager(mainActivity)
                 // 로그아웃 dialog
                 val dialog = DialogLogout()
 
-                dialog.setSignUpDialogInterface(object : LogoutDialogInterface {
+                dialog.setLogoutDialogInterface(object : LogoutDialogInterface {
                     override fun onClickYesButton() {
-                        // 탈퇴하기 기능 구현
+                        amplitude.track("click_logout_complete_mypage")
+
+                        // 로그아웃 기능 구현
                         tokenManager.deleteAccessToken()
                         amplitude.reset()
 
@@ -91,6 +95,8 @@ class MypageFragment : Fragment() {
             }
 
             buttonWithdrawal.setOnClickListener {
+                amplitude.track("click_signout_mypage")
+
                 mainActivity.supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainerView_main, MypageWithdrawalFragment())
                     .addToBackStack(null)
@@ -98,6 +104,8 @@ class MypageFragment : Fragment() {
             }
 
             layoutQna.setOnClickListener {
+                amplitude.track("click_contact_mypage")
+
                 // 스튜딩 카카오톡 채널
                 var intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_BzmZn"))
                 startActivity(intent)
