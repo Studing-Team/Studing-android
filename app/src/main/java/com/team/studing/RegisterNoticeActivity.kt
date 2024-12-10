@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.team.studing.UI.Home.Adapter.RegisterNoticeImageAdapter
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.ActivityRegisterNoticeBinding
@@ -69,12 +70,9 @@ class RegisterNoticeActivity : AppCompatActivity() {
             }
 
         binding.run {
-            scrollView.setOnTouchListener { v, event ->
-                hideKeyboard()
-                false
-            }
-
             buttonGallery.setOnClickListener {
+                amplitude.track("click_add_photo")
+
                 pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
 
@@ -97,6 +95,8 @@ class RegisterNoticeActivity : AppCompatActivity() {
             }
 
             buttonRegister.setOnClickListener {
+                amplitude.track("click_upload_notice")
+
                 viewModel.registerNotice(
                     this@RegisterNoticeActivity,
                     editTextNoticeTitle.text.toString(),
@@ -250,6 +250,11 @@ class RegisterNoticeActivity : AppCompatActivity() {
 
     private fun initView() {
         binding.run {
+            scrollView.setOnTouchListener { v, event ->
+                hideKeyboard()
+                false
+            }
+            
             toolbar.run {
                 buttonClose.setOnClickListener {
                     finish()
