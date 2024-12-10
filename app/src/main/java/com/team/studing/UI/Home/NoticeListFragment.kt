@@ -16,6 +16,7 @@ import com.team.studing.MainActivity
 import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.NoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.ViewModel.NoticeViewModel
@@ -52,12 +53,16 @@ class NoticeListFragment : Fragment() {
 
         binding.run {
             buttonQna.setOnClickListener {
+                amplitude.track("click_contact_kakao_list")
+
                 // 스튜딩 카카오톡 채널
                 var intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_BzmZn"))
                 startActivity(intent)
             }
 
             emptyViewStudentCouncil.buttonRegisterStudentCouncil.setOnClickListener {
+                amplitude.track("click_register_form_list")
+
                 val intent =
                     Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/cCyRaN41xGuqQffM6"))
                 startActivity(intent)
@@ -73,6 +78,26 @@ class NoticeListFragment : Fragment() {
         initView()
     }
 
+    private fun getAmplitudeData(position: Int) {
+        when (position) {
+            0 -> {
+                amplitude.track("click_category_all_list")
+            }
+
+            1 -> {
+                amplitude.track("click_category_university_list")
+            }
+
+            2 -> {
+                amplitude.track("click_category_college_list")
+            }
+
+            3 -> {
+                amplitude.track("click_category_department_list")
+            }
+        }
+    }
+
     fun initAdapter() {
         studentCouncilAdapter = StudentCouncilAdapter(
             mainActivity,
@@ -83,6 +108,8 @@ class NoticeListFragment : Fragment() {
             updateSelectedPosition(categoryPosition)
             itemClickListener = object : StudentCouncilAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    getAmplitudeData(position)
+
                     categoryPosition = position
                     MyApplication.noticeCategory = categoryPosition
                     if (categoryPosition == 0) {
@@ -104,6 +131,8 @@ class NoticeListFragment : Fragment() {
         ).apply {
             itemClickListener = object : NoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    amplitude.track("click_detail_notice_list")
+
                     MyApplication.noticeId = getNoticeList[position].id
                     noticeViewModel.getNoticeDetail(
                         mainActivity,
