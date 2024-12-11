@@ -48,12 +48,21 @@ class MypageViewModel : ViewModel() {
                         val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
                         Log.d("##", "Error Response: $errorBody")
 
+                        activity.finish()
                     }
                 }
 
                 override fun onFailure(call: Call<BaseResponse<MyPageInfoResponse>>, t: Throwable) {
                     // 통신 실패
                     Log.d("##", "onFailure 에러: " + t.message.toString())
+
+                    // 이전 BackStack의 모든 Fragment 제거
+                    activity.supportFragmentManager.popBackStackImmediate(
+                        null,
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE
+                    )
+
+                    activity.finish()
                 }
             })
     }

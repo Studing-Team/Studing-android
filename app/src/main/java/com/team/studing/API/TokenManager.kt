@@ -32,7 +32,7 @@ class TokenManager(val context: Context) {
     fun deleteAccessToken() {
         val sharedPreferences = context.getSharedPreferences("TokenPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.remove("access_token")
+        editor.remove("access_token").commit()
         editor.apply()
     }
 

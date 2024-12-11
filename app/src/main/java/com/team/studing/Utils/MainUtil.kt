@@ -5,7 +5,6 @@ import android.os.Build
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.core.view.WindowCompat
 
 object MainUtil {
     // 투명한 status bar
@@ -19,7 +18,7 @@ object MainUtil {
         }
 
         if (Build.VERSION.SDK_INT >= 30) {  // API 30 이상
-            WindowCompat.setDecorFitsSystemWindows(window, false)
+//            WindowCompat.setDecorFitsSystemWindows(window, false)
 
             // 레이아웃이 상태바를 침범하되, 네비게이션 바는 침범하지 않도록 설정
             window.decorView.setOnApplyWindowInsetsListener { view, insets ->

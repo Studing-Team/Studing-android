@@ -9,12 +9,12 @@ data class LoginResponse(
 
 
 data class MemberData(
-    val id: Int,
-    val loginIdentifier: String,
-    val name: String,
-    val memberUniversity: String,
-    val memberDepartment: String,
-    val role: String
+    var id: Int,
+    var loginIdentifier: String,
+    var name: String,
+    var memberUniversity: String,
+    var memberDepartment: String,
+    var role: String
 )
 
 
