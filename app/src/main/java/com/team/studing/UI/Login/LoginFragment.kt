@@ -39,11 +39,6 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(loginActivity)[LoginViewModel::class.java]
 
         binding.run {
-            root.setOnTouchListener { v, event ->
-                loginActivity.hideKeyboard()
-                false
-            }
-
             buttonLogin.setOnClickListener {
                 amplitude.track("click_next_login")
                 // 로그인 기능 구현
@@ -63,6 +58,7 @@ class LoginFragment : Fragment() {
 
             buttonSignUp.setOnClickListener {
                 amplitude.track("click_next_signup")
+
                 val nextFragment = SignUpStep1Fragment()
 
                 val transaction = loginActivity.manager.beginTransaction()
@@ -70,38 +66,56 @@ class LoginFragment : Fragment() {
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
-
-            val balloon = Balloon.Builder(loginActivity)
-//                .setWidth(BalloonSizeSpec.WRAP)
-                .setWidthRatio(0.6f) // sets width as 50% of the horizontal screen's size.
-                .setHeight(BalloonSizeSpec.WRAP)
-                .setText("스튜딩에 문의하기")
-                .setTextColorResource(R.color.black_30)
-                .setTextSize(12f)
-                .setTextTypeface(ResourcesCompat.getFont(loginActivity, R.font.inter_regular)!!)
-                .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-                .setArrowSize(10)
-                .setArrowPosition(0.5f)
-                .setArrowColorResource(R.color.black_5)
-                .setTextGravity(Gravity.CENTER)
-                .setElevation(0)
-                .setPaddingHorizontal(15)
-                .setPaddingVertical(5)
-                .setMarginTop(10)
-                .setMarginBottom(10)
-                .setMarginHorizontal(35)
-                .setCornerRadius(16f)
-                .setBackgroundDrawableResource(R.drawable.background_tooltip_black5)
-                .setBalloonAnimation(BalloonAnimation.ELASTIC)
-                .build()
-
-            buttonQna.showAlignTop(balloon)
-
-            Handler().postDelayed({
-                balloon.dismiss()
-            }, 3000)
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
+        showToolTip()
+    }
+
+    fun showToolTip() {
+        val balloon = Balloon.Builder(loginActivity)
+//                .setWidth(BalloonSizeSpec.WRAP)
+            .setWidthRatio(0.6f) // sets width as 50% of the horizontal screen's size.
+            .setHeight(BalloonSizeSpec.WRAP)
+            .setText("스튜딩에 문의하기")
+            .setTextColorResource(R.color.black_30)
+            .setTextSize(12f)
+            .setTextTypeface(ResourcesCompat.getFont(loginActivity, R.font.inter_regular)!!)
+            .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+            .setArrowSize(10)
+            .setArrowPosition(0.5f)
+            .setArrowColorResource(R.color.black_5)
+            .setTextGravity(Gravity.CENTER)
+            .setElevation(0)
+            .setPaddingHorizontal(15)
+            .setPaddingVertical(5)
+            .setMarginTop(10)
+            .setMarginBottom(10)
+            .setMarginHorizontal(35)
+            .setCornerRadius(16f)
+            .setBackgroundDrawableResource(R.drawable.background_tooltip_black5)
+            .setBalloonAnimation(BalloonAnimation.ELASTIC)
+            .build()
+
+        binding.buttonQna.showAlignTop(balloon)
+
+        Handler().postDelayed({
+            balloon.dismiss()
+        }, 3000)
+    }
+
+    fun initView() {
+
+        binding.root.setOnTouchListener { v, event ->
+            loginActivity.hideKeyboard()
+            false
+        }
+
+        viewModel.getUserInfo(loginActivity)
     }
 }

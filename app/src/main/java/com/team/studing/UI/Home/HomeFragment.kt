@@ -239,6 +239,8 @@ class HomeFragment : Fragment() {
             layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
 
             textViewNoticeScrapIntro.text = "${MyApplication.memberData?.name}님이 저장한 공지사항이에요"
+            textViewStudentCouncilIntro.text =
+                "${MyApplication.memberData?.memberUniversity}의 학생회 소식"
 
             // 리스트 데이터 초기화
             viewModel.getStudentCouncilLogo(mainActivity)
