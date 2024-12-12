@@ -14,7 +14,7 @@
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/example"
+        android:src="@drawable/img_notice_list_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/RoundSector10" />

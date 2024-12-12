@@ -30,7 +30,7 @@
                 android:layout_height="55dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="13dp"
-                android:src="@drawable/example"
+                android:src="@drawable/ic_student_council_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

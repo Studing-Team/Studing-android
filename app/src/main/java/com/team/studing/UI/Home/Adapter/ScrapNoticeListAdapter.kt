@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.team.studing.API.response.Home.ScrapNotice
 import com.team.studing.MainActivity
+import com.team.studing.R
 import com.team.studing.databinding.RowScrapNoticeListBinding
 
 class ScrapNoticeListAdapter(
@@ -47,8 +48,12 @@ class ScrapNoticeListAdapter(
         holder.title.text = scrapNotices[position].title
         holder.date.text = scrapNotices[position].createdAt
 
-        Glide.with(activity).load(scrapNotices[position].image)
-            .into(holder.image)
+        if (scrapNotices[position].image!!.isNotEmpty()) {
+            Glide.with(activity).load(scrapNotices[position].image)
+                .into(holder.image)
+        } else {
+            holder.image.setImageResource(R.drawable.img_notice_list_default)
+        }
     }
 
     override fun getItemCount() = scrapNotices.size

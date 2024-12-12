@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/RoundSector10"
-        app:srcCompat="@drawable/example" />
+        app:srcCompat="@drawable/img_notice_list_default" />
 
     <ImageView
         android:id="@+id/button_delete"

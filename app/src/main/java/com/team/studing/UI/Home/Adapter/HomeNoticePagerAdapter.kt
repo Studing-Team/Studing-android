@@ -83,8 +83,13 @@ class HomeNoticePagerAdapter(
             holder.likeCheck.setImageResource(R.drawable.ic_like_black30)
         }
 
-        Glide.with(activity).load(notices[position].image)
-            .into(holder.noticeImage)
+
+        if (notices[position].image.isNotEmpty()) {
+            Glide.with(activity).load(notices[position].image)
+                .into(holder.noticeImage)
+        } else {
+            holder.noticeImage.setImageResource(R.drawable.img_notice_default)
+        }
     }
 
     override fun getItemCount() = if (notices.size >= 5) {
