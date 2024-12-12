@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="199dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/example"
+        android:src="@drawable/img_notice_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

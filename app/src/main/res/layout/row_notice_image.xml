@@ -13,5 +13,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/example" />
+        app:srcCompat="@drawable/img_notice_default" />
 </androidx.constraintlayout.widget.ConstraintLayout>
