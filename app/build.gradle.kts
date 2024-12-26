@@ -18,8 +18,8 @@ android {
         applicationId = "com.team.studing"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 4
+        versionName = "1.0.2"
 
         buildConfigField("String", "MAP_API_KEY", "\"${properties["map_client_id"]}\"")
         buildConfigField("String", "SERVER_URL", "\"${properties["server_url"]}\"")

@@ -20,25 +20,39 @@ class FirebaseService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        Log.d(javaClass.name, "onMessageReceived: ${message.from} ")
+        Log.d("##", "onMessageReceived: ${message.from} ")
         message.notification?.let {
-            showNotification(messageTitle = it.title ?: "", messageBody = it.body ?: "")
+            showNotification(
+                messageTitle = it.title ?: "",
+                messageBody = it.body ?: "",
+                messageType = message.data["type"].toString(),
+                messageNoticeId = message.data["noticeId"].toString()
+            )
         }
     }
 
-    private fun showNotification(messageTitle: String, messageBody: String) {
+    private fun showNotification(
+        messageTitle: String,
+        messageBody: String,
+        messageType: String,
+        messageNoticeId: String
+    ) {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = (System.currentTimeMillis() / 7).toInt() // 고유 ID 지정
 
         createNotificationChannel(notificationManager)
+        Log.d("##", "onMessageReceived: ${messageType}, ${messageNoticeId} ")
+
         val intent = Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra("type", messageType)
+            putExtra("noticeId", messageNoticeId)
         }
         val pendingIntent = PendingIntent.getActivity(
             this,
             notificationID,
             intent,
-            PendingIntent.FLAG_MUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         notificationManager.notify(
             notificationID,
