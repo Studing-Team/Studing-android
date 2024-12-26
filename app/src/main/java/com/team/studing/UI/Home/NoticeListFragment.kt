@@ -136,7 +136,7 @@ class NoticeListFragment : Fragment() {
                     MyApplication.noticeId = getNoticeList[position].id
                     noticeViewModel.getNoticeDetail(
                         mainActivity,
-                        getNoticeList[position].id.toInt()
+                        MyApplication.noticeId
                     )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())

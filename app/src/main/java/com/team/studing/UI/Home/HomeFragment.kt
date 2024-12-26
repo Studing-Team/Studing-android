@@ -142,7 +142,7 @@ class HomeFragment : Fragment() {
                     MyApplication.noticeId = getScrapNoticeList[position].id.toInt()
                     noticeViewModel.getNoticeDetail(
                         mainActivity,
-                        getScrapNoticeList[position].id.toInt()
+                        MyApplication.noticeId
                     )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
