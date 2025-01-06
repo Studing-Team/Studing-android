@@ -52,9 +52,11 @@ class LoginViewModel : ViewModel() {
                             result?.data?.role.toString()
                         )
 
-                        val mainIntent = Intent(activity, MainActivity::class.java)
-                        mainIntent.putExtra("isLogin", true)
-                        activity.startActivity(mainIntent)
+                        if (MyApplication.preferences.getRole() == result?.data?.role) {
+                            val mainIntent = Intent(activity, MainActivity::class.java)
+                            mainIntent.putExtra("isLogin", true)
+                            activity.startActivity(mainIntent)
+                        }
 
                         Log.d("##", "viewModel userInfo : ${user.value}")
                     } else {
@@ -110,6 +112,8 @@ class LoginViewModel : ViewModel() {
 
                         MyApplication.memberData = result.data.memberData
                         user.value = result.data.memberData
+
+                        MyApplication.preferences.setRole(result.data.memberData.role)
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<LoginResponse>? = response.body()
