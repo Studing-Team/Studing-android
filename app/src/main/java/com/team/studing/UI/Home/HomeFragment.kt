@@ -86,7 +86,28 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        navigateForUser()
         initView()
+    }
+
+    private fun navigateForUser() {
+        requireActivity().intent.getStringExtra("type")?.let { type ->
+            if (type == "NOTICE") {
+                requireActivity().intent.getStringExtra("noticeId")?.toIntOrNull()
+                    ?.let { noticeId ->
+                        MyApplication.noticeId = noticeId
+                        noticeViewModel.getNoticeDetail(mainActivity, noticeId)
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
+                            .addToBackStack(null)
+                            .commit()
+
+                        // Intent 데이터 초기화
+                        requireActivity().intent.removeExtra("type")
+                        requireActivity().intent.removeExtra("noticeId")
+                    }
+            }
+        }
     }
 
     private fun initAdapters() {
@@ -123,7 +144,7 @@ class HomeFragment : Fragment() {
                     MyApplication.noticeId = getRecentNoticeList[position].id
                     noticeViewModel.getNoticeDetail(
                         mainActivity,
-                        getRecentNoticeList[position].id.toInt()
+                        MyApplication.noticeId
                     )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
@@ -142,7 +163,7 @@ class HomeFragment : Fragment() {
                     MyApplication.noticeId = getScrapNoticeList[position].id.toInt()
                     noticeViewModel.getNoticeDetail(
                         mainActivity,
-                        getScrapNoticeList[position].id.toInt()
+                        MyApplication.noticeId
                     )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())

@@ -1,5 +1,6 @@
 package com.team.studing.ViewModel
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +8,6 @@ import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.NoticeDetailResponse
-import com.team.studing.MainActivity
 import com.team.studing.RegisterNoticeActivity
 import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.SingleLiveEvent
@@ -29,7 +29,7 @@ class NoticeViewModel : ViewModel() {
 
 
     // 공지사항 세부 화면 조회
-    fun getNoticeDetail(activity: MainActivity, noticeId: Int) {
+    fun getNoticeDetail(activity: Activity, noticeId: Int) {
 
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
@@ -75,7 +75,7 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun likeNotice(activity: MainActivity, noticeId: Int) {
+    fun likeNotice(activity: Activity, noticeId: Int) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
@@ -111,7 +111,7 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun cancelLikeNotice(activity: MainActivity, noticeId: Int) {
+    fun cancelLikeNotice(activity: Activity, noticeId: Int) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
@@ -147,7 +147,7 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun scrapNotice(activity: MainActivity, noticeId: Int) {
+    fun scrapNotice(activity: Activity, noticeId: Int) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
@@ -183,7 +183,7 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun cancelScrapNotice(activity: MainActivity, noticeId: Int) {
+    fun cancelScrapNotice(activity: Activity, noticeId: Int) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
@@ -219,7 +219,7 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun viewNotice(activity: MainActivity, noticeId: Int) {
+    fun viewNotice(activity: Activity, noticeId: Int) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
