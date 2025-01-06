@@ -9,8 +9,6 @@ import com.team.studing.API.TokenManager
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Mypage.MyPageInfoResponse
 import com.team.studing.MainActivity
-import com.team.studing.R
-import com.team.studing.UI.Login.LoginFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import retrofit2.Call
 import retrofit2.Callback
@@ -86,16 +84,7 @@ class MypageViewModel : ViewModel() {
 
                         amplitude.reset()
 
-                        activity.supportFragmentManager.popBackStack(
-                            null,
-                            FragmentManager.POP_BACK_STACK_INCLUSIVE
-                        )
-
-                        activity.supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainerView_main, LoginFragment())
-                            .addToBackStack(null)
-                            .commit()
-
+                        activity.finish()
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<Void>? = response.body()

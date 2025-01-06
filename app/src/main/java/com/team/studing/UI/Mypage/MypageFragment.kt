@@ -8,13 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.team.studing.API.TokenManager
 import com.team.studing.API.response.Mypage.MyPageInfoResponse
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.UI.Login.LoginFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.MypageViewModel
 import com.team.studing.databinding.FragmentMypageBinding
@@ -77,16 +75,7 @@ class MypageFragment : Fragment() {
                         tokenManager.deleteAccessToken()
                         amplitude.reset()
 
-                        mainActivity.supportFragmentManager.popBackStack(
-                            null,
-                            FragmentManager.POP_BACK_STACK_INCLUSIVE
-                        )
-
-                        mainActivity.supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainerView_main, LoginFragment())
-                            .addToBackStack(null)
-                            .commit()
-
+                        mainActivity.finish()
                     }
                 })
 
