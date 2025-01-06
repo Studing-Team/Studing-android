@@ -43,11 +43,11 @@ class DialogWithdrawal : DialogFragment() {
 
 
         binding.buttonCancel.setOnClickListener {
+            listener?.onClickYesButton() // 인터페이스를 통해 이벤트 전달
             dismiss()
         }
 
         binding.buttonAccept.setOnClickListener {
-            listener?.onClickYesButton() // 인터페이스를 통해 이벤트 전달
             dismiss()
         }
 

@@ -14,4 +14,11 @@ class PreferenceUtil(context: Context) {
 
     fun getFCMToken(): String? =
         preferences.getString("FCM_TOKEN", null)
+
+    fun setRole(token: String) {
+        preferences.edit().putString("ROLE", token).apply()
+    }
+
+    fun getRole(): String? =
+        preferences.getString("ROLE", "ROLE_UNUSER")
 }
