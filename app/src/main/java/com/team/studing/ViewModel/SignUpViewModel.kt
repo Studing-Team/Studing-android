@@ -297,7 +297,6 @@ class SignUpViewModel : ViewModel() {
         val tokenManager = TokenManager(activity)
 
         apiClient.apiService.sendFcmToken(
-            "Bearer ${tokenManager.getAccessToken()}",
             SendFcmTokenRequest(
                 MyApplication.preferences.getFCMToken().toString(),
                 MyApplication.memberId

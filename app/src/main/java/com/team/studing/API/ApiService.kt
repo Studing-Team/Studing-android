@@ -74,7 +74,6 @@ interface ApiService {
     // FCM 토큰 저장
     @POST("api/v1/notifications/token")
     fun sendFcmToken(
-        @Header("Authorization") token: String,
         @Body parameters: SendFcmTokenRequest
     ): Call<BaseResponse<Void>>
 

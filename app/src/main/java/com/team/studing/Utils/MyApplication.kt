@@ -10,6 +10,9 @@ class MyApplication : Application() {
 
         lateinit var preferences: PreferenceUtil
 
+        var notificationNoticeType = ""
+        var notificationNoticeId = ""
+
         // 카테고리 리스트
         var categoryList = listOf("전체", "총학생회", "단과대", "학과")
         var noticeCategory = 0

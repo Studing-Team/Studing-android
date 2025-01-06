@@ -1,15 +1,15 @@
 package com.team.studing.UI.Home.Adapter
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.team.studing.MainActivity
 import com.team.studing.databinding.RowNoticeImageBinding
 
 class NoticeImagePagerAdapter(
-    private var activity: MainActivity,
+    private var activity: Activity,
     private var images: List<String>?
 ) :
     RecyclerView.Adapter<NoticeImagePagerAdapter.ViewHolder>() {

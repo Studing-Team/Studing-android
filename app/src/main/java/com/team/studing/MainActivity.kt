@@ -17,6 +17,7 @@ import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.MyApplication.Companion.memberData
 import com.team.studing.ViewModel.LoginViewModel
+import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,13 +25,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     lateinit var viewModel: LoginViewModel
+    lateinit var noticeViewModel: NoticeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        noticeViewModel = ViewModelProvider(this)[NoticeViewModel::class.java]
 
+        Log.d(
+            "##",
+            "notification type : ${MyApplication.notificationNoticeType}, ${MyApplication.notificationNoticeId}"
+        )
+
+        // 알림 데이터 처리
         initView()
 
         viewModel.run {
@@ -75,6 +84,10 @@ class MainActivity : AppCompatActivity() {
 
     fun initView() {
         Log.d("##", "member : ${memberData?.role}")
+        val type = intent.getStringExtra("type")
+        val noticeId = intent.getStringExtra("noticeId")
+        Log.d("##", "notification : ${type}, ${noticeId}")
+
         when (memberData?.role) {
             "ROLE_UNUSER" -> {
                 hideWriteNoticeButton(true)
@@ -119,6 +132,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setBottomNavigationView() {
         bottomNavigationView.setOnItemSelectedListener { item ->

@@ -11,44 +11,74 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.team.studing.MainActivity
+import com.team.studing.NotificationNoticeActivity
 import com.team.studing.R
 
+
 class FirebaseService : FirebaseMessagingService() {
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d("FCM Token", "onNewToken: ${token} ")
+        Log.d("FCM Token", "onNewToken: $token")
+        // 서버에 토큰 업데이트 필요 시 추가
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        Log.d(javaClass.name, "onMessageReceived: ${message.from} ")
-        message.notification?.let {
-            showNotification(messageTitle = it.title ?: "", messageBody = it.body ?: "")
+        super.onMessageReceived(message)
+
+        Log.d("FirebaseService", "Message received from: ${message.from}")
+
+//        val title = message.data["title"] ?: "알림"
+//        val body = message.data["body"] ?: "내용 없음"
+        val title = message.notification?.title.toString()
+        val body = message.notification?.body.toString()
+        val type = message.data["type"] ?: "DEFAULT"
+        val noticeId = message.data["noticeId"] ?: "0"
+
+        Log.d(
+            "FirebaseService",
+            "Data payload: title=$title, body=$body, type=$type, noticeId=$noticeId"
+        )
+
+        // 알림 표시
+        showNotification(title, body, type, noticeId)
+
+        // 데이터 메시지 처리
+        if (message.data.isNotEmpty()) {
+
         }
     }
 
-    private fun showNotification(messageTitle: String, messageBody: String) {
+    private fun showNotification(
+        messageTitle: String,
+        messageBody: String,
+        messageType: String,
+        messageNoticeId: String
+    ) {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = (System.currentTimeMillis() / 7).toInt() // 고유 ID 지정
 
         createNotificationChannel(notificationManager)
-        val intent = Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }
+
+        val intent =
+            when (messageType) {
+                "VERIFICATION" -> Intent(this, MainActivity::class.java)
+                "NOTICE" -> Intent(this, NotificationNoticeActivity::class.java)
+                else -> Intent(this, MainActivity::class.java) // 기본 화면
+            }.apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                putExtra("type", messageType)
+                putExtra("noticeId", messageNoticeId)
+            }
+
         val pendingIntent = PendingIntent.getActivity(
             this,
             notificationID,
             intent,
-            PendingIntent.FLAG_MUTABLE
-        )
-        notificationManager.notify(
-            notificationID,
-            notificationBuilder(messageTitle, messageBody, pendingIntent)
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-    }
-
-    private fun notificationBuilder(title: String, body: String, pendingIntent: PendingIntent) =
-        NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setLargeIcon(
                 BitmapFactory.decodeResource(
                     resources,
@@ -56,14 +86,16 @@ class FirebaseService : FirebaseMessagingService() {
                 )
             )
             .setSmallIcon(R.mipmap.ic_logo)
-            .setContentTitle(title)
-            .setContentText(body)
+            .setContentTitle(messageTitle)
+            .setContentText(messageBody)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .build()
 
+        notificationManager.notify(notificationID, notification)
+    }
 
     private fun createNotificationChannel(notificationManager: NotificationManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -86,3 +118,4 @@ class FirebaseService : FirebaseMessagingService() {
         private const val CHANNEL_ID = "fcm_default_channel"
     }
 }
+
