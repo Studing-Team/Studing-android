@@ -23,6 +23,7 @@ android {
 
         buildConfigField("String", "MAP_API_KEY", "\"${properties["map_client_id"]}\"")
         buildConfigField("String", "SERVER_URL", "\"${properties["server_url"]}\"")
+        buildConfigField("String", "DEV_URL", "\"${properties["dev_url"]}\"")
         buildConfigField("String", "AMPLITUDE_KEY", "\"${properties["amplitude_api_key"]}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -81,6 +82,7 @@ dependencies {
 //    implementation("com.google.android.gms:play-services-maps:21.0.1")
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.naver.maps:map-sdk:3.19.1")
+//    implementation("com.google.firebase:firebase-messaging-directboot:20.2.0")
 
     // api
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
