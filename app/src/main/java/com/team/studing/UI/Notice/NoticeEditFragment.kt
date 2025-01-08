@@ -101,6 +101,13 @@ class NoticeEditFragment : Fragment() {
 
             buttonEdit.setOnClickListener {
                 // 공지사항 수정
+                viewModel.editNotice(
+                    mainActivity,
+                    noticeId,
+                    editTextNoticeTitle.text.toString(),
+                    editTextNoticeContent.text.toString(),
+                    noticeTag
+                )
             }
         }
         return binding.root

@@ -187,6 +187,15 @@ interface ApiService {
         @Part NoticeImage: List<MultipartBody.Part>?
     ): Call<BaseResponse<Void>>
 
+    // 공지사항 수정하기
+    @Multipart
+    @PUT("api/v1/notices/{noticeId}")
+    fun editNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int,
+        @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part NoticeImage: List<MultipartBody.Part>?
+    ): Call<BaseResponse<Void>>
     // 제휴 업체 데이터 리스트 반환
     @POST("api/v1/partner")
     fun getPartnerShipInfo(
