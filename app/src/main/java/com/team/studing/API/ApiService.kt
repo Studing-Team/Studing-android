@@ -181,10 +181,10 @@ interface ApiService {
     // 공지사항 등록하기
     @Multipart
     @POST("api/v1/notices/create")
-    fun viewCheckNotice(
+    fun registerNotice(
         @Header("Authorization") token: String,
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part studentCardImage: List<MultipartBody.Part>?
+        @Part NoticeImage: List<MultipartBody.Part>?
     ): Call<BaseResponse<Void>>
 
     // 제휴 업체 데이터 리스트 반환

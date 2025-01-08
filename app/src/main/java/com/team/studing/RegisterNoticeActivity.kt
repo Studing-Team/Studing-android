@@ -34,7 +34,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
     private var selectedImages = mutableListOf<Uri>() // Set으로 중복 방지
     private lateinit var noticeImageAdapter: RegisterNoticeImageAdapter
 
-    var tag = ""
+    var noticeTag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,12 +85,12 @@ class RegisterNoticeActivity : AppCompatActivity() {
             }
 
             buttonTagNotice.setOnClickListener {
-                tag = "공지"
+                noticeTag = "공지"
                 checkTag()
             }
 
             buttonTagEvent.setOnClickListener {
-                tag = "이벤트"
+                noticeTag = "이벤트"
                 checkTag()
             }
 
@@ -101,7 +101,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
                     this@RegisterNoticeActivity,
                     editTextNoticeTitle.text.toString(),
                     editTextNoticeContent.text.toString(),
-                    tag
+                    noticeTag
                 )
             }
         }
@@ -115,14 +115,15 @@ class RegisterNoticeActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        noticeImageAdapter = RegisterNoticeImageAdapter(selectedImages.toMutableList()).apply {
-            setOnItemClickListener { position ->
-                val removedImage = selectedImages.elementAt(position)
-                selectedImages.remove(removedImage)
-                updateList(selectedImages.toMutableList())
-                binding.textViewImageNum.text = "${selectedImages.size}/10"
+        noticeImageAdapter =
+            RegisterNoticeImageAdapter(this, selectedImages.toMutableList()).apply {
+                setOnItemClickListener { position ->
+                    val removedImage = selectedImages.elementAt(position)
+                    selectedImages.remove(removedImage)
+                    updateList(selectedImages.toMutableList())
+                    binding.textViewImageNum.text = "${selectedImages.size}/10"
+                }
             }
-        }
 
         binding.recyclerViewImage.apply {
             adapter = noticeImageAdapter
@@ -132,7 +133,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
 
     fun checkTag() {
         binding.run {
-            if (tag == "공지") {
+            if (noticeTag == "공지") {
                 buttonTagNotice.run {
                     setBackgroundResource(R.drawable.background_notice_type_chip_primary20)
                     setTextColor(resources.getColor(R.color.primary_50))
@@ -141,7 +142,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
                     setBackgroundResource(R.drawable.background_chip_black10)
                     setTextColor(resources.getColor(R.color.black_30))
                 }
-            } else if (tag == "이벤트") {
+            } else if (noticeTag == "이벤트") {
                 buttonTagNotice.run {
                     setBackgroundResource(R.drawable.background_chip_black10)
                     setTextColor(resources.getColor(R.color.black_30))
@@ -158,7 +159,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
     private fun checkEnabled() {
         binding.run {
             buttonRegister.isEnabled =
-                editTextNoticeTitle.text.isNotEmpty() && editTextNoticeContent.text.isNotEmpty() && tag != ""
+                editTextNoticeTitle.text.isNotEmpty() && editTextNoticeContent.text.isNotEmpty() && noticeTag != ""
         }
     }
 

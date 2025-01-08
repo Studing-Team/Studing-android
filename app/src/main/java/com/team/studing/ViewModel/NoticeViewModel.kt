@@ -8,7 +8,7 @@ import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.NoticeDetailResponse
-import com.team.studing.RegisterNoticeActivity
+import com.team.studing.MainActivity
 import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.SingleLiveEvent
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -257,7 +257,7 @@ class NoticeViewModel : ViewModel() {
     }
 
     fun registerNotice(
-        activity: RegisterNoticeActivity,
+        activity: Activity,
         title: String,
         content: String,
         tag: String
@@ -274,7 +274,7 @@ class NoticeViewModel : ViewModel() {
         params["tag"] =
             tag.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        apiClient.apiService.viewCheckNotice(
+        apiClient.apiService.registerNotice(
             "Bearer ${tokenManager.getAccessToken()}",
             params,
             MyApplication.noticeImages
