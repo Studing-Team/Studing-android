@@ -26,6 +26,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.PartMap
 import retrofit2.http.Path
@@ -196,6 +197,14 @@ interface ApiService {
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part NoticeImage: List<MultipartBody.Part>?
     ): Call<BaseResponse<Void>>
+
+    // 공지사항 삭제하기
+    @PUT("api/v1/notices/{noticeId}")
+    fun deleteNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
     // 제휴 업체 데이터 리스트 반환
     @POST("api/v1/partner")
     fun getPartnerShipInfo(

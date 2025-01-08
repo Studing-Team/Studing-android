@@ -281,6 +281,7 @@ class NoticeDetailFragment : Fragment() {
                         dialog.setNoticeDeleteDialogInterface(object : NoticeDeleteDialogInterface {
                             override fun onClickYesButton() {
                                 // 공지사항 삭제 기능 구현
+                                viewModel.deleteNotice(mainActivity, getNoticeDetail?.id!!)
                             }
                         })
 
