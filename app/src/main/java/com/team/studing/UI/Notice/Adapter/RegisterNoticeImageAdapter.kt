@@ -1,14 +1,18 @@
 package com.team.studing.UI.Notice.Adapter
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.team.studing.databinding.RowRegisterNoticeImageBinding
 
 class RegisterNoticeImageAdapter(
+    var activity: Activity,
     private var noticeImages: MutableList<Uri>
 ) :
     RecyclerView.Adapter<RegisterNoticeImageAdapter.ViewHolder>() {
@@ -55,7 +59,11 @@ class RegisterNoticeImageAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.image.setImageURI(noticeImages[position])
+        Glide.with(activity)
+            .load(noticeImages[position])
+            .skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(holder.image)
     }
 
     override fun getItemCount() = noticeImages.size
