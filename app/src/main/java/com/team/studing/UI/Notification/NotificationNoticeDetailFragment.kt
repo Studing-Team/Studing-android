@@ -12,7 +12,7 @@ import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.MainActivity
 import com.team.studing.NotificationNoticeActivity
 import com.team.studing.R
-import com.team.studing.UI.Home.Adapter.NoticeImagePagerAdapter
+import com.team.studing.UI.Notice.Adapter.NoticeImagePagerAdapter
 import com.team.studing.Utils.BasicToast
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.ViewModel.NoticeViewModel

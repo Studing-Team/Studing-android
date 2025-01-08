@@ -1,4 +1,4 @@
-package com.team.studing.UI.Home
+package com.team.studing.UI.Notice
 
 import android.content.Intent
 import android.net.Uri
@@ -11,30 +11,31 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.team.studing.API.response.Home.ScrapNotice
+import com.team.studing.API.response.Home.Notice
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.UI.Home.Adapter.ScrapNoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
+import com.team.studing.UI.Notice.Adapter.NoticeListAdapter
+import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.ViewModel.NoticeViewModel
-import com.team.studing.databinding.FragmentScrapNoticeListBinding
+import com.team.studing.databinding.FragmentNoticeListBinding
 
-class ScrapNoticeListFragment : Fragment() {
+class NoticeListFragment : Fragment() {
 
-    lateinit var binding: FragmentScrapNoticeListBinding
+    lateinit var binding: FragmentNoticeListBinding
     lateinit var mainActivity: MainActivity
     lateinit var viewModel: HomeViewModel
     lateinit var noticeViewModel: NoticeViewModel
 
     private lateinit var studentCouncilAdapter: StudentCouncilAdapter
-    private lateinit var scrapNoticeListAdapter: ScrapNoticeListAdapter
+    private lateinit var noticeListAdapter: NoticeListAdapter
 
     private var getStudentCouncilLogoList = mutableListOf<String>()
     private var getStudentCouncilNameList = mutableListOf<String>()
     private var getUnReadStudentCouncilNameList = mutableListOf<String>()
-    private var getScrapNoticeList = mutableListOf<ScrapNotice>()
+    private var getNoticeList = mutableListOf<Notice>()
 
     private var categoryPosition = 0
     private var isRegisterMajorStudentCouncil = false
@@ -44,21 +45,30 @@ class ScrapNoticeListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentScrapNoticeListBinding.inflate(layoutInflater)
+        binding = FragmentNoticeListBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(mainActivity)[HomeViewModel::class.java]
         noticeViewModel = ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
 
-        initAdapter()
-        observeViewModel()
 
         binding.run {
+            buttonQna.setOnClickListener {
+                amplitude.track("click_contact_kakao_list")
+
+                // 스튜딩 카카오톡 채널
+                var intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://pf.kakao.com/_BzmZn"))
+                startActivity(intent)
+            }
+
             emptyViewStudentCouncil.buttonRegisterStudentCouncil.setOnClickListener {
+                amplitude.track("click_register_form_list")
+
                 val intent =
                     Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/cCyRaN41xGuqQffM6"))
                 startActivity(intent)
             }
         }
+
 
         return binding.root
     }
@@ -68,6 +78,26 @@ class ScrapNoticeListFragment : Fragment() {
         initView()
     }
 
+    private fun setAmplitudeData(position: Int) {
+        when (position) {
+            0 -> {
+                amplitude.track("click_category_all_list")
+            }
+
+            1 -> {
+                amplitude.track("click_category_university_list")
+            }
+
+            2 -> {
+                amplitude.track("click_category_college_list")
+            }
+
+            3 -> {
+                amplitude.track("click_category_department_list")
+            }
+        }
+    }
+
     fun initAdapter() {
         studentCouncilAdapter = StudentCouncilAdapter(
             mainActivity,
@@ -75,25 +105,35 @@ class ScrapNoticeListFragment : Fragment() {
             getStudentCouncilLogoList,
             getUnReadStudentCouncilNameList
         ).apply {
+            updateSelectedPosition(categoryPosition)
             itemClickListener = object : StudentCouncilAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
+                    setAmplitudeData(position)
+
                     categoryPosition = position
-                    viewModel.getScrapNoticeList(
-                        mainActivity,
-                        MyApplication.categoryList[categoryPosition]
-                    )
+                    MyApplication.noticeCategory = categoryPosition
+                    if (categoryPosition == 0) {
+                        viewModel.getNoticeList(mainActivity)
+                    } else {
+                        viewModel.getStudentCouncilNoticeList(
+                            mainActivity,
+                            MyApplication.categoryList[categoryPosition]
+                        )
+                    }
                     updateNoticeListVisibility()
                 }
             }
         }
 
-        scrapNoticeListAdapter = ScrapNoticeListAdapter(
+        noticeListAdapter = NoticeListAdapter(
             mainActivity,
-            getScrapNoticeList
+            getNoticeList
         ).apply {
-            itemClickListener = object : ScrapNoticeListAdapter.OnItemClickListener {
+            itemClickListener = object : NoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
-                    MyApplication.noticeId = getScrapNoticeList[position].id.toInt()
+                    amplitude.track("click_detail_notice_list")
+
+                    MyApplication.noticeId = getNoticeList[position].id
                     noticeViewModel.getNoticeDetail(
                         mainActivity,
                         MyApplication.noticeId
@@ -111,8 +151,8 @@ class ScrapNoticeListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
 
-        binding.recyclerViewScrapNoticeList.apply {
-            adapter = scrapNoticeListAdapter
+        binding.recyclerViewNoticeList.apply {
+            adapter = noticeListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
     }
@@ -142,18 +182,24 @@ class ScrapNoticeListFragment : Fragment() {
                 )
             }
 
-//            unreadStudentCouncilNameList.observe(viewLifecycleOwner) {
-//                getUnReadStudentCouncilNameList = it
-//                studentCouncilAdapter.updateList(
-//                    getStudentCouncilNameList,
-//                    getStudentCouncilLogoList,
-//                    getUnReadStudentCouncilNameList
-//                )
-//            }
+            unreadStudentCouncilNameList.observe(viewLifecycleOwner) {
+                getUnReadStudentCouncilNameList = it
+                studentCouncilAdapter.updateList(
+                    getStudentCouncilNameList,
+                    getStudentCouncilLogoList,
+                    getUnReadStudentCouncilNameList
+                )
+            }
 
-            scrapNoticeList.observe(viewLifecycleOwner) {
-                getScrapNoticeList = it
-                scrapNoticeListAdapter.updateList(getScrapNoticeList)
+            noticeList.observe(viewLifecycleOwner) {
+                getNoticeList = it
+                noticeListAdapter.updateList(getNoticeList)
+                updateNoticeListVisibility()
+            }
+
+            studentCouncilNoticeList.observe(viewLifecycleOwner) {
+                getNoticeList = it
+                noticeListAdapter.updateList(getNoticeList)
                 updateNoticeListVisibility()
             }
         }
@@ -164,34 +210,55 @@ class ScrapNoticeListFragment : Fragment() {
         binding.run {
             if (!isRegisterMajorStudentCouncil && categoryPosition == 3) {
                 Log.d("##", "no studentCouncil")
-                recyclerViewScrapNoticeList.visibility = View.GONE
-                emptyViewScrapNotice.layoutEmptyNoticeList.visibility = View.GONE
+                recyclerViewNoticeList.visibility = View.GONE
+                emptyViewNotice.layoutEmptyNoticeList.visibility = View.GONE
                 emptyViewStudentCouncil.layoutEmptyStudentCouncil.visibility = View.VISIBLE
             } else {
-                if (getScrapNoticeList.isEmpty()) {
-                    Log.d("##", "empty : ${getScrapNoticeList}")
-                    recyclerViewScrapNoticeList.visibility = View.GONE
-                    emptyViewScrapNotice.layoutEmptyNoticeList.visibility = View.VISIBLE
+                if (getNoticeList.isEmpty()) {
+                    Log.d("##", "empty : ${getNoticeList}")
+                    recyclerViewNoticeList.visibility = View.GONE
+                    emptyViewNotice.layoutEmptyNoticeList.visibility = View.VISIBLE
                     emptyViewStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
                 } else {
-                    Log.d("##", "not empty : ${getScrapNoticeList}")
-                    recyclerViewScrapNoticeList.visibility = View.VISIBLE
-                    emptyViewScrapNotice.layoutEmptyNoticeList.visibility = View.GONE
+                    Log.d("##", "not empty : ${getNoticeList}")
+                    recyclerViewNoticeList.visibility = View.VISIBLE
+                    emptyViewNotice.layoutEmptyNoticeList.visibility = View.GONE
                     emptyViewStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
                 }
             }
         }
     }
 
+
     fun initView() {
         mainActivity.hideBottomNavigation(true)
         mainActivity.hideWriteNoticeButton(true)
 
-        viewModel.getScrapNoticeList(mainActivity, MyApplication.categoryList[categoryPosition])
+        categoryPosition = MyApplication.noticeCategory
+        // 카테고리 초기 선택 및 스크롤
+        binding.recyclerViewStudentCouncil.post {
+            studentCouncilAdapter.updateSelectedPosition(categoryPosition) // 어댑터에 선택 상태 전달
+            binding.recyclerViewStudentCouncil.smoothScrollToPosition(categoryPosition)
+        }
+        if (categoryPosition == 0) {
+            viewModel.getNoticeList(mainActivity)
+        } else {
+            viewModel.getStudentCouncilNoticeList(
+                mainActivity,
+                MyApplication.categoryList[categoryPosition]
+            )
+        }
+
+        initAdapter()
+        observeViewModel()
 
         binding.run {
+            recyclerViewNoticeList.visibility = View.VISIBLE
+            emptyViewNotice.layoutEmptyNoticeList.visibility = View.GONE
+            emptyViewStudentCouncil.layoutEmptyStudentCouncil.visibility = View.GONE
+
             toolbar.run {
-                textViewTitle.text = "저장한 공지사항을 확인해요"
+                textViewTitle.text = "학생회 공지 리스트"
                 buttonBack.setOnClickListener {
                     fragmentManager?.popBackStack()
                 }

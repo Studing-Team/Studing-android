@@ -1,6 +1,5 @@
-package com.team.studing.UI.Home
+package com.team.studing.UI.Notice
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.UI.Home.Adapter.NoticeImagePagerAdapter
+import com.team.studing.UI.Notice.Adapter.NoticeImagePagerAdapter
 import com.team.studing.Utils.BasicToast
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.HomeViewModel
@@ -228,7 +226,7 @@ class NoticeDetailFragment : Fragment() {
         }
     }
 
-    
+
     fun initView() {
 
         mainActivity.hideBottomNavigation(true)

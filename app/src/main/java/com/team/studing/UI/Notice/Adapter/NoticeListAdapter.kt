@@ -1,4 +1,4 @@
-package com.team.studing.UI.Home.Adapter
+package com.team.studing.UI.Notice.Adapter
 
 import android.content.Context
 import android.graphics.Color

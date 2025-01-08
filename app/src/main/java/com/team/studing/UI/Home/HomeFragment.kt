@@ -17,6 +17,10 @@ import com.team.studing.R
 import com.team.studing.UI.Home.Adapter.HomeNoticePagerAdapter
 import com.team.studing.UI.Home.Adapter.HomeScrapNoticeListAdapter
 import com.team.studing.UI.Home.Adapter.StudentCouncilAdapter
+import com.team.studing.UI.Notice.NoticeDetailFragment
+import com.team.studing.UI.Notice.NoticeListFragment
+import com.team.studing.UI.Notice.ScrapNoticeListFragment
+import com.team.studing.UI.Notice.UnreadNoticeFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication

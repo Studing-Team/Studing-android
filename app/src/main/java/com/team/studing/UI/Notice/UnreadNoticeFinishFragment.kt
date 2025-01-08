@@ -1,4 +1,4 @@
-package com.team.studing.UI.Home
+package com.team.studing.UI.Notice
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.databinding.FragmentUnreadNoticeFinishBinding
 

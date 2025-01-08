@@ -13,7 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.team.studing.UI.Home.Adapter.RegisterNoticeImageAdapter
+import com.team.studing.UI.Notice.Adapter.RegisterNoticeImageAdapter
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.NoticeViewModel
@@ -254,7 +254,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
                 hideKeyboard()
                 false
             }
-            
+
             toolbar.run {
                 buttonClose.setOnClickListener {
                     finish()

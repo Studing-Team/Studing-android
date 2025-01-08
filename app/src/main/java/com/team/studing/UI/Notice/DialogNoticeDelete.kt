@@ -1,4 +1,4 @@
-package com.team.studing.UI.Home
+package com.team.studing.UI.Notice
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
