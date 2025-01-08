@@ -1,9 +1,14 @@
 package com.team.studing.UI.Home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -223,7 +228,7 @@ class NoticeDetailFragment : Fragment() {
         }
     }
 
-
+    
     fun initView() {
 
         mainActivity.hideBottomNavigation(true)
@@ -236,6 +241,44 @@ class NoticeDetailFragment : Fragment() {
                     fragmentManager?.popBackStack()
                 }
                 textViewTitle.text = "공지사항"
+
+                buttonKebabMenu.visibility = View.VISIBLE
+                buttonKebabMenu.setOnClickListener {
+//                    showPopUpMenu()
+                    val popupView =
+                        LayoutInflater.from(context).inflate(R.layout.popup_menu_item, null)
+
+                    val popupWindow = PopupWindow(
+                        popupView,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true
+                    )
+                    popupWindow.elevation = 50f
+
+// 팝업 클릭 이벤트 설정
+                    popupView.findViewById<TextView>(R.id.textView_menu_edit).setOnClickListener {
+                        Toast.makeText(context, "수정하기 클릭됨", Toast.LENGTH_SHORT).show()
+                        popupWindow.dismiss()
+                    }
+
+                    popupView.findViewById<TextView>(R.id.textView_menu_delete).setOnClickListener {
+                        // 공지사항 삭제 dialog
+                        val dialog = DialogNoticeDelete()
+
+                        dialog.setNoticeDeleteDialogInterface(object : NoticeDeleteDialogInterface {
+                            override fun onClickYesButton() {
+                                // 공지사항 삭제 기능 구현
+                            }
+                        })
+
+                        dialog.show(parentFragmentManager, "DialogNoticeDelete")
+                        popupWindow.dismiss()
+                    }
+
+// 팝업 표시
+                    popupWindow.showAsDropDown(buttonKebabMenu, -330, 20)
+                }
             }
         }
     }
