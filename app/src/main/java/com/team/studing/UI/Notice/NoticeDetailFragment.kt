@@ -239,6 +239,9 @@ class NoticeDetailFragment : Fragment() {
         mainActivity.hideBottomNavigation(true)
         mainActivity.hideWriteNoticeButton(true)
 
+        MyApplication.notificationNoticeType = ""
+        MyApplication.notificationNoticeId = ""
+
         binding.run {
 
             toolbar.run {
