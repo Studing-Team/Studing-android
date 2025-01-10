@@ -197,7 +197,7 @@ class ReSubmitActivity : AppCompatActivity() {
 
                 textViewTitle.text = "회원가입"
                 buttonClose.setOnClickListener {
-                    fragmentManager?.popBackStack()
+                    finish()
                 }
             }
         }

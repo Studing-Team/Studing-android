@@ -241,7 +241,7 @@ class SignUpViewModel : ViewModel() {
             })
     }
 
-    // 회원가입 API
+    // 회원가입 재인증 요청 API
     fun reSubmit(activity: ReSubmitActivity) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
@@ -249,8 +249,8 @@ class SignUpViewModel : ViewModel() {
         // DTO의 각 필드를 RequestBody로 변환하고 Map에 추가
         val params = HashMap<String, RequestBody>()
 
-        params["admissionNumber"] =
-            MyApplication.signUpStudentNum.toRequestBody("text/plain".toMediaTypeOrNull())
+        params["studentNumber"] =
+            MyApplication.signUpStudentIDNumber.toRequestBody("text/plain".toMediaTypeOrNull())
         params["name"] = MyApplication.signUpName.toRequestBody("text/plain".toMediaTypeOrNull())
 
         apiClient.apiService.reSubmit(
