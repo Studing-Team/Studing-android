@@ -24,6 +24,7 @@ import com.team.studing.UI.Notice.UnreadNoticeFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MainUtil.setStatusBarTransparent
 import com.team.studing.Utils.MyApplication
+import com.team.studing.Utils.MyApplication.Companion.memberData
 import com.team.studing.ViewModel.HomeViewModel
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentHomeBinding
@@ -100,7 +101,7 @@ class HomeFragment : Fragment() {
                 requireActivity().intent.getStringExtra("noticeId")?.toIntOrNull()
                     ?.let { noticeId ->
                         MyApplication.noticeId = noticeId
-                        noticeViewModel.getNoticeDetail(mainActivity, noticeId)
+//                        noticeViewModel.getNoticeDetail(mainActivity, noticeId)
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                             .addToBackStack(null)
@@ -146,10 +147,10 @@ class HomeFragment : Fragment() {
                 override fun onItemClick(position: Int) {
                     amplitude.track("click_detail_notice_home")
                     MyApplication.noticeId = getRecentNoticeList[position].id
-                    noticeViewModel.getNoticeDetail(
-                        mainActivity,
-                        MyApplication.noticeId
-                    )
+//                    noticeViewModel.getNoticeDetail(
+//                        mainActivity,
+//                        MyApplication.noticeId
+//                    )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)
@@ -165,10 +166,10 @@ class HomeFragment : Fragment() {
             itemClickListener = object : HomeScrapNoticeListAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     MyApplication.noticeId = getScrapNoticeList[position].id.toInt()
-                    noticeViewModel.getNoticeDetail(
-                        mainActivity,
-                        MyApplication.noticeId
-                    )
+//                    noticeViewModel.getNoticeDetail(
+//                        mainActivity,
+//                        MyApplication.noticeId
+//                    )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)
@@ -256,16 +257,16 @@ class HomeFragment : Fragment() {
     private fun initView() {
         mainActivity.hideBottomNavigation(false)
         mainActivity.setStatusBarTransparent()
-        if (MyApplication.memberData?.role != "ROLE_USER") {
+        if (memberData?.role != "ROLE_USER") {
             mainActivity.hideWriteNoticeButton(false)
         }
         binding.run {
             layoutEmptyScrapNotice.layoutEmptyHomeScrapNotice.visibility = View.GONE
             layoutEmptyNotice.layoutEmptyHomeNotice.visibility = View.GONE
 
-            textViewNoticeScrapIntro.text = "${MyApplication.memberData?.name}님이 저장한 공지사항이에요"
+            textViewNoticeScrapIntro.text = "${memberData?.name}님이 저장한 공지사항이에요"
             textViewStudentCouncilIntro.text =
-                "${MyApplication.memberData?.memberUniversity}의 학생회 소식"
+                "${memberData?.memberUniversity}의 학생회 소식"
 
             // 리스트 데이터 초기화
             viewModel.getStudentCouncilLogo(mainActivity)
@@ -285,7 +286,7 @@ class HomeFragment : Fragment() {
 
             binding.textViewNoticeIntro.text =
                 "${MyApplication.categoryList[categoryPosition]} 공지사항이에요"
-            textViewUnreadNoticeWithNickname.text = "${MyApplication.memberData?.name}님이 놓친 공지사항"
+            textViewUnreadNoticeWithNickname.text = "${memberData?.name}님이 놓친 공지사항"
         }
     }
 

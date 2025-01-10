@@ -1,6 +1,7 @@
 package com.team.studing.UI.Notice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.team.studing.R
 import com.team.studing.UI.Notice.Adapter.NoticeImagePagerAdapter
 import com.team.studing.Utils.BasicToast
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
+import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentNoticeDetailBinding
 
@@ -43,7 +45,6 @@ class NoticeDetailFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         observeViewModel()
-        initView()
 
         binding.run {
 
@@ -79,6 +80,10 @@ class NoticeDetailFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initView()
+        viewModel.getNoticeDetail(
+            mainActivity,
+            MyApplication.noticeId
+        )
     }
 
     override fun onDestroy() {
@@ -95,6 +100,7 @@ class NoticeDetailFragment : Fragment() {
         viewModel.run {
             noticeDetail.observe(viewLifecycleOwner) {
                 getNoticeDetail = it
+                Log.d("##", "notice detail update : ${getNoticeDetail}")
                 setData()
             }
 
@@ -198,6 +204,12 @@ class NoticeDetailFragment : Fragment() {
                     }
                 }
 
+                if (getNoticeDetail?.isAuthor == true) {
+                    toolbar.buttonKebabMenu.visibility = View.VISIBLE
+                } else {
+                    toolbar.buttonKebabMenu.visibility = View.INVISIBLE
+                }
+
                 if (getNoticeDetail?.images.isNullOrEmpty()) {
                     viewPager.visibility = View.GONE
                     viewPager.isUserInputEnabled = true // 슬라이드 동작 활성화
@@ -235,7 +247,6 @@ class NoticeDetailFragment : Fragment() {
                 }
                 textViewTitle.text = "공지사항"
 
-                buttonKebabMenu.visibility = View.VISIBLE
                 buttonKebabMenu.setOnClickListener {
 //                    showPopUpMenu()
                     val popupView =

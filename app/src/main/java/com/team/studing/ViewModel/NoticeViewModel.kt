@@ -345,8 +345,7 @@ class NoticeViewModel : ViewModel() {
                         // 정상적으로 통신이 성공된 경우
                         val result: BaseResponse<Void>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
-
-                        getNoticeDetail(activity, id)
+                        
                         activity.supportFragmentManager.popBackStack()
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)

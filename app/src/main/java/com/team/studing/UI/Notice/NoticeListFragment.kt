@@ -134,10 +134,10 @@ class NoticeListFragment : Fragment() {
                     amplitude.track("click_detail_notice_list")
 
                     MyApplication.noticeId = getNoticeList[position].id
-                    noticeViewModel.getNoticeDetail(
-                        mainActivity,
-                        MyApplication.noticeId
-                    )
+//                    noticeViewModel.getNoticeDetail(
+//                        mainActivity,
+//                        MyApplication.noticeId
+//                    )
                     mainActivity.supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainerView_main, NoticeDetailFragment())
                         .addToBackStack(null)
