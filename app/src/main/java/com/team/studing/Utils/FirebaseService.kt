@@ -10,8 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.team.studing.MainActivity
-import com.team.studing.NotificationNoticeActivity
+import com.team.studing.LoginActivity
 import com.team.studing.R
 
 
@@ -28,12 +27,15 @@ class FirebaseService : FirebaseMessagingService() {
 
         Log.d("FirebaseService", "Message received from: ${message.from}")
 
-//        val title = message.data["title"] ?: "알림"
-//        val body = message.data["body"] ?: "내용 없음"
-        val title = message.notification?.title.toString()
-        val body = message.notification?.body.toString()
+        val title = message.data["title"] ?: "알림"
+        val body = message.data["body"] ?: "내용 없음"
+//        val title = message.notification?.title.toString()
+//        val body = message.notification?.body.toString()
         val type = message.data["type"] ?: "DEFAULT"
         val noticeId = message.data["noticeId"] ?: "0"
+
+        MyApplication.notificationNoticeType = message.data["type"].toString()
+        MyApplication.notificationNoticeId = message.data["noticeId"].toString()
 
         Log.d(
             "FirebaseService",
@@ -60,12 +62,13 @@ class FirebaseService : FirebaseMessagingService() {
 
         createNotificationChannel(notificationManager)
 
-        val intent =
-            when (messageType) {
-                "VERIFICATION" -> Intent(this, MainActivity::class.java)
-                "NOTICE" -> Intent(this, NotificationNoticeActivity::class.java)
-                else -> Intent(this, MainActivity::class.java) // 기본 화면
-            }.apply {
+//        val intent = when (messageType) {
+//            "VERIFICATION" -> Intent(this, LoginActivity::class.java)
+//            "NOTICE" -> Intent(this, LoginActivity::class.java)
+//            else -> Intent(this, MainActivity::class.java) // 기본 화면
+//        }
+        val intent = Intent(this, LoginActivity::class.java)
+            .apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 putExtra("type", messageType)
                 putExtra("noticeId", messageNoticeId)

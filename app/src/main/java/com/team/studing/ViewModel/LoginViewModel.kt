@@ -1,5 +1,6 @@
 package com.team.studing.ViewModel
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -26,7 +27,7 @@ class LoginViewModel : ViewModel() {
 
     var user: MutableLiveData<MemberData> = MutableLiveData()
 
-    fun getUserInfo(activity: LoginActivity) {
+    fun getUserInfo(activity: Activity) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
