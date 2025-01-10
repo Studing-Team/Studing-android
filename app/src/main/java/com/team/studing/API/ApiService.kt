@@ -199,7 +199,7 @@ interface ApiService {
     ): Call<BaseResponse<Void>>
 
     // 공지사항 삭제하기
-    @PUT("api/v1/notices/{noticeId}")
+    @DELETE("api/v1/notices/{noticeId}")
     fun deleteNotice(
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int
