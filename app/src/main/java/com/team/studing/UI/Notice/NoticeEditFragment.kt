@@ -1,23 +1,26 @@
-package com.team.studing
+package com.team.studing.UI.Notice
 
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.inputmethod.InputMethodManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.team.studing.MainActivity
+import com.team.studing.R
 import com.team.studing.UI.Notice.Adapter.RegisterNoticeImageAdapter
-import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.NoticeViewModel
-import com.team.studing.databinding.ActivityRegisterNoticeBinding
+import com.team.studing.databinding.FragmentNoticeEditBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -26,23 +29,27 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
-class RegisterNoticeActivity : AppCompatActivity() {
+class NoticeEditFragment : Fragment() {
 
-    lateinit var binding: ActivityRegisterNoticeBinding
+    lateinit var binding: FragmentNoticeEditBinding
+    lateinit var mainActivity: MainActivity
     lateinit var viewModel: NoticeViewModel
 
     private var selectedImages = mutableListOf<Uri>() // Set으로 중복 방지
     private lateinit var noticeImageAdapter: RegisterNoticeImageAdapter
 
     var noticeTag = ""
+    var noticeId = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityRegisterNoticeBinding.inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentNoticeEditBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
         viewModel = ViewModelProvider(this)[NoticeViewModel::class.java]
 
         initView()
-        initRecyclerView()
 
         // 다중 선택
         // PickMultipleVisualMedia 클래스의 생성자로 maxItems(사진 개수 제한)을 넘겨줄 수 있음.
@@ -71,8 +78,6 @@ class RegisterNoticeActivity : AppCompatActivity() {
 
         binding.run {
             buttonGallery.setOnClickListener {
-                amplitude.track("click_add_photo")
-
                 pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
 
@@ -94,24 +99,24 @@ class RegisterNoticeActivity : AppCompatActivity() {
                 checkTag()
             }
 
-            buttonRegister.setOnClickListener {
-                amplitude.track("click_upload_notice")
-
-                viewModel.registerNotice(
-                    this@RegisterNoticeActivity,
+            buttonEdit.setOnClickListener {
+                // 공지사항 수정
+                viewModel.editNotice(
+                    mainActivity,
+                    noticeId,
                     editTextNoticeTitle.text.toString(),
                     editTextNoticeContent.text.toString(),
                     noticeTag
                 )
             }
         }
-
-        setContentView(binding.root)
+        return binding.root
     }
+
 
     private fun initRecyclerView() {
         noticeImageAdapter =
-            RegisterNoticeImageAdapter(this, selectedImages.toMutableList()).apply {
+            RegisterNoticeImageAdapter(mainActivity, selectedImages.toMutableList()).apply {
                 setOnItemClickListener { position ->
                     val removedImage = selectedImages.elementAt(position)
                     selectedImages.remove(removedImage)
@@ -153,7 +158,7 @@ class RegisterNoticeActivity : AppCompatActivity() {
 
     private fun checkEnabled() {
         binding.run {
-            buttonRegister.isEnabled =
+            buttonEdit.isEnabled =
                 editTextNoticeTitle.text.isNotEmpty() && editTextNoticeContent.text.isNotEmpty() && noticeTag != ""
         }
     }
@@ -182,13 +187,13 @@ class RegisterNoticeActivity : AppCompatActivity() {
 
     private fun convertResizeImage(imageUri: Uri): Uri? {
         return try {
-            val contentResolver = this.contentResolver
+            val contentResolver = mainActivity.contentResolver
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
 
             val resizedBitmap =
                 Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
 
-            val tempFile = File.createTempFile("resized_image", ".jpg", this.cacheDir)
+            val tempFile = File.createTempFile("resized_image", ".jpg", mainActivity.cacheDir)
 
             val byteArrayOutputStream = ByteArrayOutputStream()
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
@@ -233,29 +238,45 @@ class RegisterNoticeActivity : AppCompatActivity() {
         return compressedImages
     }
 
-    fun hideKeyboard() {
-        val currentFocusView = currentFocus
-        if (currentFocusView != null) {
-            val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.hideSoftInputFromWindow(
-                currentFocusView.windowToken,
-                InputMethodManager.HIDE_NOT_ALWAYS
-            )
-        }
-    }
-
     private fun initView() {
         binding.run {
             scrollView.setOnTouchListener { v, event ->
-                hideKeyboard()
+                mainActivity.hideKeyboard()
                 false
+            }
+
+            // 전달받은 데이터 읽기
+            arguments?.let { bundle ->
+                noticeId = bundle.getInt("id", 0)
+                val title = bundle.getString("title", "")
+                val content = bundle.getString("content", "")
+                val images = arguments?.getStringArrayList("image")
+                noticeTag = bundle.getString("tag", "공지")
+                Log.d("##", "title: $title, content: $content, tag: $noticeTag, images: $images")
+
+                val uri = mutableListOf<Uri>()
+                if (images?.size != 0) {
+                    for (i in 0 until images?.size!!) {
+                        uri.add(Uri.parse(images[i]))
+                        Log.d("##", "images : ${Uri.parse(images[i])}")
+                    }
+                    selectedImages = uri
+                    Log.d("##", "images : ${selectedImages}")
+                }
+                MyApplication.noticeImages = processAndCompressImages(selectedImages)
+                binding.textViewImageNum.text = "${selectedImages.size}/10"
+                initRecyclerView()
+
+                editTextNoticeTitle.setText("$title")
+                editTextNoticeContent.setText("$content")
+                checkTag()
             }
 
             toolbar.run {
                 buttonClose.setOnClickListener {
-                    finish()
+                    fragmentManager?.popBackStack()
                 }
-                textViewTitle.text = "공지사항 작성"
+                textViewTitle.text = "공지사항 수정"
             }
         }
     }

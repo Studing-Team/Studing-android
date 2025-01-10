@@ -1,4 +1,4 @@
-package com.team.studing.UI.Home.Adapter
+package com.team.studing.UI.Notice.Adapter
 
 import android.app.Activity
 import android.content.Context

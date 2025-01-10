@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.Notice.NoticeEditFragment">
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_close"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_edit"
+        style="@style/NextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="9dp"
+        android:enabled="false"
+        android:text="수정하기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_edit"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/button_gallery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_gallery"
+                app:layout_constraintTop_toTopOf="@+id/button_gallery"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/button_gallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="33dp"
+                android:background="@drawable/background_signup_edittext_unselected"
+                android:paddingHorizontal="21dp"
+                android:paddingVertical="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView_image_num"
+                    style="@style/Chips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="0/10"
+                    android:textColor="@color/black_30"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView_gallery"
+                    app:layout_constraintStart_toStartOf="@+id/imageView_gallery"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView_gallery" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView_register_notice_title"
+                style="@style/Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="제목"
+                android:textColor="@color/black_40"
+                app:layout_constraintStart_toStartOf="@+id/button_gallery"
+                app:layout_constraintTop_toBottomOf="@+id/button_gallery" />
+
+            <EditText
+                android:id="@+id/editText_notice_title"
+                style="@style/SignUpEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:hint=" 제목을 입력해주세요"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView_register_notice_title"
+                app:layout_constraintTop_toBottomOf="@+id/textView_register_notice_title" />
+
+            <TextView
+                android:id="@+id/textView_register_notice_content"
+                style="@style/Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="내용"
+                android:textColor="@color/black_40"
+                app:layout_constraintStart_toStartOf="@+id/editText_notice_title"
+                app:layout_constraintTop_toBottomOf="@+id/editText_notice_title" />
+
+            <EditText
+                android:id="@+id/editText_notice_content"
+                style="@style/SignUpEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint=" 공지사항 내용을 입력해주세요"
+                android:inputType="textMultiLine"
+                android:minHeight="150dp"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView_register_notice_content"
+                app:layout_constraintTop_toBottomOf="@+id/textView_register_notice_content" />
+
+            <TextView
+                android:id="@+id/textView_register_notice_tag"
+                style="@style/Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="태그"
+                android:textColor="@color/black_40"
+                app:layout_constraintStart_toStartOf="@+id/editText_notice_content"
+                app:layout_constraintTop_toBottomOf="@+id/editText_notice_content" />
+
+            <TextView
+                android:id="@+id/button_tag_notice"
+                style="@style/RegisterNoticeTagChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="80dp"
+                android:text="공지"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView_register_notice_tag"
+                app:layout_constraintTop_toBottomOf="@+id/textView_register_notice_tag" />
+
+            <TextView
+                android:id="@+id/button_tag_event"
+                style="@style/RegisterNoticeTagChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="이벤트"
+                app:layout_constraintBottom_toBottomOf="@+id/button_tag_notice"
+                app:layout_constraintStart_toEndOf="@+id/button_tag_notice"
+                app:layout_constraintTop_toTopOf="@+id/button_tag_notice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

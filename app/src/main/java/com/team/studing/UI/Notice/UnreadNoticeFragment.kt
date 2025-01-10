@@ -1,4 +1,4 @@
-package com.team.studing.UI.Home
+package com.team.studing.UI.Notice
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.team.studing.API.response.Home.UnreadNotice
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.UI.Home.Adapter.UnreadNoticePagerAdapter
+import com.team.studing.UI.Notice.Adapter.UnreadNoticePagerAdapter
 import com.team.studing.Utils.BasicToast
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.ViewModel.HomeViewModel

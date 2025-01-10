@@ -1,19 +1,22 @@
-package com.team.studing.UI.Home
+package com.team.studing.UI.Notice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.MainActivity
 import com.team.studing.R
-import com.team.studing.UI.Home.Adapter.NoticeImagePagerAdapter
+import com.team.studing.UI.Notice.Adapter.NoticeImagePagerAdapter
 import com.team.studing.Utils.BasicToast
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
-import com.team.studing.ViewModel.HomeViewModel
+import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentNoticeDetailBinding
 
@@ -22,10 +25,7 @@ class NoticeDetailFragment : Fragment() {
     lateinit var binding: FragmentNoticeDetailBinding
     lateinit var mainActivity: MainActivity
 
-    private val viewModel: HomeViewModel by lazy {
-        ViewModelProvider(mainActivity)[HomeViewModel::class.java]
-    }
-    private val noticeViewModel: NoticeViewModel by lazy {
+    private val viewModel: NoticeViewModel by lazy {
         ViewModelProvider(mainActivity)[NoticeViewModel::class.java]
     }
 
@@ -45,7 +45,6 @@ class NoticeDetailFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         observeViewModel()
-        initView()
 
         binding.run {
 
@@ -58,9 +57,9 @@ class NoticeDetailFragment : Fragment() {
                 amplitude.track("click_save_post_detail")
 
                 if (!isScrap!!) {
-                    noticeViewModel.scrapNotice(mainActivity, getNoticeDetail?.id!!)
+                    viewModel.scrapNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
-                    noticeViewModel.cancelScrapNotice(mainActivity, getNoticeDetail?.id!!)
+                    viewModel.cancelScrapNotice(mainActivity, getNoticeDetail?.id!!)
                 }
             }
 
@@ -68,9 +67,9 @@ class NoticeDetailFragment : Fragment() {
                 amplitude.track("click_like_post_detail")
 
                 if (!isLike!!) {
-                    noticeViewModel.likeNotice(mainActivity, getNoticeDetail?.id!!)
+                    viewModel.likeNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
-                    noticeViewModel.cancelLikeNotice(mainActivity, getNoticeDetail?.id!!)
+                    viewModel.cancelLikeNotice(mainActivity, getNoticeDetail?.id!!)
                 }
             }
         }
@@ -80,7 +79,11 @@ class NoticeDetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getNoticeDetail = null
+        initView()
+        viewModel.getNoticeDetail(
+            mainActivity,
+            MyApplication.noticeId
+        )
     }
 
     override fun onDestroy() {
@@ -94,9 +97,10 @@ class NoticeDetailFragment : Fragment() {
     }
 
     fun observeViewModel() {
-        noticeViewModel.run {
+        viewModel.run {
             noticeDetail.observe(viewLifecycleOwner) {
                 getNoticeDetail = it
+                Log.d("##", "notice detail update : ${getNoticeDetail}")
                 setData()
             }
 
@@ -200,6 +204,12 @@ class NoticeDetailFragment : Fragment() {
                     }
                 }
 
+                if (getNoticeDetail?.isAuthor == true) {
+                    toolbar.buttonKebabMenu.visibility = View.VISIBLE
+                } else {
+                    toolbar.buttonKebabMenu.visibility = View.INVISIBLE
+                }
+
                 if (getNoticeDetail?.images.isNullOrEmpty()) {
                     viewPager.visibility = View.GONE
                     viewPager.isUserInputEnabled = true // 슬라이드 동작 활성화
@@ -236,6 +246,63 @@ class NoticeDetailFragment : Fragment() {
                     fragmentManager?.popBackStack()
                 }
                 textViewTitle.text = "공지사항"
+
+                buttonKebabMenu.setOnClickListener {
+//                    showPopUpMenu()
+                    val popupView =
+                        LayoutInflater.from(context).inflate(R.layout.popup_menu_item, null)
+
+                    val popupWindow = PopupWindow(
+                        popupView,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true
+                    )
+                    popupWindow.elevation = 50f
+
+                    // 팝업 클릭 이벤트 설정
+                    popupView.findViewById<TextView>(R.id.textView_menu_edit).setOnClickListener {
+                        // 데이터 전달을 위해 Bundle 생성
+                        val bundle = Bundle().apply {
+                            putInt("id", getNoticeDetail?.id!!)
+                            putString("title", "${getNoticeDetail?.title}")
+                            putString("content", "${getNoticeDetail?.content}")
+                            putString("tag", "${getNoticeDetail?.tag}")
+                            putStringArrayList("image", ArrayList(getNoticeDetail?.images))
+                        }
+
+                        // 전달할 Fragment 생성
+                        val noticeEditFragment = NoticeEditFragment().apply {
+                            arguments = bundle // 생성한 Bundle을 Fragment의 arguments에 설정
+                        }
+
+                        // Fragment 전환
+                        mainActivity.supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragmentContainerView_main, noticeEditFragment)
+                            .addToBackStack(null)
+                            .commit()
+
+                        popupWindow.dismiss()
+                    }
+
+                    popupView.findViewById<TextView>(R.id.textView_menu_delete).setOnClickListener {
+                        // 공지사항 삭제 dialog
+                        val dialog = DialogNoticeDelete()
+
+                        dialog.setNoticeDeleteDialogInterface(object : NoticeDeleteDialogInterface {
+                            override fun onClickYesButton() {
+                                // 공지사항 삭제 기능 구현
+                                viewModel.deleteNotice(mainActivity, getNoticeDetail?.id!!)
+                            }
+                        })
+
+                        dialog.show(parentFragmentManager, "DialogNoticeDelete")
+                        popupWindow.dismiss()
+                    }
+
+                    // 팝업 표시
+                    popupWindow.showAsDropDown(buttonKebabMenu, -330, 20)
+                }
             }
         }
     }

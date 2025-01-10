@@ -13,5 +13,6 @@ data class NoticeDetailResponse(
     val tag: String,
     val images: List<String>,
     var saveCheck: Boolean,
-    var likeCheck: Boolean
+    var likeCheck: Boolean,
+    var isAuthor: Boolean
 )
