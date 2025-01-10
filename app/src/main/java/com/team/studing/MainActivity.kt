@@ -12,6 +12,7 @@ import com.team.studing.UI.Home.HomeFailFragment
 import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
+import com.team.studing.UI.Notice.NoticeDetailFragment
 import com.team.studing.UI.Partnership.PartnershipFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
@@ -72,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        initView()
 
         if (MyApplication.reSubmit) {
             val nextFragment = HomeWaitingFragment()
@@ -119,6 +121,16 @@ class MainActivity : AppCompatActivity() {
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                if (MyApplication.notificationNoticeType == "NOTICE") {
+                    MyApplication.noticeId = MyApplication.notificationNoticeId.toIntOrNull()!!
+                    val nextFragment = NoticeDetailFragment()
+
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
             }
 
             else -> {
@@ -129,6 +141,16 @@ class MainActivity : AppCompatActivity() {
                 transaction.replace(R.id.fragmentContainerView_main, nextFragment)
                 transaction.addToBackStack(null)
                 transaction.commit()
+
+                if (MyApplication.notificationNoticeType == "NOTICE") {
+                    MyApplication.noticeId = MyApplication.notificationNoticeId.toIntOrNull()!!
+                    val nextFragment = NoticeDetailFragment()
+
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragmentContainerView_main, nextFragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
             }
         }
     }

@@ -299,7 +299,8 @@ class SignUpViewModel : ViewModel() {
         apiClient.apiService.sendFcmToken(
             SendFcmTokenRequest(
                 MyApplication.preferences.getFCMToken().toString(),
-                MyApplication.memberId
+                MyApplication.memberId,
+                "ANDROID"
             )
         )
             .enqueue(object :
