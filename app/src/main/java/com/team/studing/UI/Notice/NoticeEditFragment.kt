@@ -114,11 +114,6 @@ class NoticeEditFragment : Fragment() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        MyApplication.noticeImages = null
-    }
-
     private fun initRecyclerView() {
         noticeImageAdapter =
             RegisterNoticeImageAdapter(mainActivity, selectedImages.toMutableList()).apply {

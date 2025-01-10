@@ -185,7 +185,7 @@ interface ApiService {
     fun registerNotice(
         @Header("Authorization") token: String,
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part NoticeImage: List<MultipartBody.Part>?
+        @Part noticeImages: List<MultipartBody.Part>?
     ): Call<BaseResponse<Void>>
 
     // 공지사항 수정하기
@@ -195,7 +195,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int,
         @PartMap parameters: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part NoticeImage: List<MultipartBody.Part>?
+        @Part noticeImages: List<MultipartBody.Part>?
     ): Call<BaseResponse<Void>>
 
     // 공지사항 삭제하기
