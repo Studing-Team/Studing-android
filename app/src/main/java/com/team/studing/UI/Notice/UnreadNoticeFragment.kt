@@ -76,7 +76,7 @@ class UnreadNoticeFragment : Fragment() {
                 val totalItems = unreadNoticePagerAdapter.itemCount
 
                 toolbar.textViewTitle.text = "${totalItems - currentItem}개 남음"
-                if (currentItem < totalItems - 1) {
+                if (currentItem <= totalItems - 1) {
                     // 현재 페이지가 마지막 페이지가 아니면 다음 페이지로 이동
                     noticeViewModel.viewNotice(mainActivity, getUnreadNotices[currentItem].id)
                     viewPager2.setCurrentItem(currentItem, true)
