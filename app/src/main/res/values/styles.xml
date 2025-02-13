@@ -154,6 +154,28 @@
         <item name="android:paddingVertical">10dp</item>
     </style>
 
+    <!-- 기간 입력창 -->
+    <style name="DateEditText" parent="Body3">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/black_40</item>
+        <item name="android:textColorHint">@color/black_30</item>
+        <item name="android:background">@drawable/background_signup_edittext_unselected</item>
+        <item name="android:paddingHorizontal">22dp</item>
+        <item name="android:paddingVertical">8dp</item>
+    </style>
+
+    <!-- 기간 입력창 -->
+    <style name="TimeEditText" parent="Body3">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColor">@color/black_40</item>
+        <item name="android:textColorHint">@color/black_30</item>
+        <item name="android:background">@drawable/background_signup_edittext_unselected</item>
+        <item name="android:paddingHorizontal">16.5dp</item>
+        <item name="android:paddingVertical">8dp</item>
+    </style>
+
     <!-- 버튼 -->
     <style name="NextButton" parent="Subtitle2">
         <item name="android:layout_height">wrap_content</item>

@@ -61,9 +61,24 @@ class MainActivity : AppCompatActivity() {
             buttonWriteNotice.setOnClickListener {
                 amplitude.track("click_post_notice_home")
 
-                val mainIntent = Intent(this@MainActivity, RegisterNoticeActivity::class.java)
-                mainIntent.putExtra("register", true)
-                startActivity(mainIntent)
+                val noticeBottomsheet = RegisterNoticeBottomSheetFragment()
+
+                noticeBottomsheet.setRegisterDialogInterface(object :
+                    RegisterNoticeBottomSheetInterface {
+                    override fun onClickNoticeButton(id: Int) {
+                        // 일반 공지 작성
+                        val mainIntent =
+                            Intent(this@MainActivity, RegisterNoticeActivity::class.java)
+                        mainIntent.putExtra("type", "notice")
+                        startActivity(mainIntent)
+                    }
+
+                    override fun onClickFirstEventButton(id: Int) {
+                        // 선착순 이벤트 작성
+                    }
+                })
+
+                noticeBottomsheet.show(supportFragmentManager, "DialogWithdrawal")
             }
         }
 

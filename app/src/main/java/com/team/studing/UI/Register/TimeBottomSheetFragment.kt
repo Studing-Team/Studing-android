@@ -9,25 +9,21 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import com.archit.calendardaterangepicker.customviews.CalendarListener
-import com.team.studing.databinding.FragmentDateBottomSheetBinding
-import java.util.Calendar
+import com.team.studing.databinding.FragmentTimeBottomSheetBinding
 
-interface DateBottomSheetInterface {
-    fun onDateClickCompleteButton(date: String)
+interface TimeBottomSheetInterface {
+    fun onTimeClickCompleteButton(time: String)
 }
 
-class DateBottomSheetFragment : DialogFragment() {
+class TimeBottomSheetFragment : DialogFragment() {
 
-    lateinit var binding: FragmentDateBottomSheetBinding
-
-    var date = ""
+    lateinit var binding: FragmentTimeBottomSheetBinding
 
     // 인터페이스 인스턴스
-    private var listener: DateBottomSheetInterface? = null
+    private var listener: TimeBottomSheetInterface? = null
 
     // 리스너 설정 메서드
-    fun setDateBottomSheetInterface(listener: DateBottomSheetInterface) {
+    fun setTimeBottomSheetInterface(listener: TimeBottomSheetInterface) {
         this.listener = listener
     }
 
@@ -59,36 +55,41 @@ class DateBottomSheetFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDateBottomSheetBinding.inflate(inflater, container, false)
+        binding = FragmentTimeBottomSheetBinding.inflate(inflater, container, false)
 
         // 배경을 투명하게 설정
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
+        binding.run {
+            // 오전/오후 설정
+            spinnerAmPm.minValue = 0
+            spinnerAmPm.maxValue = 1
+            spinnerAmPm.displayedValues = arrayOf("오전", "오후")
+
+            // 시간 설정 (1 ~ 12)
+            spinnerHour.minValue = 1
+            spinnerHour.maxValue = 12
+
+            // 분 설정 (0 ~ 59)
+            spinnerMinute.minValue = 0
+            spinnerMinute.maxValue = 59
+            spinnerMinute.setFormatter { String.format("%02d", it) }
+        }
+
         // 클릭 이벤트 처리
         binding.run {
-
-            calendarRegisterMedicineDate.setCalendarListener(object : CalendarListener,
-                StudingCalendarListener {
-                override fun onDateRangeSelected(startDate: Calendar, endDate: Calendar) {
-                }
-
-                override fun onFirstDateSelected(startDate: Calendar) {
-                    var start = startDate.time
-                    date = if (start.month + 1 < 10) {
-                        "20${
-                            start.year.toString().substring(1)
-                        }년 0${start.month + 1}월 ${start.date}일"
-                    } else {
-                        "20${
-                            start.year.toString().substring(1)
-                        }년 ${start.month + 1}월 ${start.date}일"
-                    }
-                }
-            })
-
             buttonComplete.setOnClickListener {
-                listener?.onDateClickCompleteButton(date)
+                val amPm = spinnerAmPm.displayedValues[spinnerAmPm.value]
+                val hour = spinnerHour.value
+                val minute = spinnerMinute.value
+
+                val selectedTime = if (amPm == "오후") {
+                    "${hour + 12}:${String.format("%02d", minute)}"
+                } else {
+                    "$hour:${String.format("%02d", minute)}"
+                }
+                listener?.onTimeClickCompleteButton(selectedTime)
                 dismiss()
             }
         }

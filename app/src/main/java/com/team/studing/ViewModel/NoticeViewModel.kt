@@ -260,7 +260,11 @@ class NoticeViewModel : ViewModel() {
         activity: Activity,
         title: String,
         content: String,
-        tag: String
+        tag: String,
+        isDateTime: Boolean,
+        startTime: String,
+        endTime: String,
+        firstEventNum: String?
     ) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
@@ -273,6 +277,19 @@ class NoticeViewModel : ViewModel() {
             content.toRequestBody("text/plain".toMediaTypeOrNull())
         params["tag"] =
             tag.toRequestBody("text/plain".toMediaTypeOrNull())
+        if (isDateTime) {
+            params["startTime"] =
+                startTime.toRequestBody("text/plain".toMediaTypeOrNull())
+            params["endTime"] =
+                endTime.toRequestBody("text/plain".toMediaTypeOrNull())
+        }
+
+        if (tag == "선착순") {
+            if (firstEventNum != null) {
+                params["firstComeNumber"] =
+                    firstEventNum.toRequestBody("text/plain".toMediaTypeOrNull())
+            }
+        }
 
         apiClient.apiService.registerNotice(
             "Bearer ${tokenManager.getAccessToken()}",
@@ -345,7 +362,7 @@ class NoticeViewModel : ViewModel() {
                         // 정상적으로 통신이 성공된 경우
                         val result: BaseResponse<Void>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
-                        
+
                         activity.supportFragmentManager.popBackStack()
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
