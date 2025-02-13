@@ -13,6 +13,8 @@ import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
 import com.team.studing.UI.Notice.NoticeDetailFragment
+import com.team.studing.UI.Notice.RegisterNoticeBottomSheetFragment
+import com.team.studing.UI.Notice.RegisterNoticeBottomSheetInterface
 import com.team.studing.UI.Partnership.PartnershipFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
@@ -75,6 +77,10 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onClickFirstEventButton(id: Int) {
                         // 선착순 이벤트 작성
+                        val mainIntent =
+                            Intent(this@MainActivity, RegisterNoticeActivity::class.java)
+                        mainIntent.putExtra("type", "first event")
+                        startActivity(mainIntent)
                     }
                 })
 
