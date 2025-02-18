@@ -6,6 +6,7 @@ import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
 import com.team.studing.API.request.SignUp.SendFcmTokenRequest
 import com.team.studing.API.response.BaseResponse
+import com.team.studing.API.response.Home.GetFirstEventRankingResponse
 import com.team.studing.API.response.Home.GetStudentCouncilLogoResponse
 import com.team.studing.API.response.Home.GetUnreadNoticeCountResponse
 import com.team.studing.API.response.Home.GetUnreadNoticeListResponse
@@ -194,6 +195,14 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int
     ): Call<BaseResponse<Void>>
+
+    // 선착순 이벤트 순위 조회
+    @GET("api/v1/notices/first-come/rankings/{noticeId}")
+    fun getFirstEventRanking(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<GetFirstEventRankingResponse>>
+
     // 공지사항 수정하기
     @Multipart
     @PUT("api/v1/notices/{noticeId}")

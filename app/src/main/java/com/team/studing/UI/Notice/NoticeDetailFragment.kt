@@ -88,6 +88,7 @@ class NoticeDetailFragment : Fragment() {
 
                     FirstEventState.COMPLETE -> {
                         // 내 순위 확인
+                        viewModel.getFirstEventResult(mainActivity, getNoticeDetail?.id!!)
                     }
 
                     else -> {}
