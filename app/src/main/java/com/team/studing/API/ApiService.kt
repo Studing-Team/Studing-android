@@ -188,6 +188,12 @@ interface ApiService {
         @Part noticeImages: List<MultipartBody.Part>?
     ): Call<BaseResponse<Void>>
 
+    // 선착순 이벤트 신청
+    @POST("api/v1/notices/first-come/{noticeId}")
+    fun joinFirstEvent(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
     // 공지사항 수정하기
     @Multipart
     @PUT("api/v1/notices/{noticeId}")

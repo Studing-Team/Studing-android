@@ -37,6 +37,8 @@ class NoticeDetailFragment : Fragment() {
     var isScrap: Boolean? = false
     var isView: Boolean? = false
 
+    var firstEventStatus: FirstEventState = FirstEventState.BEFORE
+
     private var getNoticeDetail: NoticeDetailResponse? = null
     private lateinit var noticeImageAdapter: NoticeImagePagerAdapter
 
@@ -74,6 +76,21 @@ class NoticeDetailFragment : Fragment() {
                     viewModel.likeNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
                     viewModel.cancelLikeNotice(mainActivity, getNoticeDetail?.id!!)
+                }
+            }
+
+            layoutNoticeDetail.buttonFirstEvent.setOnClickListener {
+                when (firstEventStatus) {
+                    FirstEventState.ACTIVE -> {
+                        // 선착순 이벤트 참여
+                        viewModel.joinFirstEvent(mainActivity, getNoticeDetail?.id!!)
+                    }
+
+                    FirstEventState.COMPLETE -> {
+                        // 내 순위 확인
+                    }
+
+                    else -> {}
                 }
             }
         }
@@ -182,6 +199,10 @@ class NoticeDetailFragment : Fragment() {
                     // 선착순 이벤트인 경우
                     buttonFirstEvent.visibility = View.VISIBLE
                     textViewEventTimeTitle.text = "선착순 이벤트 안내"
+                    checkNoticeTime(
+                        getNoticeDetail?.startTime!!,
+                        getNoticeDetail?.endTime!!
+                    )
                 } else {
                     buttonFirstEvent.visibility = View.GONE
                     textViewEventTimeTitle.text = "공지사항 안내"
@@ -266,6 +287,43 @@ class NoticeDetailFragment : Fragment() {
         }
     }
 
+    fun checkNoticeTime(startTime: String, endTime: String) {
+        // 날짜 및 시간 설정
+        val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+
+        // LocalDateTime으로 변환
+        val startLocalTime = LocalDateTime.parse(startTime, formatter)
+        val endLocalTime = LocalDateTime.parse(endTime, formatter)
+        val currentTime = LocalDateTime.now()
+
+        // 현재 시간이 시작-종료 범위 내에 있는지 확인
+        val isWithinTimeRange =
+            currentTime.isAfter(startLocalTime) && currentTime.isBefore(endLocalTime)
+
+        Log.d("##", "$startLocalTime , $endLocalTime , $currentTime : $isWithinTimeRange")
+
+        // 현재 시간이 범위 내에 있는지 확인하여 버튼 상태 결정
+        firstEventStatus =
+            if (getNoticeDetail?.isFirstComeApplied == true) {
+                FirstEventState.COMPLETE
+            } else {
+                if (currentTime.isAfter(startLocalTime) && currentTime.isBefore(endLocalTime)) {
+                    FirstEventState.ACTIVE
+                } else if (currentTime.isBefore(startLocalTime)) {
+                    FirstEventState.BEFORE
+                } else {
+                    FirstEventState.FINISH
+                }
+            }
+
+        // 버튼 UI 업데이트
+        binding.layoutNoticeDetail.buttonFirstEvent.run {
+            text = firstEventStatus.text
+            backgroundTintList =
+                ContextCompat.getColorStateList(mainActivity, firstEventStatus.colorId)
+            isEnabled = firstEventStatus.isEnabled
+        }
+    }
 
     fun changDateToString(time: String): String? {
         // LocalDateTime으로 변환
@@ -356,4 +414,11 @@ class NoticeDetailFragment : Fragment() {
             }
         }
     }
+}
+
+enum class FirstEventState(val text: String, val colorId: Int, val isEnabled: Boolean) {
+    ACTIVE("선착순 이벤트 참여하기", R.color.red, true),
+    COMPLETE("내 순위 확인하기", R.color.black_50, true),
+    FINISH("종료된 이벤트", R.color.black_20, false),
+    BEFORE("선착순 이벤트 참여하기", R.color.black_20, false)
 }
