@@ -154,7 +154,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="14dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -162,6 +162,86 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView_student_council"
                 tools:layout_editor_absoluteX="360dp"
                 tools:layout_editor_absoluteY="42dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_event_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="11dp">
+
+                    <TextView
+                        android:id="@+id/textView_event_time_title"
+                        style="@style/Chips"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="선착순 이벤트 안내"
+                        android:textColor="@color/black_50"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_event_start_time_title"
+                        style="@style/Caption12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="시작 시간 :"
+                        android:textColor="@color/black_50"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_event_time_title" />
+
+                    <TextView
+                        android:id="@+id/textView_event_start_time_value"
+                        style="@style/Caption12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="2025년 1월 1일 18시 00분"
+                        android:textColor="@color/black_50"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_event_start_time_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_event_start_time_title" />
+
+                    <TextView
+                        android:id="@+id/textView_event_end_time_title"
+                        style="@style/Caption12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="종료 시간 :"
+                        android:textColor="@color/black_50"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_event_start_time_title" />
+
+                    <TextView
+                        android:id="@+id/textView_event_end_time_value"
+                        style="@style/Caption12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="2025년 1월 1일 18시 00분"
+                        android:textColor="@color/black_50"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_event_end_time_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_event_end_time_title" />
+
+                    <Button
+                        android:id="@+id/button_first_event"
+                        style="@style/Body2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:backgroundTint="@color/red"
+                        android:paddingVertical="6dp"
+                        android:text="선착순 이벤트 참여하기"
+                        android:textColor="@color/white"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_event_end_time_value" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPager"

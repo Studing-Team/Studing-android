@@ -24,7 +24,7 @@ class RegisterNoticeBottomSheetFragment : DialogFragment() {
     private var listener: RegisterNoticeBottomSheetInterface? = null
 
     // 리스너 설정 메서드
-    fun setLogoutDialogInterface(listener: RegisterNoticeBottomSheetInterface) {
+    fun setRegisterDialogInterface(listener: RegisterNoticeBottomSheetInterface) {
         this.listener = listener
     }
 

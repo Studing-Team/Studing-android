@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -19,6 +20,9 @@ import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentNoticeDetailBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class NoticeDetailFragment : Fragment() {
 
@@ -165,6 +169,24 @@ class NoticeDetailFragment : Fragment() {
     fun setData() {
         binding.run {
             layoutNoticeDetail.run {
+                if (getNoticeDetail?.startTime != null && getNoticeDetail?.endTime != null) {
+                    layoutEventTime.visibility = View.VISIBLE
+                    textViewEventStartTimeValue.text =
+                        changDateToString(getNoticeDetail?.startTime!!)
+                    textViewEventEndTimeValue.text = changDateToString(getNoticeDetail?.endTime!!)
+                } else {
+                    layoutEventTime.visibility = View.GONE
+                }
+
+                if (getNoticeDetail?.isFirstComeNotice == true) {
+                    // 선착순 이벤트인 경우
+                    buttonFirstEvent.visibility = View.VISIBLE
+                    textViewEventTimeTitle.text = "선착순 이벤트 안내"
+                } else {
+                    buttonFirstEvent.visibility = View.GONE
+                    textViewEventTimeTitle.text = "공지사항 안내"
+                }
+
                 textViewNoticeTitle.text = getNoticeDetail?.title
                 textViewNoticeContent.text = getNoticeDetail?.content
                 textViewLikeNum.text = getNoticeDetail?.likeCount.toString()
@@ -192,15 +214,26 @@ class NoticeDetailFragment : Fragment() {
                     .into(imageViewStudentCouncil)
 
                 chipNoticeType.text = getNoticeDetail?.tag
-                if (getNoticeDetail?.tag == "공지") {
-                    chipNoticeType.run {
-                        setBackgroundResource(R.drawable.background_notice_type_chip_primary20)
-                        setTextColor(resources.getColor(R.color.primary_50))
+                when (getNoticeDetail?.tag) {
+                    "공지" -> {
+                        chipNoticeType.run {
+                            setBackgroundResource(R.drawable.background_notice_type_chip_primary20)
+                            setTextColor(resources.getColor(R.color.primary_50))
+                        }
                     }
-                } else {
-                    chipNoticeType.run {
-                        setBackgroundResource(R.drawable.background_notice_type_chip_red)
-                        setTextColor(resources.getColor(R.color.red))
+
+                    "이벤트" -> {
+                        chipNoticeType.run {
+                            setBackgroundResource(R.drawable.background_notice_type_chip_red)
+                            setTextColor(resources.getColor(R.color.red))
+                        }
+                    }
+
+                    "선착순" -> {
+                        chipNoticeType.run {
+                            setBackgroundResource(R.drawable.background_notice_type_chip_red)
+                            setTextColor(resources.getColor(R.color.red))
+                        }
                     }
                 }
 
@@ -231,6 +264,20 @@ class NoticeDetailFragment : Fragment() {
                 }
             }
         }
+    }
+
+
+    fun changDateToString(time: String): String? {
+        // LocalDateTime으로 변환
+        val localDateTime = LocalDateTime.parse(time)
+
+        // 변환할 포맷 설정
+        val formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 HH시 mm분", Locale.KOREAN)
+
+        // LocalDateTime을 문자열로 변환
+        val formattedTime = localDateTime.format(formatter)
+
+        return formattedTime
     }
 
 

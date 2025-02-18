@@ -1,5 +1,7 @@
 package com.team.studing.API.response.Home
 
+import java.time.LocalTime
+
 data class NoticeDetailResponse(
     val id: Int,
     val title: String,
@@ -14,5 +16,10 @@ data class NoticeDetailResponse(
     val images: List<String>,
     var saveCheck: Boolean,
     var likeCheck: Boolean,
-    var isAuthor: Boolean
+    var isAuthor: Boolean,
+    var startTime: String?,
+    var endTime: String?,
+    var isFirstComeNotice: Boolean,
+    var isFirstComeApplied: Boolean,
+    var alarmTime: LocalTime?
 )

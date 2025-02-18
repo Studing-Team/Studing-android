@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: LoginViewModel
     lateinit var noticeViewModel: NoticeViewModel
 
+    val manager = supportFragmentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
