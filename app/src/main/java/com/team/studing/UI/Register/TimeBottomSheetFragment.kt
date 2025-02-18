@@ -87,7 +87,11 @@ class TimeBottomSheetFragment : DialogFragment() {
                 val selectedTime = if (amPm == "오후") {
                     "${hour + 12}:${String.format("%02d", minute)}"
                 } else {
-                    "$hour:${String.format("%02d", minute)}"
+                    if (hour < 10) {
+                        "0$hour:${String.format("%02d", minute)}"
+                    } else {
+                        "$hour:${String.format("%02d", minute)}"
+                    }
                 }
                 listener?.onTimeClickCompleteButton(selectedTime)
                 dismiss()

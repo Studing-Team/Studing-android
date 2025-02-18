@@ -247,7 +247,7 @@
                         android:clickable="false"
                         android:focusable="false"
                         android:gravity="center"
-                        android:hint="2025년 1월 1일"
+                        android:hint="2025년 01월 01일"
                         android:inputType="text"
                         android:textAlignment="center" />
 
@@ -292,7 +292,7 @@
                         android:clickable="false"
                         android:focusable="false"
                         android:gravity="center"
-                        android:hint="2025년 1월 1일"
+                        android:hint="2025년 01월 01일"
                         android:inputType="text"
                         android:textAlignment="center" />
 
