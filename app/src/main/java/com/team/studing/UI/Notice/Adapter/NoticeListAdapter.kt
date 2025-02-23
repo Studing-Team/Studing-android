@@ -60,6 +60,11 @@ class NoticeListAdapter(
                         setBackgroundResource(R.drawable.background_notice_type_chip_red)
                         setTextColor(resources.getColor(R.color.red))
                     }
+
+                    "선착순" -> {
+                        setBackgroundResource(R.drawable.background_notice_type_chip_red)
+                        setTextColor(resources.getColor(R.color.red))
+                    }
                 }
             }
         } else {
