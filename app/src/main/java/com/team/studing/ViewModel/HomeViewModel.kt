@@ -265,6 +265,7 @@ class HomeViewModel : ViewModel() {
                                 var isFirstComeNotice = result.data.notices[i].isFirstComeNotice
                                 var isFirstComeApplied = result.data.notices[i].isFirstComeApplied
                                 var alarmTime = result.data.notices[i].alarmTime
+                                var firstEventNumber = result.data.notices[i].firstComeNumber
 
                                 for (j in 0 until result.data.notices[i].images.size) {
                                     var noticeImage = result.data.notices[i].images[j]
@@ -291,7 +292,8 @@ class HomeViewModel : ViewModel() {
                                     endTime,
                                     isFirstComeNotice,
                                     isFirstComeApplied,
-                                    alarmTime
+                                    alarmTime,
+                                    firstEventNumber
                                 )
                                 tempUnreadList.add(n1)
                             }

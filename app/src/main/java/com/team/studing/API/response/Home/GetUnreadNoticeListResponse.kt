@@ -23,5 +23,6 @@ data class UnreadNotice(
     var endTime: String?,
     var isFirstComeNotice: Boolean,
     var isFirstComeApplied: Boolean,
-    var alarmTime: String?
+    var alarmTime: String?,
+    var firstComeNumber: Int
 )
