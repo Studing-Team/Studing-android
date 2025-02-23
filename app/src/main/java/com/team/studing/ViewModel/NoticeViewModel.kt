@@ -267,8 +267,8 @@ class NoticeViewModel : ViewModel() {
         content: String,
         tag: String,
         isDateTime: Boolean,
-        startTime: String,
-        endTime: String,
+        startTime: String?,
+        endTime: String?,
         firstEventNum: String?
     ) {
         val apiClient = ApiClient(activity)
@@ -284,9 +284,9 @@ class NoticeViewModel : ViewModel() {
             tag.toRequestBody("text/plain".toMediaTypeOrNull())
         if (isDateTime) {
             params["startTime"] =
-                startTime.toRequestBody("text/plain".toMediaTypeOrNull())
+                startTime!!.toRequestBody("text/plain".toMediaTypeOrNull())
             params["endTime"] =
-                endTime.toRequestBody("text/plain".toMediaTypeOrNull())
+                endTime!!.toRequestBody("text/plain".toMediaTypeOrNull())
         }
 
         if (tag == "선착순") {

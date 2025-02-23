@@ -140,22 +140,35 @@ class RegisterNoticeFragment : Fragment() {
             buttonRegister.setOnClickListener {
                 amplitude.track("click_upload_notice")
 
-                viewModel.registerNotice(
-                    registerNoticeActivity,
-                    editTextNoticeTitle.text.toString(),
-                    editTextNoticeContent.text.toString(),
-                    noticeTag,
-                    isWriteTime,
-                    changeTimeFormat(
-                        editTextStartDate.text.toString(),
-                        editTextStartTime.text.toString()
-                    ).toString(),
-                    changeTimeFormat(
-                        editTextEndDate.text.toString(),
-                        editTextEndTime.text.toString()
-                    ).toString(),
-                    firstEventNum = null
-                )
+                if (isWriteTime) {
+                    viewModel.registerNotice(
+                        registerNoticeActivity,
+                        editTextNoticeTitle.text.toString(),
+                        editTextNoticeContent.text.toString(),
+                        noticeTag,
+                        isWriteTime,
+                        changeTimeFormat(
+                            editTextStartDate.text.toString(),
+                            editTextStartTime.text.toString()
+                        ).toString(),
+                        changeTimeFormat(
+                            editTextEndDate.text.toString(),
+                            editTextEndTime.text.toString()
+                        ).toString(),
+                        firstEventNum = null
+                    )
+                } else {
+                    viewModel.registerNotice(
+                        registerNoticeActivity,
+                        editTextNoticeTitle.text.toString(),
+                        editTextNoticeContent.text.toString(),
+                        noticeTag,
+                        isWriteTime,
+                        null,
+                        null,
+                        firstEventNum = null
+                    )
+                }
             }
         }
 
