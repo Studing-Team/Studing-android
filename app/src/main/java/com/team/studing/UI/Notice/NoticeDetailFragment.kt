@@ -266,7 +266,7 @@ class NoticeDetailFragment : Fragment() {
                 if (getNoticeDetail?.isAuthor == true) {
                     toolbar.buttonKebabMenu.visibility = View.VISIBLE
                 } else {
-                    toolbar.buttonKebabMenu.visibility = View.INVISIBLE
+                    toolbar.buttonKebabMenu.visibility = View.GONE
                 }
 
                 if (getNoticeDetail?.images.isNullOrEmpty()) {
@@ -359,6 +359,20 @@ class NoticeDetailFragment : Fragment() {
                     fragmentManager?.popBackStack()
                 }
                 textViewTitle.text = "공지사항"
+
+                buttonNotification.setOnClickListener {
+                    val dialog = DialogRemindNotification(mainActivity)
+
+                    dialog.setNoticeDeleteDialogInterface(object :
+                        RemindNotificationDialogInterface {
+                        override fun onClickYesButton() {
+                            // 공지사항 리마인드 알림 설정 기능 구현
+
+                        }
+                    })
+
+                    dialog.show(parentFragmentManager, "DialogNoticeDelete")
+                }
 
                 buttonKebabMenu.setOnClickListener {
 //                    showPopUpMenu()

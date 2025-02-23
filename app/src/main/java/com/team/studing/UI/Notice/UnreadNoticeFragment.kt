@@ -212,6 +212,20 @@ class UnreadNoticeFragment : Fragment() {
         binding.run {
 
             toolbar.run {
+                buttonNotification.setOnClickListener {
+                    val dialog = DialogRemindNotification(mainActivity)
+
+                    dialog.setNoticeDeleteDialogInterface(object :
+                        RemindNotificationDialogInterface {
+                        override fun onClickYesButton() {
+                            // 공지사항 리마인드 알림 설정 기능 구현
+
+                        }
+                    })
+
+                    dialog.show(parentFragmentManager, "DialogNoticeDelete")
+                }
+
                 buttonKebabMenu.setOnClickListener {
 //                    showPopUpMenu()
                     val popupView =
