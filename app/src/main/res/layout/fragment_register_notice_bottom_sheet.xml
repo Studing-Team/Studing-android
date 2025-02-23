@@ -10,7 +10,7 @@
     android:backgroundTintMode="multiply"
     android:paddingHorizontal="24dp"
     android:paddingBottom="18dp"
-    tools:context=".UI.Notice.RegisterNoticeBottomSheetFragment">
+    tools:context=".UI.Register.RegisterNoticeBottomSheetFragment">
 
     <Button
         android:id="@+id/button_close"

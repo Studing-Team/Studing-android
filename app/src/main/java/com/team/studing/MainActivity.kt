@@ -13,9 +13,9 @@ import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
 import com.team.studing.UI.Notice.NoticeDetailFragment
-import com.team.studing.UI.Notice.RegisterNoticeBottomSheetFragment
-import com.team.studing.UI.Notice.RegisterNoticeBottomSheetInterface
 import com.team.studing.UI.Partnership.PartnershipFragment
+import com.team.studing.UI.Register.RegisterNoticeBottomSheetFragment
+import com.team.studing.UI.Register.RegisterNoticeBottomSheetInterface
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.MyApplication.Companion.memberData
