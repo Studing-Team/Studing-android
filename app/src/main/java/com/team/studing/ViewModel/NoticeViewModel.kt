@@ -331,7 +331,7 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun joinFirstEvent(activity: MainActivity, noticeId: Int) {
+    fun joinFirstEvent(activity: MainActivity, noticeId: Int, fragment: String) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
@@ -353,7 +353,10 @@ class NoticeViewModel : ViewModel() {
                         dialog.setEventDialogInterface(object : EventDialogInterface {
                             override fun onClickYesButton() {
                                 // 데이터 업데이트
-                                getNoticeDetail(activity, noticeId)
+                                if (fragment == "unread") {
+                                } else {
+                                    getNoticeDetail(activity, noticeId)
+                                }
                             }
                         })
 

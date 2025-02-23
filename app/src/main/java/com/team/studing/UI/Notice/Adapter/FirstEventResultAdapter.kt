@@ -1,6 +1,7 @@
 package com.team.studing.UI.Notice.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -27,7 +28,7 @@ class FirstEventResultAdapter(
         if (position == null) {
             selectedPosition = -1
         } else {
-            selectedPosition = position
+            selectedPosition = position - 1
         }
         notifyDataSetChanged()
     }
@@ -52,7 +53,8 @@ class FirstEventResultAdapter(
         holder.time.text = rankings[position].applyDateTime
         holder.studentNum.text = rankings[position].maskedStudentNumber
 
-        if (selectedPosition != -1) {
+
+        if (selectedPosition != -1 && position == selectedPosition) {
             holder.layoutMyRanking.setBackgroundResource(R.color.red_5)
             holder.ranking.setTextColor(
                 ContextCompat.getColor(
