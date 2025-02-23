@@ -37,7 +37,7 @@ class SignUpWaitingFragment : Fragment() {
 
         binding.run {
 
-            buttonNotification.setOnClickListener {
+            buttonSetNotification.setOnClickListener {
                 amplitude.track("click_next_signup_alarm")
                 // 알림 권한 설정
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
