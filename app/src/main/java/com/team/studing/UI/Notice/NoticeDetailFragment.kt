@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -19,6 +20,9 @@ import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.ViewModel.NoticeViewModel
 import com.team.studing.databinding.FragmentNoticeDetailBinding
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class NoticeDetailFragment : Fragment() {
 
@@ -32,6 +36,8 @@ class NoticeDetailFragment : Fragment() {
     var isLike: Boolean? = false
     var isScrap: Boolean? = false
     var isView: Boolean? = false
+
+    var firstEventStatus: FirstEventState = FirstEventState.BEFORE
 
     private var getNoticeDetail: NoticeDetailResponse? = null
     private lateinit var noticeImageAdapter: NoticeImagePagerAdapter
@@ -70,6 +76,26 @@ class NoticeDetailFragment : Fragment() {
                     viewModel.likeNotice(mainActivity, getNoticeDetail?.id!!)
                 } else {
                     viewModel.cancelLikeNotice(mainActivity, getNoticeDetail?.id!!)
+                }
+            }
+
+            layoutNoticeDetail.buttonFirstEvent.setOnClickListener {
+                when (firstEventStatus) {
+                    FirstEventState.ACTIVE -> {
+                        // 선착순 이벤트 참여
+                        viewModel.joinFirstEvent(
+                            mainActivity,
+                            getNoticeDetail?.id!!,
+                            "detail"
+                        )
+                    }
+
+                    FirstEventState.COMPLETE -> {
+                        // 내 순위 확인
+                        viewModel.getFirstEventResult(mainActivity, getNoticeDetail?.id!!)
+                    }
+
+                    else -> {}
                 }
             }
         }
@@ -165,6 +191,28 @@ class NoticeDetailFragment : Fragment() {
     fun setData() {
         binding.run {
             layoutNoticeDetail.run {
+                if (getNoticeDetail?.startTime != null && getNoticeDetail?.endTime != null) {
+                    layoutEventTime.visibility = View.VISIBLE
+                    textViewEventStartTimeValue.text =
+                        changDateToString(getNoticeDetail?.startTime!!)
+                    textViewEventEndTimeValue.text = changDateToString(getNoticeDetail?.endTime!!)
+                } else {
+                    layoutEventTime.visibility = View.GONE
+                }
+
+                if (getNoticeDetail?.isFirstComeNotice == true) {
+                    // 선착순 이벤트인 경우
+                    buttonFirstEvent.visibility = View.VISIBLE
+                    textViewEventTimeTitle.text = "선착순 이벤트 안내"
+                    checkNoticeTime(
+                        getNoticeDetail?.startTime!!,
+                        getNoticeDetail?.endTime!!
+                    )
+                } else {
+                    buttonFirstEvent.visibility = View.GONE
+                    textViewEventTimeTitle.text = "공지사항 안내"
+                }
+
                 textViewNoticeTitle.text = getNoticeDetail?.title
                 textViewNoticeContent.text = getNoticeDetail?.content
                 textViewLikeNum.text = getNoticeDetail?.likeCount.toString()
@@ -192,15 +240,26 @@ class NoticeDetailFragment : Fragment() {
                     .into(imageViewStudentCouncil)
 
                 chipNoticeType.text = getNoticeDetail?.tag
-                if (getNoticeDetail?.tag == "공지") {
-                    chipNoticeType.run {
-                        setBackgroundResource(R.drawable.background_notice_type_chip_primary20)
-                        setTextColor(resources.getColor(R.color.primary_50))
+                when (getNoticeDetail?.tag) {
+                    "공지" -> {
+                        chipNoticeType.run {
+                            setBackgroundResource(R.drawable.background_notice_type_chip_primary20)
+                            setTextColor(resources.getColor(R.color.primary_50))
+                        }
                     }
-                } else {
-                    chipNoticeType.run {
-                        setBackgroundResource(R.drawable.background_notice_type_chip_red)
-                        setTextColor(resources.getColor(R.color.red))
+
+                    "이벤트" -> {
+                        chipNoticeType.run {
+                            setBackgroundResource(R.drawable.background_notice_type_chip_red)
+                            setTextColor(resources.getColor(R.color.red))
+                        }
+                    }
+
+                    "선착순" -> {
+                        chipNoticeType.run {
+                            setBackgroundResource(R.drawable.background_notice_type_chip_red)
+                            setTextColor(resources.getColor(R.color.red))
+                        }
                     }
                 }
 
@@ -231,6 +290,57 @@ class NoticeDetailFragment : Fragment() {
                 }
             }
         }
+    }
+
+    fun checkNoticeTime(startTime: String, endTime: String) {
+        // 날짜 및 시간 설정
+        val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+
+        // LocalDateTime으로 변환
+        val startLocalTime = LocalDateTime.parse(startTime, formatter)
+        val endLocalTime = LocalDateTime.parse(endTime, formatter)
+        val currentTime = LocalDateTime.now()
+
+        // 현재 시간이 시작-종료 범위 내에 있는지 확인
+        val isWithinTimeRange =
+            currentTime.isAfter(startLocalTime) && currentTime.isBefore(endLocalTime)
+
+        Log.d("##", "$startLocalTime , $endLocalTime , $currentTime : $isWithinTimeRange")
+
+        // 현재 시간이 범위 내에 있는지 확인하여 버튼 상태 결정
+        firstEventStatus =
+            if (getNoticeDetail?.isFirstComeApplied == true) {
+                FirstEventState.COMPLETE
+            } else {
+                if (currentTime.isAfter(startLocalTime) && currentTime.isBefore(endLocalTime)) {
+                    FirstEventState.ACTIVE
+                } else if (currentTime.isBefore(startLocalTime)) {
+                    FirstEventState.BEFORE
+                } else {
+                    FirstEventState.FINISH
+                }
+            }
+
+        // 버튼 UI 업데이트
+        binding.layoutNoticeDetail.buttonFirstEvent.run {
+            text = firstEventStatus.text
+            backgroundTintList =
+                ContextCompat.getColorStateList(mainActivity, firstEventStatus.colorId)
+            isEnabled = firstEventStatus.isEnabled
+        }
+    }
+
+    fun changDateToString(time: String): String? {
+        // LocalDateTime으로 변환
+        val localDateTime = LocalDateTime.parse(time)
+
+        // 변환할 포맷 설정
+        val formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 HH시 mm분", Locale.KOREAN)
+
+        // LocalDateTime을 문자열로 변환
+        val formattedTime = localDateTime.format(formatter)
+
+        return formattedTime
     }
 
 

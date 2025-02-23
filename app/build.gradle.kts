@@ -18,8 +18,8 @@ android {
         applicationId = "com.team.studing"
         minSdk = 24
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.2"
+        versionCode = 5
+        versionName = "1.0.3"
 
         buildConfigField("String", "MAP_API_KEY", "\"${properties["map_client_id"]}\"")
         buildConfigField("String", "SERVER_URL", "\"${properties["server_url"]}\"")
@@ -71,6 +71,9 @@ dependencies {
 
     // tooltip
     implementation("com.github.skydoves:balloon:1.6.6")
+
+    // 캘린더
+    implementation("io.github.architshah248.calendar:awesome-calendar:2.0.0")
 
     // onboarding dot indicator
     implementation("com.tbuonomo:dotsindicator:5.0")

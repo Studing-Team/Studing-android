@@ -35,4 +35,21 @@
         <item name="android:spotShadowAlpha">0.03</item>
     </style>
 
+    <style name="BottomSheetStyle" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/StudingBottomSheet</item>
+    </style>
+
+    <style name="StudingBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginBottom">11dp</item>
+    </style>
+
+    <style name="AppTheme.NumberPicker" parent="Base.Theme.Studing">
+        <item name="colorControlNormal">@color/black_10</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primary_50</item>
+        <item name="android:unselectedAlpha">10</item>
+    </style>
 </resources>

@@ -13,6 +13,8 @@ import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
 import com.team.studing.UI.Notice.NoticeDetailFragment
+import com.team.studing.UI.Notice.RegisterNoticeBottomSheetFragment
+import com.team.studing.UI.Notice.RegisterNoticeBottomSheetInterface
 import com.team.studing.UI.Partnership.PartnershipFragment
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
     lateinit var viewModel: LoginViewModel
     lateinit var noticeViewModel: NoticeViewModel
+
+    val manager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +65,28 @@ class MainActivity : AppCompatActivity() {
             buttonWriteNotice.setOnClickListener {
                 amplitude.track("click_post_notice_home")
 
-                val mainIntent = Intent(this@MainActivity, RegisterNoticeActivity::class.java)
-                mainIntent.putExtra("register", true)
-                startActivity(mainIntent)
+                val noticeBottomsheet = RegisterNoticeBottomSheetFragment()
+
+                noticeBottomsheet.setRegisterDialogInterface(object :
+                    RegisterNoticeBottomSheetInterface {
+                    override fun onClickNoticeButton(id: Int) {
+                        // 일반 공지 작성
+                        val mainIntent =
+                            Intent(this@MainActivity, RegisterNoticeActivity::class.java)
+                        mainIntent.putExtra("type", "notice")
+                        startActivity(mainIntent)
+                    }
+
+                    override fun onClickFirstEventButton(id: Int) {
+                        // 선착순 이벤트 작성
+                        val mainIntent =
+                            Intent(this@MainActivity, RegisterNoticeActivity::class.java)
+                        mainIntent.putExtra("type", "first event")
+                        startActivity(mainIntent)
+                    }
+                })
+
+                noticeBottomsheet.show(supportFragmentManager, "DialogWithdrawal")
             }
         }
 

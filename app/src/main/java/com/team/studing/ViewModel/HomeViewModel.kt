@@ -259,6 +259,13 @@ class HomeViewModel : ViewModel() {
                                 var tag = result.data.notices[i].tag
                                 var saveCheck = result.data.notices[i].saveCheck
                                 var likeCheck = result.data.notices[i].likeCheck
+                                var isAuthor = result.data.notices[i].isAuthor
+                                var startTime = result.data.notices[i].startTime
+                                var endTime = result.data.notices[i].endTime
+                                var isFirstComeNotice = result.data.notices[i].isFirstComeNotice
+                                var isFirstComeApplied = result.data.notices[i].isFirstComeApplied
+                                var alarmTime = result.data.notices[i].alarmTime
+                                var firstEventNumber = result.data.notices[i].firstComeNumber
 
                                 for (j in 0 until result.data.notices[i].images.size) {
                                     var noticeImage = result.data.notices[i].images[j]
@@ -280,6 +287,13 @@ class HomeViewModel : ViewModel() {
                                     tempImageList,
                                     saveCheck,
                                     likeCheck,
+                                    isAuthor,
+                                    startTime,
+                                    endTime,
+                                    isFirstComeNotice,
+                                    isFirstComeApplied,
+                                    alarmTime,
+                                    firstEventNumber
                                 )
                                 tempUnreadList.add(n1)
                             }
