@@ -83,7 +83,11 @@ class NoticeDetailFragment : Fragment() {
                 when (firstEventStatus) {
                     FirstEventState.ACTIVE -> {
                         // 선착순 이벤트 참여
-                        viewModel.joinFirstEvent(mainActivity, getNoticeDetail?.id!!)
+                        viewModel.joinFirstEvent(
+                            mainActivity,
+                            getNoticeDetail?.id!!,
+                            "detail"
+                        )
                     }
 
                     FirstEventState.COMPLETE -> {
@@ -415,11 +419,4 @@ class NoticeDetailFragment : Fragment() {
             }
         }
     }
-}
-
-enum class FirstEventState(val text: String, val colorId: Int, val isEnabled: Boolean) {
-    ACTIVE("선착순 이벤트 참여하기", R.color.red, true),
-    COMPLETE("내 순위 확인하기", R.color.black_50, true),
-    FINISH("종료된 이벤트", R.color.black_20, false),
-    BEFORE("선착순 이벤트 참여하기", R.color.black_20, false)
 }

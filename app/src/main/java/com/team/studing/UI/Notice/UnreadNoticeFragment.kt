@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.team.studing.API.response.Home.UnreadNotice
@@ -151,7 +153,7 @@ class UnreadNoticeFragment : Fragment() {
                         buttonLikeNotice.setImageResource(R.drawable.ic_like_primary20)
                         getUnreadNotices[currentItem].likeCheck = false
                     }
-                    unreadNoticePagerAdapter.updateList(getUnreadNotices)
+                    unreadNoticePagerAdapter.updateList(getUnreadNotices, null)
                 }
             }
 
@@ -178,7 +180,7 @@ class UnreadNoticeFragment : Fragment() {
                         buttonScrap.text = "저장하기"
                     }
                 }
-                unreadNoticePagerAdapter.updateList(getUnreadNotices)
+                unreadNoticePagerAdapter.updateList(getUnreadNotices, null)
             }
 
             isViewed.observe(viewLifecycleOwner) {
@@ -186,7 +188,13 @@ class UnreadNoticeFragment : Fragment() {
                 if (isView == true) {
                     getUnreadNotices[currentItem].readCount += 1
                 }
-                unreadNoticePagerAdapter.updateList(getUnreadNotices)
+                unreadNoticePagerAdapter.updateList(getUnreadNotices, null)
+
+                if (getUnreadNotices[currentItem].isAuthor) {
+                    binding.toolbar.buttonKebabMenu.visibility = View.VISIBLE
+                } else {
+                    binding.toolbar.buttonKebabMenu.visibility = View.GONE
+                }
             }
         }
     }
@@ -204,6 +212,71 @@ class UnreadNoticeFragment : Fragment() {
         binding.run {
 
             toolbar.run {
+                buttonKebabMenu.setOnClickListener {
+//                    showPopUpMenu()
+                    val popupView =
+                        LayoutInflater.from(context).inflate(R.layout.popup_menu_item, null)
+
+                    val popupWindow = PopupWindow(
+                        popupView,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true
+                    )
+                    popupWindow.elevation = 50f
+
+                    // 팝업 클릭 이벤트 설정
+                    popupView.findViewById<TextView>(R.id.textView_menu_edit).setOnClickListener {
+                        // 데이터 전달을 위해 Bundle 생성
+                        val bundle = Bundle().apply {
+                            putInt("id", getUnreadNotices[currentItem].id)
+                            putString("title", "${getUnreadNotices[currentItem].title}")
+                            putString("content", "${getUnreadNotices[currentItem].content}")
+                            putString("tag", "${getUnreadNotices[currentItem].tag}")
+                            putString("startTime", "${getUnreadNotices[currentItem].startTime}")
+                            putString("endTime", "${getUnreadNotices[currentItem].endTime}")
+                            putStringArrayList(
+                                "image",
+                                ArrayList(getUnreadNotices[currentItem].images)
+                            )
+                        }
+
+                        // 전달할 Fragment 생성
+                        val noticeEditFragment = NoticeEditFragment().apply {
+                            arguments = bundle // 생성한 Bundle을 Fragment의 arguments에 설정
+                        }
+
+                        // Fragment 전환
+                        mainActivity.supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragmentContainerView_main, noticeEditFragment)
+                            .addToBackStack(null)
+                            .commit()
+
+                        popupWindow.dismiss()
+                    }
+
+                    popupView.findViewById<TextView>(R.id.textView_menu_delete).setOnClickListener {
+                        // 공지사항 삭제 dialog
+                        val dialog = DialogNoticeDelete()
+
+                        dialog.setNoticeDeleteDialogInterface(object : NoticeDeleteDialogInterface {
+                            override fun onClickYesButton() {
+                                // 공지사항 삭제 기능 구현
+                                noticeViewModel.deleteNotice(
+                                    mainActivity,
+                                    getUnreadNotices[currentItem].id
+                                )
+                            }
+                        })
+
+                        dialog.show(parentFragmentManager, "DialogNoticeDelete")
+                        popupWindow.dismiss()
+                    }
+
+                    // 팝업 표시
+                    popupWindow.showAsDropDown(buttonKebabMenu, -330, 20)
+                }
+
                 buttonBack.setOnClickListener {
                     amplitude.track("click_back_unread")
                     // 홈화면으로 이동

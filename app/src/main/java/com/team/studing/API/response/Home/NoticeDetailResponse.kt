@@ -21,5 +21,6 @@ data class NoticeDetailResponse(
     var endTime: String?,
     var isFirstComeNotice: Boolean,
     var isFirstComeApplied: Boolean,
-    var alarmTime: LocalTime?
+    var alarmTime: LocalTime?,
+    var firstComeNumber: Int?
 )

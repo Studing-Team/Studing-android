@@ -17,5 +17,11 @@ data class UnreadNotice(
     val tag: String?,
     val images: List<String>,
     var saveCheck: Boolean,
-    var likeCheck: Boolean
+    var likeCheck: Boolean,
+    var isAuthor: Boolean,
+    var startTime: String?,
+    var endTime: String?,
+    var isFirstComeNotice: Boolean,
+    var isFirstComeApplied: Boolean,
+    var alarmTime: String?
 )
