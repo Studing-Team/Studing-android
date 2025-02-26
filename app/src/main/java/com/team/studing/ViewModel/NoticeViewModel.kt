@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.team.studing.API.ApiClient
 import com.team.studing.API.TokenManager
+import com.team.studing.API.request.Notice.SetRemindNotificationRequest
 import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetFirstEventRankingResponse
 import com.team.studing.API.response.Home.NoticeDetailResponse
@@ -31,10 +32,11 @@ class NoticeViewModel : ViewModel() {
 
     // 공지사항 세부 내용
     var noticeDetail: MutableLiveData<NoticeDetailResponse?> = MutableLiveData()
+    var updateNoticeDetail: MutableLiveData<NoticeDetailResponse?> = MutableLiveData()
 
 
     // 공지사항 세부 화면 조회
-    fun getNoticeDetail(activity: Activity, noticeId: Int) {
+    fun getNoticeDetail(activity: Activity, noticeId: Int, isUpdate: Boolean) {
 
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
@@ -55,9 +57,12 @@ class NoticeViewModel : ViewModel() {
                         val result: BaseResponse<NoticeDetailResponse>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
 
-                        noticeDetail.value = result?.data
-
-                        viewNotice(activity, noticeId)
+                        if (!isUpdate) {
+                            noticeDetail.value = result?.data
+                            viewNotice(activity, noticeId)
+                        } else {
+                            updateNoticeDetail.value = result?.data
+                        }
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<NoticeDetailResponse>? = response.body()
@@ -261,6 +266,114 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
+    fun setRemindNotification(
+        activity: Activity,
+        noticeId: Int,
+        date: String,
+        time: String,
+        fragment: String
+    ) {
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        val year = date.substringBefore("년").trim().toInt()
+        val month = date.substringAfter("년").substringBefore("월").trim().toInt()
+        val day = date.substringAfter("월").substringBefore("일").trim().toInt()
+
+        Log.d("##", "Year: $year, Month: $month, Day: $day")
+
+        val (hour, minute) = time.split(":").map { it.toInt() }
+
+        Log.d("##", "Hour: $hour, Minute: $minute")
+
+        var remindNotificationTime = SetRemindNotificationRequest(year, month, day, hour, minute)
+
+
+        apiClient.apiService.setRemindNotification(
+            "Bearer ${tokenManager.getAccessToken()}",
+            noticeId,
+            remindNotificationTime
+        )
+            .enqueue(object :
+                Callback<BaseResponse<Void>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Void>>,
+                    response: Response<BaseResponse<Void>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        if (fragment == "unread") {
+                            getNoticeDetail(activity, noticeId, true)
+                        } else {
+                            getNoticeDetail(activity, noticeId, false)
+                        }
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<Void>>, t: Throwable) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
+    fun deleteRemindNotification(activity: Activity, noticeId: Int, fragment: String) {
+        val apiClient = ApiClient(activity)
+        val tokenManager = TokenManager(activity)
+
+        apiClient.apiService.deleteRemindNotification(
+            "Bearer ${tokenManager.getAccessToken()}",
+            noticeId
+        )
+            .enqueue(object :
+                Callback<BaseResponse<Void>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Void>>,
+                    response: Response<BaseResponse<Void>>
+                ) {
+                    Log.d("##", "onResponse 성공: " + response.body().toString())
+                    if (response.isSuccessful) {
+                        // 정상적으로 통신이 성공된 경우
+                        val result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 성공: " + result?.toString())
+
+                        if (fragment == "unread") {
+                            getNoticeDetail(activity, noticeId, true)
+                        } else {
+                            getNoticeDetail(activity, noticeId, false)
+                        }
+
+                    } else {
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        var result: BaseResponse<Void>? = response.body()
+                        Log.d("##", "onResponse 실패")
+                        Log.d("##", "onResponse 실패: " + response.code())
+                        Log.d("##", "onResponse 실패: " + response.body())
+                        val errorBody = response.errorBody()?.string() // 에러 응답 데이터를 문자열로 얻음
+                        Log.d("##", "Error Response: $errorBody")
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<Void>>, t: Throwable) {
+                    // 통신 실패
+                    Log.d("##", "onFailure 에러: " + t.message.toString())
+                }
+            })
+    }
+
     fun registerNotice(
         activity: Activity,
         title: String,
@@ -354,8 +467,9 @@ class NoticeViewModel : ViewModel() {
                             override fun onClickYesButton() {
                                 // 데이터 업데이트
                                 if (fragment == "unread") {
+                                    getNoticeDetail(activity, noticeId, true)
                                 } else {
-                                    getNoticeDetail(activity, noticeId)
+                                    getNoticeDetail(activity, noticeId, false)
                                 }
                             }
                         })

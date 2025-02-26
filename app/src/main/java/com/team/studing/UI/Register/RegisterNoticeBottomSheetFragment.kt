@@ -1,4 +1,4 @@
-package com.team.studing.UI.Notice
+package com.team.studing.UI.Register
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

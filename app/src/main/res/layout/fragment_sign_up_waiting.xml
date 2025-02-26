@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SignUp.SignUpWaitingFragment">
 
     <include
@@ -37,7 +37,7 @@
         app:layout_constraintWidth_percent="1" />
 
     <Button
-        android:id="@+id/button_notification"
+        android:id="@+id/button_set_notification"
         style="@style/NextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -57,15 +57,15 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
+        android:background="@drawable/background_button_start"
+        android:paddingVertical="15dp"
         android:text="스튜딩 시작하기"
         android:textColor="@color/black_50"
-        android:background="@drawable/background_button_start"
         app:backgroundTint="@null"
-        app:rippleColor="@color/transparent"
-        android:paddingVertical="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/transparent" />
 
     <ScrollView
         android:layout_width="match_parent"

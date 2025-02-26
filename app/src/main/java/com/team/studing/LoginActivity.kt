@@ -26,13 +26,21 @@ class LoginActivity : AppCompatActivity() {
         MyApplication.preferences = PreferenceUtil(applicationContext)
 
         setFCMToken()
+        handleNotificationIntent(intent)
 
         setContentView(binding.root)
+    }
+
+    private fun handleNotificationIntent(intent: Intent) {
+        MyApplication.notificationNoticeType = intent.getStringExtra("type").toString()
+        MyApplication.notificationNoticeId = intent.getStringExtra("noticeId").toString()
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent) // 새로운 Intent 설정
+
+        intent.let { handleNotificationIntent(it) } // 앱 실행 중 알림 클릭 처리
 
         // Intent에서 "openFragment" 값을 확인하고, SignUpStep6Fragment로 전환
         val openFragment = intent.getStringExtra("openFragment")

@@ -1,6 +1,7 @@
 package com.team.studing.API
 
 import com.team.studing.API.request.Home.CategoryRequest
+import com.team.studing.API.request.Notice.SetRemindNotificationRequest
 import com.team.studing.API.request.PartnerShip.GetPartnerShipInfoRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
@@ -176,6 +177,21 @@ interface ApiService {
     // 공지사항 조회수
     @POST("api/v1/notices/view-check/{noticeId}")
     fun viewCheckNotice(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 리마인드 알림 설정
+    @POST("api/v1/notifications/alarm/notice/{noticeId}")
+    fun setRemindNotification(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int,
+        @Body parameters: SetRemindNotificationRequest
+    ): Call<BaseResponse<Void>>
+
+    // 공지사항 리마인드 알림 취소
+    @DELETE("api/v1/notifications/alarm/notice/{noticeId}")
+    fun deleteRemindNotification(
         @Header("Authorization") token: String,
         @Path("noticeId") noticeId: Int
     ): Call<BaseResponse<Void>>

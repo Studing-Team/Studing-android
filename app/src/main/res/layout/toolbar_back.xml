@@ -48,10 +48,18 @@
         app:layout_constraintTop_toTopOf="@+id/button_back">
 
         <ImageView
+            android:id="@+id/button_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_notification_unselected" />
+
+        <ImageView
             android:id="@+id/button_kebab_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_kebab_menu" />
     </LinearLayout>
 

@@ -1,7 +1,5 @@
 package com.team.studing.API.response.Home
 
-import java.time.LocalTime
-
 data class NoticeDetailResponse(
     val id: Int,
     val title: String,
@@ -21,6 +19,6 @@ data class NoticeDetailResponse(
     var endTime: String?,
     var isFirstComeNotice: Boolean,
     var isFirstComeApplied: Boolean,
-    var alarmTime: LocalTime?,
+    var alarmTime: String?,
     var firstComeNumber: Int?
 )

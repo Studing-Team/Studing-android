@@ -13,9 +13,9 @@ import com.team.studing.UI.Home.HomeFragment
 import com.team.studing.UI.Home.HomeWaitingFragment
 import com.team.studing.UI.Mypage.MypageFragment
 import com.team.studing.UI.Notice.NoticeDetailFragment
-import com.team.studing.UI.Notice.RegisterNoticeBottomSheetFragment
-import com.team.studing.UI.Notice.RegisterNoticeBottomSheetInterface
 import com.team.studing.UI.Partnership.PartnershipFragment
+import com.team.studing.UI.Register.RegisterNoticeBottomSheetFragment
+import com.team.studing.UI.Register.RegisterNoticeBottomSheetInterface
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
 import com.team.studing.Utils.MyApplication
 import com.team.studing.Utils.MyApplication.Companion.memberData
@@ -38,14 +38,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         noticeViewModel = ViewModelProvider(this)[NoticeViewModel::class.java]
-
-        Log.d(
-            "##",
-            "notification type : ${MyApplication.notificationNoticeType}, ${MyApplication.notificationNoticeId}"
-        )
-
-        // 알림 데이터 처리
-        initView()
 
         viewModel.run {
             user.observe(this@MainActivity) {
@@ -109,9 +101,10 @@ class MainActivity : AppCompatActivity() {
 
     fun initView() {
         Log.d("##", "member : ${memberData?.role}")
-        val type = intent.getStringExtra("type")
-        val noticeId = intent.getStringExtra("noticeId")
-        Log.d("##", "notification : ${type}, ${noticeId}")
+        Log.d(
+            "##",
+            "notification type : ${MyApplication.notificationNoticeType}, ${MyApplication.notificationNoticeId}"
+        )
 
         when (memberData?.role) {
             "ROLE_UNUSER" -> {
@@ -137,6 +130,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             "ROLE_USER" -> {
+                Log.d(
+                    "##",
+                    "notification type - user : ${MyApplication.notificationNoticeType}, ${MyApplication.notificationNoticeId}"
+                )
                 hideWriteNoticeButton(true)
                 val nextFragment = HomeFragment()
 
@@ -145,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-                if (MyApplication.notificationNoticeType == "NOTICE") {
+                if (MyApplication.notificationNoticeType == "NOTICE" || MyApplication.notificationNoticeType == "NOTICE_ALARM") {
                     MyApplication.noticeId = MyApplication.notificationNoticeId.toIntOrNull()!!
                     val nextFragment = NoticeDetailFragment()
 
@@ -157,6 +154,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> {
+                Log.d(
+                    "##",
+                    "notification type - 관리자 : ${MyApplication.notificationNoticeType}, ${MyApplication.notificationNoticeId}"
+                )
+
                 hideWriteNoticeButton(false)
                 val nextFragment = HomeFragment()
 
@@ -165,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                 transaction.addToBackStack(null)
                 transaction.commit()
 
-                if (MyApplication.notificationNoticeType == "NOTICE") {
+                if (MyApplication.notificationNoticeType == "NOTICE" || MyApplication.notificationNoticeType == "NOTICE_ALARM") {
                     MyApplication.noticeId = MyApplication.notificationNoticeId.toIntOrNull()!!
                     val nextFragment = NoticeDetailFragment()
 

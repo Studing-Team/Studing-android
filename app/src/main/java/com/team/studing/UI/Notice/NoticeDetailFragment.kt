@@ -1,5 +1,6 @@
 package com.team.studing.UI.Notice
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -42,6 +44,7 @@ class NoticeDetailFragment : Fragment() {
     private var getNoticeDetail: NoticeDetailResponse? = null
     private lateinit var noticeImageAdapter: NoticeImagePagerAdapter
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +54,9 @@ class NoticeDetailFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         observeViewModel()
+
+        MyApplication.notificationNoticeType = ""
+        MyApplication.notificationNoticeId = ""
 
         binding.run {
 
@@ -108,7 +114,8 @@ class NoticeDetailFragment : Fragment() {
         initView()
         viewModel.getNoticeDetail(
             mainActivity,
-            MyApplication.noticeId
+            MyApplication.noticeId,
+            false
         )
     }
 
@@ -122,6 +129,7 @@ class NoticeDetailFragment : Fragment() {
         viewModelStore.clear()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun observeViewModel() {
         viewModel.run {
             noticeDetail.observe(viewLifecycleOwner) {
@@ -188,6 +196,7 @@ class NoticeDetailFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun setData() {
         binding.run {
             layoutNoticeDetail.run {
@@ -211,6 +220,12 @@ class NoticeDetailFragment : Fragment() {
                 } else {
                     buttonFirstEvent.visibility = View.GONE
                     textViewEventTimeTitle.text = "공지사항 안내"
+                }
+
+                if (getNoticeDetail?.alarmTime != null) {
+                    toolbar.buttonNotification.setImageResource(R.drawable.ic_notification_selected)
+                } else {
+                    toolbar.buttonNotification.setImageResource(R.drawable.ic_notification_unselected)
                 }
 
                 textViewNoticeTitle.text = getNoticeDetail?.title
@@ -266,7 +281,7 @@ class NoticeDetailFragment : Fragment() {
                 if (getNoticeDetail?.isAuthor == true) {
                     toolbar.buttonKebabMenu.visibility = View.VISIBLE
                 } else {
-                    toolbar.buttonKebabMenu.visibility = View.INVISIBLE
+                    toolbar.buttonKebabMenu.visibility = View.GONE
                 }
 
                 if (getNoticeDetail?.images.isNullOrEmpty()) {
@@ -292,6 +307,7 @@ class NoticeDetailFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun checkNoticeTime(startTime: String, endTime: String) {
         // 날짜 및 시간 설정
         val formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
@@ -330,6 +346,7 @@ class NoticeDetailFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun changDateToString(time: String): String? {
         // LocalDateTime으로 변환
         val localDateTime = LocalDateTime.parse(time)
@@ -359,6 +376,35 @@ class NoticeDetailFragment : Fragment() {
                     fragmentManager?.popBackStack()
                 }
                 textViewTitle.text = "공지사항"
+
+                buttonNotification.setOnClickListener {
+                    val dialog = DialogRemindNotification(mainActivity, getNoticeDetail?.alarmTime)
+
+                    dialog.setNoticeDeleteDialogInterface(object :
+                        RemindNotificationDialogInterface {
+                        override fun onClickSettingButton(date: String, time: String) {
+                            // 공지사항 리마인드 알림 설정 기능 구현
+                            viewModel.setRemindNotification(
+                                mainActivity,
+                                getNoticeDetail?.id!!,
+                                date,
+                                time,
+                                "detail"
+                            )
+                        }
+
+                        override fun onClickUnSettingButton() {
+                            // 공지사항 리마인드 알림 취소 기능 구현
+                            viewModel.deleteRemindNotification(
+                                mainActivity,
+                                getNoticeDetail?.id!!,
+                                "detail"
+                            )
+                        }
+                    })
+
+                    dialog.show(parentFragmentManager, "DialogNoticeRemindNotification")
+                }
 
                 buttonKebabMenu.setOnClickListener {
 //                    showPopUpMenu()
