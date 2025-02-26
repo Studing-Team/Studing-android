@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                         val mainIntent =
                             Intent(this@MainActivity, RegisterNoticeActivity::class.java)
                         mainIntent.putExtra("type", "notice")
+                        mainIntent.putExtra("isEdit", false)
                         startActivity(mainIntent)
                     }
 
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                         val mainIntent =
                             Intent(this@MainActivity, RegisterNoticeActivity::class.java)
                         mainIntent.putExtra("type", "first event")
+                        mainIntent.putExtra("isEdit", false)
                         startActivity(mainIntent)
                     }
                 })
@@ -88,6 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         initView()
 
         if (MyApplication.reSubmit) {

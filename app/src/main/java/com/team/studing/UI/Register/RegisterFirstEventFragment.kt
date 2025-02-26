@@ -47,6 +47,9 @@ class RegisterFirstEventFragment : Fragment() {
     private var selectedImages = mutableListOf<Uri>() // Set으로 중복 방지
     private lateinit var noticeImageAdapter: RegisterNoticeImageAdapter
 
+    var noticeId = 0
+    var isEdit = false
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +81,7 @@ class RegisterFirstEventFragment : Fragment() {
                     MyApplication.noticeImages = compressedImages
                     Log.d("##", "selected image : ${MyApplication.noticeImages}")
 
+                    checkEnabled()
                 } else {
                     // uri 리스트에 값이 없을 경우
                     Log.d("##", "No media selected")
@@ -106,24 +110,45 @@ class RegisterFirstEventFragment : Fragment() {
             }
 
             buttonRegister.setOnClickListener {
-                amplitude.track("click_upload_notice")
+                if (isEdit) {
+                    // 선착순 이벤트 수정
+                    viewModel.editNotice(
+                        registerNoticeActivity,
+                        noticeId,
+                        editTextNoticeTitle.text.toString(),
+                        editTextNoticeContent.text.toString(),
+                        "선착순",
+                        changeTimeFormat(
+                            editTextStartDate.text.toString(),
+                            editTextStartTime.text.toString()
+                        ).toString(),
+                        changeTimeFormat(
+                            editTextEndDate.text.toString(),
+                            editTextEndTime.text.toString()
+                        ).toString(),
+                        editTextFirstEventNumber.text.toString()
+                    )
+                } else {
+                    // 선착순 이벤트 등록
+                    amplitude.track("click_upload_notice")
 
-                viewModel.registerNotice(
-                    registerNoticeActivity,
-                    editTextNoticeTitle.text.toString(),
-                    editTextNoticeContent.text.toString(),
-                    "선착순",
-                    true,
-                    changeTimeFormat(
-                        editTextStartDate.text.toString(),
-                        editTextStartTime.text.toString()
-                    ).toString(),
-                    changeTimeFormat(
-                        editTextEndDate.text.toString(),
-                        editTextEndTime.text.toString()
-                    ).toString(),
-                    editTextFirstEventNumber.text.toString()
-                )
+                    viewModel.registerNotice(
+                        registerNoticeActivity,
+                        editTextNoticeTitle.text.toString(),
+                        editTextNoticeContent.text.toString(),
+                        "선착순",
+                        true,
+                        changeTimeFormat(
+                            editTextStartDate.text.toString(),
+                            editTextStartTime.text.toString()
+                        ).toString(),
+                        changeTimeFormat(
+                            editTextEndDate.text.toString(),
+                            editTextEndTime.text.toString()
+                        ).toString(),
+                        editTextFirstEventNumber.text.toString()
+                    )
+                }
             }
         }
 
@@ -331,6 +356,7 @@ class RegisterFirstEventFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() {
         binding.run {
             scrollView.setOnTouchListener { v, event ->
@@ -338,12 +364,74 @@ class RegisterFirstEventFragment : Fragment() {
                 false
             }
 
+            isEdit = arguments?.getBoolean("isEdit", false) == true
+
+            if (isEdit == true) {
+                // 전달받은 데이터 읽기
+                arguments?.let { bundle ->
+                    noticeId = bundle.getInt("id", 0)
+                    val title = bundle.getString("title", "")
+                    val content = bundle.getString("content", "")
+                    val images = bundle.getStringArrayList("image")
+                    val firstEventNumber = bundle.getInt("firstEventNumber")
+                    val startDateTime = bundle.getString("startTime")
+                    val endDateTime = bundle.getString("endTime")
+
+                    var (startDate, startTime) = splitDateTimeString(startDateTime!!)
+                    var (endDate, endTime) = splitDateTimeString(endDateTime!!)
+
+                    val uri = mutableListOf<Uri>()
+                    if (images?.size != 0) {
+                        for (i in 0 until images?.size!!) {
+                            uri.add(Uri.parse(images[i]))
+                            Log.d("##", "images : ${Uri.parse(images[i])}")
+                        }
+                        selectedImages = uri
+                        Log.d("##", "images : ${selectedImages}")
+                    }
+                    MyApplication.noticeImages = processAndCompressImages(selectedImages)
+                    binding.textViewImageNum.text = "${selectedImages.size}/10"
+                    initRecyclerView()
+
+                    buttonRegister.isEnabled = false
+
+                    editTextNoticeTitle.setText(title)
+                    editTextNoticeContent.setText(content)
+                    editTextFirstEventNumber.setText(firstEventNumber.toString())
+                    editTextStartDate.setText(startDate)
+                    editTextStartTime.setText(startTime)
+                    editTextEndDate.setText(endDate)
+                    editTextEndTime.setText(endTime)
+
+                    toolbar.textViewTitle.text = "공지사항 수정"
+                    buttonRegister.text = "수정하기"
+                }
+            } else {
+                toolbar.textViewTitle.text = "선착순 이벤트 등록"
+            }
+
             toolbar.run {
                 buttonClose.setOnClickListener {
                     registerNoticeActivity.finish()
                 }
-                textViewTitle.text = "선착순 이벤트 등록"
             }
         }
+    }
+
+    // 문자열을 받아 날짜와 시간을 분리하는 함수
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun splitDateTimeString(dateTimeStr: String): Pair<String, String> {
+        // 문자열을 LocalDateTime으로 파싱
+        val dateTime = LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+        // 날짜 포맷 (2025년 2월 5일)
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일", Locale.KOREAN)
+        val dateString = dateTime.toLocalDate().format(dateFormatter)
+
+        // 시간 포맷 (13:00)
+        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.KOREAN)
+        val timeString = dateTime.toLocalTime().format(timeFormatter)
+
+        return Pair(dateString, timeString)
     }
 }
