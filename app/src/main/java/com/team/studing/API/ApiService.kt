@@ -188,6 +188,14 @@ interface ApiService {
         @Path("noticeId") noticeId: Int,
         @Body parameters: SetRemindNotificationRequest
     ): Call<BaseResponse<Void>>
+
+    // 공지사항 리마인드 알림 취소
+    @DELETE("api/v1/notifications/alarm/notice/{noticeId}")
+    fun deleteRemindNotification(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int
+    ): Call<BaseResponse<Void>>
+
     // 공지사항 등록하기
     @Multipart
     @POST("api/v1/notices/create")

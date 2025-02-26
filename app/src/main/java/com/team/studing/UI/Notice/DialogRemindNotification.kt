@@ -60,6 +60,26 @@ class DialogRemindNotification(var activity: MainActivity, var inputTime: String
         binding.run {
             // 다이얼로그 텍스트 설정
             if (isRemindNotification) {
+                textViewTitle.text = "리마인드 알림 취소"
+                textViewDescription.text = "해당 공지사항에 설정한\n푸쉬알림을 취소하시겠습니까?"
+                buttonSetting.text = "네"
+                buttonCancel.text = "아니요"
+
+                var (date, time) = splitDateTimeString(inputTime!!)
+
+                // 알람 시간 텍스트 설정
+                editTextDate.run {
+                    setText(date)
+                    isFocusable = false
+                    isClickable = false
+                    isEnabled = false
+                }
+                editTextTime.run {
+                    setText(time)
+                    isFocusable = false
+                    isClickable = false
+                    isEnabled = false
+                }
             } else {
                 textViewTitle.text = "알림 설정"
                 textViewDescription.text = "리마인드 푸쉬 알림을 받고 싶은\n날짜와 시간을 설정해주세요!"
@@ -111,6 +131,8 @@ class DialogRemindNotification(var activity: MainActivity, var inputTime: String
                         editTextTime.text.toString()
                     )
                 } else {
+                    // 리마인드 푸시 알림 취소
+                    listener?.onClickUnSettingButton()
                 }
                 dismiss()
             }

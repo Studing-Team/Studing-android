@@ -389,6 +389,11 @@ class NoticeDetailFragment : Fragment() {
                         }
 
                         override fun onClickUnSettingButton() {
+                            // 공지사항 리마인드 알림 취소 기능 구현
+                            viewModel.deleteRemindNotification(
+                                mainActivity,
+                                getNoticeDetail?.id!!
+                            )
                         }
                     })
 
