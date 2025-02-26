@@ -1,6 +1,7 @@
 package com.team.studing.API
 
 import com.team.studing.API.request.Home.CategoryRequest
+import com.team.studing.API.request.Notice.SetRemindNotificationRequest
 import com.team.studing.API.request.PartnerShip.GetPartnerShipInfoRequest
 import com.team.studing.API.request.SignUp.CheckIdRequest
 import com.team.studing.API.request.SignUp.GetMajorListRequest
@@ -180,6 +181,13 @@ interface ApiService {
         @Path("noticeId") noticeId: Int
     ): Call<BaseResponse<Void>>
 
+    // 공지사항 리마인드 알림 설정
+    @POST("api/v1/notifications/alarm/notice/{noticeId}")
+    fun setRemindNotification(
+        @Header("Authorization") token: String,
+        @Path("noticeId") noticeId: Int,
+        @Body parameters: SetRemindNotificationRequest
+    ): Call<BaseResponse<Void>>
     // 공지사항 등록하기
     @Multipart
     @POST("api/v1/notices/create")
