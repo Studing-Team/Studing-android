@@ -32,10 +32,11 @@ class NoticeViewModel : ViewModel() {
 
     // 공지사항 세부 내용
     var noticeDetail: MutableLiveData<NoticeDetailResponse?> = MutableLiveData()
+    var updateNoticeDetail: MutableLiveData<NoticeDetailResponse?> = MutableLiveData()
 
 
     // 공지사항 세부 화면 조회
-    fun getNoticeDetail(activity: Activity, noticeId: Int) {
+    fun getNoticeDetail(activity: Activity, noticeId: Int, isUpdate: Boolean) {
 
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
@@ -56,9 +57,12 @@ class NoticeViewModel : ViewModel() {
                         val result: BaseResponse<NoticeDetailResponse>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
 
-                        noticeDetail.value = result?.data
-
-                        viewNotice(activity, noticeId)
+                        if (!isUpdate) {
+                            noticeDetail.value = result?.data
+                            viewNotice(activity, noticeId)
+                        } else {
+                            updateNoticeDetail.value = result?.data
+                        }
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<NoticeDetailResponse>? = response.body()
@@ -262,7 +266,13 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun setRemindNotification(activity: Activity, noticeId: Int, date: String, time: String) {
+    fun setRemindNotification(
+        activity: Activity,
+        noticeId: Int,
+        date: String,
+        time: String,
+        fragment: String
+    ) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
@@ -296,7 +306,11 @@ class NoticeViewModel : ViewModel() {
                         val result: BaseResponse<Void>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
 
-                        getNoticeDetail(activity, noticeId)
+                        if (fragment == "unread") {
+                            getNoticeDetail(activity, noticeId, true)
+                        } else {
+                            getNoticeDetail(activity, noticeId, false)
+                        }
 
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
@@ -316,7 +330,7 @@ class NoticeViewModel : ViewModel() {
             })
     }
 
-    fun deleteRemindNotification(activity: Activity, noticeId: Int) {
+    fun deleteRemindNotification(activity: Activity, noticeId: Int, fragment: String) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
 
@@ -336,7 +350,11 @@ class NoticeViewModel : ViewModel() {
                         val result: BaseResponse<Void>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
 
-                        getNoticeDetail(activity, noticeId)
+                        if (fragment == "unread") {
+                            getNoticeDetail(activity, noticeId, true)
+                        } else {
+                            getNoticeDetail(activity, noticeId, false)
+                        }
 
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
@@ -449,8 +467,9 @@ class NoticeViewModel : ViewModel() {
                             override fun onClickYesButton() {
                                 // 데이터 업데이트
                                 if (fragment == "unread") {
+                                    getNoticeDetail(activity, noticeId, true)
                                 } else {
-                                    getNoticeDetail(activity, noticeId)
+                                    getNoticeDetail(activity, noticeId, false)
                                 }
                             }
                         })

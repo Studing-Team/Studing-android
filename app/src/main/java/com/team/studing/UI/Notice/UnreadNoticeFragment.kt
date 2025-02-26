@@ -204,7 +204,7 @@ class UnreadNoticeFragment : Fragment() {
                 }
             }
 
-            noticeDetail.observe(viewLifecycleOwner) {
+            updateNoticeDetail.observe(viewLifecycleOwner) {
                 if (it?.alarmTime != null) {
                     getUnreadNotices[currentItem].alarmTime = it.alarmTime
                     binding.toolbar.buttonNotification.setImageResource(R.drawable.ic_notification_selected)
@@ -240,7 +240,8 @@ class UnreadNoticeFragment : Fragment() {
                             mainActivity,
                             getUnreadNotices[currentItem].id,
                             date,
-                            time
+                            time,
+                            "unread"
                         )
                     }
 
@@ -248,7 +249,8 @@ class UnreadNoticeFragment : Fragment() {
                         // 공지사항 리마인드 알림 취소 기능 구현
                         noticeViewModel.deleteRemindNotification(
                             mainActivity,
-                            getUnreadNotices[currentItem].id
+                            getUnreadNotices[currentItem].id,
+                            "unread"
                         )
                     }
                 })

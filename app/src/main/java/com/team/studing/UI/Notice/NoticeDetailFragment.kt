@@ -55,6 +55,9 @@ class NoticeDetailFragment : Fragment() {
 
         observeViewModel()
 
+        MyApplication.notificationNoticeType = ""
+        MyApplication.notificationNoticeId = ""
+
         binding.run {
 
             noticeImageAdapter = NoticeImagePagerAdapter(
@@ -111,7 +114,8 @@ class NoticeDetailFragment : Fragment() {
         initView()
         viewModel.getNoticeDetail(
             mainActivity,
-            MyApplication.noticeId
+            MyApplication.noticeId,
+            false
         )
     }
 
@@ -384,7 +388,8 @@ class NoticeDetailFragment : Fragment() {
                                 mainActivity,
                                 getNoticeDetail?.id!!,
                                 date,
-                                time
+                                time,
+                                "detail"
                             )
                         }
 
@@ -392,7 +397,8 @@ class NoticeDetailFragment : Fragment() {
                             // 공지사항 리마인드 알림 취소 기능 구현
                             viewModel.deleteRemindNotification(
                                 mainActivity,
-                                getNoticeDetail?.id!!
+                                getNoticeDetail?.id!!,
+                                "detail"
                             )
                         }
                     })

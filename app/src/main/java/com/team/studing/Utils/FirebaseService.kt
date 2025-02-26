@@ -34,9 +34,6 @@ class FirebaseService : FirebaseMessagingService() {
         val type = message.data["type"] ?: "DEFAULT"
         val noticeId = message.data["noticeId"] ?: "0"
 
-        MyApplication.notificationNoticeType = message.data["type"].toString()
-        MyApplication.notificationNoticeId = message.data["noticeId"].toString()
-
         Log.d(
             "FirebaseService",
             "Data payload: title=$title, body=$body, type=$type, noticeId=$noticeId"
