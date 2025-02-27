@@ -17,8 +17,10 @@ import com.team.studing.UI.Register.DateBottomSheetInterface
 import com.team.studing.UI.Register.TimeBottomSheetFragment
 import com.team.studing.UI.Register.TimeBottomSheetInterface
 import com.team.studing.databinding.DialogRemindNotificationBinding
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Locale
 
 interface RemindNotificationDialogInterface {
@@ -89,7 +91,11 @@ class DialogRemindNotification(var activity: MainActivity, var inputTime: String
 
             editTextDate.setOnClickListener {
                 // 캘린더 bottom sheet
-                val dateBottomsheet = DateBottomSheetFragment()
+                val dateBottomsheet = if (editTextDate.text.isNotEmpty()) {
+                    DateBottomSheetFragment(getTodayDateString(), editTextDate.text.toString())
+                } else {
+                    DateBottomSheetFragment(getTodayDateString(), getTodayDateString())
+                }
 
                 dateBottomsheet.setDateBottomSheetInterface(object : DateBottomSheetInterface {
                     override fun onDateClickCompleteButton(date: String) {
@@ -152,6 +158,12 @@ class DialogRemindNotification(var activity: MainActivity, var inputTime: String
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    fun getTodayDateString(): String {
+        val calendar = Calendar.getInstance() // 현재 날짜 가져오기
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+        return dateFormat.format(calendar.time) // 날짜를 원하는 형식으로 변환
     }
 
     // 문자열을 받아 날짜와 시간을 분리하는 함수

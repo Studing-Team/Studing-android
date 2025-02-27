@@ -19,26 +19,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
-        android:id="@+id/calendarRegisterMedicineDate"
-        android:layout_width="wrap_content"
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarRegisterDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toTopOf="@id/button_complete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view"
-        custom:default_date_color="@color/black_50"
-        custom:disable_date_color="@color/black_50"
-        custom:range_color="@color/primary_10"
-        custom:range_date_color="@color/primary_50"
-        custom:selected_date_circle_color="@color/primary_10"
-        custom:selected_date_color="@color/primary_50"
-        custom:text_size_date="14sp"
-        custom:text_size_title="14sp"
-        custom:text_size_week="14sp"
-        custom:title_color="@color/black_50"
-        custom:week_color="@color/black_20" />
+        app:mcv_dateTextAppearance="@color/black_50"
+        app:mcv_leftArrow="@drawable/ic_arrow_left_primary50"
+        app:mcv_rightArrow="@drawable/ic_arrow_right_primary50"
+        app:mcv_selectionColor="@color/primary_10"
+        app:mcv_showOtherDates="all"
+        app:mcv_weekDayLabels="@color/black_20"
+        app:mcv_weekDayTextAppearance="@style/Body2" />
 
     <Button
         android:id="@+id/button_complete"

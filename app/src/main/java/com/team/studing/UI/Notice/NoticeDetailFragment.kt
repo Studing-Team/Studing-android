@@ -1,5 +1,6 @@
 package com.team.studing.UI.Notice
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.MainActivity
 import com.team.studing.R
+import com.team.studing.RegisterNoticeActivity
 import com.team.studing.UI.Notice.Adapter.NoticeImagePagerAdapter
 import com.team.studing.Utils.BasicToast
 import com.team.studing.Utils.GlobalApplication.Companion.amplitude
@@ -421,25 +423,40 @@ class NoticeDetailFragment : Fragment() {
 
                     // 팝업 클릭 이벤트 설정
                     popupView.findViewById<TextView>(R.id.textView_menu_edit).setOnClickListener {
-                        // 데이터 전달을 위해 Bundle 생성
-                        val bundle = Bundle().apply {
-                            putInt("id", getNoticeDetail?.id!!)
-                            putString("title", "${getNoticeDetail?.title}")
-                            putString("content", "${getNoticeDetail?.content}")
-                            putString("tag", "${getNoticeDetail?.tag}")
-                            putStringArrayList("image", ArrayList(getNoticeDetail?.images))
-                        }
 
-                        // 전달할 Fragment 생성
-                        val noticeEditFragment = NoticeEditFragment().apply {
-                            arguments = bundle // 생성한 Bundle을 Fragment의 arguments에 설정
-                        }
+                        val mainIntent =
+                            Intent(mainActivity, RegisterNoticeActivity::class.java)
+                        when (getNoticeDetail?.tag) {
+                            "선착순" -> {
+                                mainIntent.run {
+                                    putExtra("type", "first event")
+                                    putExtra("isEdit", true)
+                                    putExtra("id", getNoticeDetail?.id!!)
+                                    putExtra("title", "${getNoticeDetail?.title}")
+                                    putExtra("content", "${getNoticeDetail?.content}")
+                                    putExtra("tag", "${getNoticeDetail?.tag}")
+                                    putExtra("image", ArrayList(getNoticeDetail?.images))
+                                    putExtra("firstEventNumber", getNoticeDetail?.firstComeNumber)
+                                    putExtra("startTime", getNoticeDetail?.startTime)
+                                    putExtra("endTime", getNoticeDetail?.endTime)
+                                }
+                            }
 
-                        // Fragment 전환
-                        mainActivity.supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragmentContainerView_main, noticeEditFragment)
-                            .addToBackStack(null)
-                            .commit()
+                            else -> {
+                                mainIntent.run {
+                                    putExtra("type", "notice")
+                                    putExtra("isEdit", true)
+                                    putExtra("id", getNoticeDetail?.id!!)
+                                    putExtra("title", "${getNoticeDetail?.title}")
+                                    putExtra("content", "${getNoticeDetail?.content}")
+                                    putExtra("tag", "${getNoticeDetail?.tag}")
+                                    putExtra("image", ArrayList(getNoticeDetail?.images))
+                                    putExtra("startTime", getNoticeDetail?.startTime)
+                                    putExtra("endTime", getNoticeDetail?.endTime)
+                                }
+                            }
+                        }
+                        startActivity(mainIntent)
 
                         popupWindow.dismiss()
                     }

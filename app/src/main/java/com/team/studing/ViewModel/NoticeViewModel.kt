@@ -11,6 +11,7 @@ import com.team.studing.API.response.BaseResponse
 import com.team.studing.API.response.Home.GetFirstEventRankingResponse
 import com.team.studing.API.response.Home.NoticeDetailResponse
 import com.team.studing.MainActivity
+import com.team.studing.RegisterNoticeActivity
 import com.team.studing.UI.Notice.DialogEvent
 import com.team.studing.UI.Notice.EventDialogInterface
 import com.team.studing.UI.Notice.FirstEventBottomSheetFragment
@@ -560,11 +561,14 @@ class NoticeViewModel : ViewModel() {
     }
 
     fun editNotice(
-        activity: MainActivity,
+        activity: RegisterNoticeActivity,
         id: Int,
         title: String,
         content: String,
-        tag: String
+        tag: String,
+        startTime: String?,
+        endTime: String?,
+        firstEventNum: String?
     ) {
         val apiClient = ApiClient(activity)
         val tokenManager = TokenManager(activity)
@@ -577,6 +581,16 @@ class NoticeViewModel : ViewModel() {
             content.toRequestBody("text/plain".toMediaTypeOrNull())
         params["tag"] =
             tag.toRequestBody("text/plain".toMediaTypeOrNull())
+        if (startTime != null && endTime != null) {
+            params["startTime"] =
+                startTime.toRequestBody("text/plain".toMediaTypeOrNull())
+            params["endTime"] =
+                endTime.toRequestBody("text/plain".toMediaTypeOrNull())
+        }
+        if (firstEventNum != null) {
+            params["firstEventNum"] =
+                firstEventNum.toRequestBody("text/plain".toMediaTypeOrNull())
+        }
 
         apiClient.apiService.editNotice(
             "Bearer ${tokenManager.getAccessToken()}",
@@ -596,7 +610,9 @@ class NoticeViewModel : ViewModel() {
                         val result: BaseResponse<Void>? = response.body()
                         Log.d("##", "onResponse 성공: " + result?.toString())
 
-                        activity.supportFragmentManager.popBackStack()
+                        MyApplication.noticeId = id
+
+                        activity.finish()
                     } else {
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         var result: BaseResponse<Void>? = response.body()

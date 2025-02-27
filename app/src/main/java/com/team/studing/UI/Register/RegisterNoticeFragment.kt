@@ -33,10 +33,12 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Locale
 
 class RegisterNoticeFragment : Fragment() {
@@ -50,6 +52,9 @@ class RegisterNoticeFragment : Fragment() {
 
     var noticeTag = ""
     var isWriteTime = false
+
+    var isEdit = false
+    var noticeId = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -82,6 +87,8 @@ class RegisterNoticeFragment : Fragment() {
                     // 압축된 이미지 리스트를 사용
                     MyApplication.noticeImages = compressedImages
                     Log.d("##", "selected image : ${MyApplication.noticeImages}")
+
+                    checkEnabled()
 
                 } else {
                     // uri 리스트에 값이 없을 경우
@@ -138,36 +145,70 @@ class RegisterNoticeFragment : Fragment() {
             }
 
             buttonRegister.setOnClickListener {
-                amplitude.track("click_upload_notice")
-
-                if (isWriteTime) {
-                    viewModel.registerNotice(
-                        registerNoticeActivity,
-                        editTextNoticeTitle.text.toString(),
-                        editTextNoticeContent.text.toString(),
-                        noticeTag,
-                        isWriteTime,
-                        changeTimeFormat(
-                            editTextStartDate.text.toString(),
-                            editTextStartTime.text.toString()
-                        ).toString(),
-                        changeTimeFormat(
-                            editTextEndDate.text.toString(),
-                            editTextEndTime.text.toString()
-                        ).toString(),
-                        firstEventNum = null
-                    )
+                if (isEdit) {
+                    // 공지사항 수정
+                    if (isWriteTime) {
+                        viewModel.editNotice(
+                            registerNoticeActivity,
+                            noticeId,
+                            editTextNoticeTitle.text.toString(),
+                            editTextNoticeContent.text.toString(),
+                            noticeTag,
+                            changeTimeFormat(
+                                editTextStartDate.text.toString(),
+                                editTextStartTime.text.toString()
+                            ).toString(),
+                            changeTimeFormat(
+                                editTextEndDate.text.toString(),
+                                editTextEndTime.text.toString()
+                            ).toString(),
+                            null
+                        )
+                    } else {
+                        viewModel.editNotice(
+                            registerNoticeActivity,
+                            noticeId,
+                            editTextNoticeTitle.text.toString(),
+                            editTextNoticeContent.text.toString(),
+                            noticeTag,
+                            null,
+                            null,
+                            null
+                        )
+                    }
                 } else {
-                    viewModel.registerNotice(
-                        registerNoticeActivity,
-                        editTextNoticeTitle.text.toString(),
-                        editTextNoticeContent.text.toString(),
-                        noticeTag,
-                        isWriteTime,
-                        null,
-                        null,
-                        firstEventNum = null
-                    )
+                    // 공지사항 등록
+                    amplitude.track("click_upload_notice")
+
+                    if (isWriteTime) {
+                        viewModel.registerNotice(
+                            registerNoticeActivity,
+                            editTextNoticeTitle.text.toString(),
+                            editTextNoticeContent.text.toString(),
+                            noticeTag,
+                            isWriteTime,
+                            changeTimeFormat(
+                                editTextStartDate.text.toString(),
+                                editTextStartTime.text.toString()
+                            ).toString(),
+                            changeTimeFormat(
+                                editTextEndDate.text.toString(),
+                                editTextEndTime.text.toString()
+                            ).toString(),
+                            firstEventNum = null
+                        )
+                    } else {
+                        viewModel.registerNotice(
+                            registerNoticeActivity,
+                            editTextNoticeTitle.text.toString(),
+                            editTextNoticeContent.text.toString(),
+                            noticeTag,
+                            isWriteTime,
+                            null,
+                            null,
+                            firstEventNum = null
+                        )
+                    }
                 }
             }
         }
@@ -231,11 +272,16 @@ class RegisterNoticeFragment : Fragment() {
     fun selectDateTime() {
         binding.run {
             editTextStartDate.setOnClickListener {
-                val dateBottomsheet = DateBottomSheetFragment()
+                val dateBottomsheet = if (editTextStartDate.text.isNotEmpty()) {
+                    DateBottomSheetFragment(getTodayDateString(), editTextStartDate.text.toString())
+                } else {
+                    DateBottomSheetFragment(getTodayDateString(), getTodayDateString())
+                }
 
                 dateBottomsheet.setDateBottomSheetInterface(object : DateBottomSheetInterface {
                     override fun onDateClickCompleteButton(date: String) {
                         editTextStartDate.setText(date)
+                        checkEnabled()
                     }
                 })
 
@@ -251,6 +297,7 @@ class RegisterNoticeFragment : Fragment() {
                 timeBottomsheet.setTimeBottomSheetInterface(object : TimeBottomSheetInterface {
                     override fun onTimeClickCompleteButton(time: String) {
                         editTextStartTime.setText(time)
+                        checkEnabled()
                     }
                 })
 
@@ -261,11 +308,23 @@ class RegisterNoticeFragment : Fragment() {
             }
 
             editTextEndDate.setOnClickListener {
-                val dateBottomsheet = DateBottomSheetFragment()
+                var startDate =
+                    if (editTextStartDate.text.isNotEmpty()) {
+                        editTextStartDate.text.toString()
+                    } else {
+                        getTodayDateString()
+                    }
+
+                val dateBottomsheet = if (editTextEndDate.text.isNotEmpty()) {
+                    DateBottomSheetFragment(startDate, editTextEndDate.text.toString())
+                } else {
+                    DateBottomSheetFragment(startDate, getTodayDateString())
+                }
 
                 dateBottomsheet.setDateBottomSheetInterface(object : DateBottomSheetInterface {
                     override fun onDateClickCompleteButton(date: String) {
                         editTextEndDate.setText(date)
+                        checkEnabled()
                     }
                 })
 
@@ -281,6 +340,7 @@ class RegisterNoticeFragment : Fragment() {
                 timeBottomsheet.setTimeBottomSheetInterface(object : TimeBottomSheetInterface {
                     override fun onTimeClickCompleteButton(time: String) {
                         editTextEndTime.setText(time)
+                        checkEnabled()
                     }
                 })
 
@@ -329,6 +389,12 @@ class RegisterNoticeFragment : Fragment() {
                     editTextNoticeTitle.text.isNotEmpty() && editTextNoticeContent.text.isNotEmpty() && noticeTag != ""
             }
         }
+    }
+
+    fun getTodayDateString(): String {
+        val calendar = Calendar.getInstance() // 현재 날짜 가져오기
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+        return dateFormat.format(calendar.time) // 날짜를 원하는 형식으로 변환
     }
 
     private fun processSelectedImages(uris: List<Uri>): List<MultipartBody.Part> {
@@ -419,6 +485,7 @@ class RegisterNoticeFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() {
         binding.run {
             scrollView.setOnTouchListener { v, event ->
@@ -426,14 +493,84 @@ class RegisterNoticeFragment : Fragment() {
                 false
             }
 
-            layoutCheckTime.visibility = View.GONE
+            isEdit = arguments?.getBoolean("isEdit", false) == true
+
+            if (isEdit == true) {
+                // 전달받은 데이터 읽기
+                arguments?.let { bundle ->
+                    noticeId = bundle.getInt("id", 0)
+                    val title = bundle.getString("title", "")
+                    val content = bundle.getString("content", "")
+                    val images = bundle.getStringArrayList("image")
+                    var startDateTime = bundle.getString("startTime", null)
+                    var endDateTime = bundle.getString("endTime", null)
+                    noticeTag = bundle.getString("tag", "공지")
+
+                    val uri = mutableListOf<Uri>()
+                    if (images?.size != 0) {
+                        for (i in 0 until images?.size!!) {
+                            uri.add(Uri.parse(images[i]))
+                            Log.d("##", "images : ${Uri.parse(images[i])}")
+                        }
+                        selectedImages = uri
+                        Log.d("##", "images : ${selectedImages}")
+                    }
+                    MyApplication.noticeImages = processAndCompressImages(selectedImages)
+                    binding.textViewImageNum.text = "${selectedImages.size}/10"
+                    initRecyclerView()
+
+                    editTextNoticeTitle.setText(title)
+                    editTextNoticeContent.setText(content)
+                    if (startDateTime != null && endDateTime != null) {
+                        isWriteTime = true
+                        var (startDate, startTime) = splitDateTimeString(startDateTime)
+                        var (endDate, endTime) = splitDateTimeString(endDateTime)
+
+                        editTextStartDate.setText(startDate)
+                        editTextStartTime.setText(startTime)
+                        editTextEndDate.setText(endDate)
+                        editTextEndTime.setText(endTime)
+
+                        layoutCheckTime.visibility = View.VISIBLE
+                        imageViewCheckboxTime.setImageResource(R.drawable.ic_checkbox_checked)
+                    } else {
+                        layoutCheckTime.visibility = View.GONE
+                    }
+
+                    checkTag()
+
+                    buttonRegister.isEnabled = false
+
+                    toolbar.textViewTitle.text = "공지사항 수정"
+                    buttonRegister.text = "수정하기"
+                }
+            } else {
+                toolbar.textViewTitle.text = "공지사항 작성"
+                layoutCheckTime.visibility = View.GONE
+            }
 
             toolbar.run {
                 buttonClose.setOnClickListener {
                     registerNoticeActivity.finish()
                 }
-                textViewTitle.text = "공지사항 작성"
             }
         }
+    }
+
+    // 문자열을 받아 날짜와 시간을 분리하는 함수
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun splitDateTimeString(dateTimeStr: String): Pair<String, String> {
+        // 문자열을 LocalDateTime으로 파싱
+        val dateTime = LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+
+        // 날짜 포맷 (2025년 2월 5일)
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일", Locale.KOREAN)
+        val dateString = dateTime.toLocalDate().format(dateFormatter)
+
+        // 시간 포맷 (13:00)
+        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.KOREAN)
+        val timeString = dateTime.toLocalTime().format(timeFormatter)
+
+        return Pair(dateString, timeString)
     }
 }

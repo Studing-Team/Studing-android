@@ -9,15 +9,22 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import com.archit.calendardaterangepicker.customviews.CalendarListener
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
+import com.prolificinteractive.materialcalendarview.format.DateFormatTitleFormatter
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter
 import com.team.studing.databinding.FragmentDateBottomSheetBinding
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 interface DateBottomSheetInterface {
     fun onDateClickCompleteButton(date: String)
 }
 
-class DateBottomSheetFragment : DialogFragment() {
+class DateBottomSheetFragment(var disableDay: String, var firstSelectedDate: String) :
+    DialogFragment() {
 
     lateinit var binding: FragmentDateBottomSheetBinding
 
@@ -68,26 +75,36 @@ class DateBottomSheetFragment : DialogFragment() {
         // 클릭 이벤트 처리
         binding.run {
 
-            calendarRegisterMedicineDate.setCalendarListener(object : CalendarListener,
-                StudingCalendarListener {
-                override fun onDateRangeSelected(startDate: Calendar, endDate: Calendar) {
-                }
+//            disableDatesBeforeTarget("2025년 03월 01일")
 
-                override fun onFirstDateSelected(startDate: Calendar) {
-                    var start = startDate.time
-                    date = if (start.month + 1 < 10) {
-                        "20${
-                            start.year.toString().substring(1)
-                        }년 0${start.month + 1}월 ${start.date}일"
-                    } else {
-                        "20${
-                            start.year.toString().substring(1)
-                        }년 ${start.month + 1}월 ${start.date}일"
-                    }
-                }
-            })
+            val disabledDates = hashSetOf<CalendarDay>()
+
+            binding.calendarRegisterDate.apply {
+                // 휴무일 지정을 위한 Decorator 설정
+                addDecorator(
+                    DayDisableDecorator(
+                        disabledDates,
+                        convertStringToCalendarDay(disableDay)
+                    )
+                )
+                // 요일을 지정하귀 위해 {"월", "화", ..., "일"} 배열을 추가한다.
+                setWeekDayLabels(arrayOf("월", "화", "수", "목", "금", "토", "일"))
+                // 달력 상단에 `월 년` 포맷을 수정하기 위해 TitleFormatter 설정
+                setTitleFormatter(MyTitleFormatter())
+
+                setSelectedDate(convertStringToCalendarDay(firstSelectedDate))
+            }
+
+            DateFormatTitleFormatter()
 
             buttonComplete.setOnClickListener {
+                val date = binding.calendarRegisterDate.selectedDate?.let {
+                    val calendar = Calendar.getInstance().apply {
+                        set(it.year, it.month - 1, it.day) // month는 1부터 시작하는 CalendarDay 기준
+                    }
+                    val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+                    dateFormat.format(calendar.time)
+                } ?: "날짜를 선택해주세요"
                 listener?.onDateClickCompleteButton(date)
                 dismiss()
             }
@@ -95,4 +112,55 @@ class DateBottomSheetFragment : DialogFragment() {
 
         return binding.root
     }
+
+    fun convertStringToCalendarDay(dateString: String): CalendarDay {
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+        val date =
+            dateFormat.parse(dateString) ?: return CalendarDay.today() // 변환 실패 시 오늘 날짜 반환
+
+        val calendar = Calendar.getInstance().apply {
+            time = date
+        }
+
+        return CalendarDay.from(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1,
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+    }
+
+
+    inner class MyTitleFormatter : TitleFormatter {
+        override fun format(day: CalendarDay?): CharSequence {
+            day ?: return ""
+
+            val calendar = Calendar.getInstance().apply {
+                set(day.year, day.month - 1, day.day) // month가 0부터 시작하므로 -1 필요
+            }
+
+            val simpleDateFormat = SimpleDateFormat("yyyy년 MM월", Locale.KOREA)
+            return simpleDateFormat.format(calendar.time)
+        }
+    }
+
+
+    inner class DayDisableDecorator : DayViewDecorator {
+        private var dates = HashSet<CalendarDay>()
+        private var today: CalendarDay
+
+        constructor(dates: HashSet<CalendarDay>, today: CalendarDay) {
+            this.dates = dates
+            this.today = today
+        }
+
+        override fun shouldDecorate(day: CalendarDay): Boolean {
+            // 휴무일 || 이전 날짜
+            return dates.contains(day) || day.isBefore(today)
+        }
+
+        override fun decorate(view: DayViewFacade?) {
+            view?.let { it.setDaysDisabled(true) }
+        }
+    }
+
 }
