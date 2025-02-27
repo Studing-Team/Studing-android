@@ -215,6 +215,7 @@ class NoticeDetailFragment : Fragment() {
                     // 선착순 이벤트인 경우
                     buttonFirstEvent.visibility = View.VISIBLE
                     textViewEventTimeTitle.text = "선착순 이벤트 안내"
+                    textViewEventNum.text = "인원 ${getNoticeDetail?.firstComeNumber}명"
                     checkNoticeTime(
                         getNoticeDetail?.startTime!!,
                         getNoticeDetail?.endTime!!

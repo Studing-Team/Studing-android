@@ -173,12 +173,23 @@
                     <TextView
                         android:id="@+id/textView_event_time_title"
                         style="@style/Chips"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="선착순 이벤트 안내"
                         android:textColor="@color/black_50"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_event_num"
+                        style="@style/Chips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="인원 0명"
+                        android:textColor="@color/black_20"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_event_time_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView_event_time_title" />
 
                     <TextView
                         android:id="@+id/textView_event_start_time_title"
