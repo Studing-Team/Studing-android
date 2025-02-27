@@ -36,7 +36,7 @@
         style="@style/LoginEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7dp"
         android:hint="비밀번호"
         android:inputType="text|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,104 +48,60 @@
         style="@style/BodyAdd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7dp"
+        android:backgroundTint="@color/white"
+        android:paddingVertical="14dp"
         android:text="로그인"
-        android:textColor="@color/white"
-        app:cornerRadius="50dp"
+        android:textColor="@color/gra"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="@+id/editText_password"
         app:layout_constraintStart_toStartOf="@+id/editText_password"
         app:layout_constraintTop_toBottomOf="@+id/editText_password" />
 
 
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/linearLayout"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="25dp"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        app:layout_constraintEnd_toEndOf="@+id/button_login"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/button_login"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/button_login">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/textView_find_id"-->
-    <!--            style="@style/Body2"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_marginStart="19dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:text="아이디 찾기"-->
-    <!--            android:textAlignment="center" />-->
-
-    <!--        <View-->
-    <!--            android:id="@+id/divider"-->
-    <!--            android:layout_weight="0.01"-->
-    <!--            android:layout_width="1dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_marginStart="15dp"-->
-    <!--            android:layout_marginTop="2dp"-->
-    <!--            android:layout_marginBottom="2dp"-->
-    <!--            android:background="@color/black_40" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/textView_find_password"-->
-    <!--            style="@style/Body2"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_marginStart="15dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:text="비밀번호 찾기"-->
-    <!--            android:textAlignment="center" />-->
-
-    <!--        <View-->
-    <!--            android:id="@+id/divider2"-->
-    <!--            android:layout_weight="0.01"-->
-    <!--            android:layout_width="1dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_marginStart="15dp"-->
-    <!--            android:layout_marginTop="2dp"-->
-    <!--            android:layout_marginBottom="2dp"-->
-    <!--            android:background="@color/black_40" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/textView_signup"-->
-    <!--            style="@style/Body2"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_marginStart="15dp"-->
-    <!--            android:layout_marginEnd="19dp"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:text="회원가입"-->
-    <!--            android:textAlignment="center" />-->
-    <!--    </LinearLayout>-->
-
-    <TextView
-        android:id="@+id/button_sign_up"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="@string/sign_up"
-        android:textColor="@color/black_50"
-        android:textSize="14sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/button_login"
         app:layout_constraintStart_toStartOf="@+id/button_login"
-        app:layout_constraintTop_toBottomOf="@+id/button_login" />
+        app:layout_constraintTop_toBottomOf="@+id/button_login">
 
-    <ImageView
-        android:id="@+id/button_qna"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_qna_black50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/button_sign_up"
+            style="@style/Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="회원가입"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/button_login"
+            app:layout_constraintStart_toStartOf="@+id/button_login"
+            app:layout_constraintTop_toBottomOf="@+id/button_login" />
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="0.01"
+            android:background="@color/black_5" />
 
+        <TextView
+            android:id="@+id/button_qna"
+            style="@style/Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:layout_weight="1"
+            android:text="스튜딩 문의하기"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
