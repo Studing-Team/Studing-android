@@ -62,6 +62,17 @@ class NoticeDetailFragment : Fragment() {
 
         binding.run {
 
+            refreshLayout.setOnRefreshListener {
+                initView()
+                viewModel.getNoticeDetail(
+                    mainActivity,
+                    MyApplication.noticeId,
+                    false
+                )
+
+                binding.refreshLayout.isRefreshing = false
+            }
+
             noticeImageAdapter = NoticeImagePagerAdapter(
                 mainActivity,
                 getNoticeDetail?.images
