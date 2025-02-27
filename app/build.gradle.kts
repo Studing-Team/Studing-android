@@ -72,8 +72,11 @@ dependencies {
     // tooltip
     implementation("com.github.skydoves:balloon:1.6.6")
 
-    // 캘린더
-    implementation("io.github.architshah248.calendar:awesome-calendar:2.0.0")
+    // calendar
+    implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
 
     // onboarding dot indicator
     implementation("com.tbuonomo:dotsindicator:5.0")

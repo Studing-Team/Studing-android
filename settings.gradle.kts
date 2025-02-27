@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
         maven {
             url = uri("https://repository.map.naver.com/archive/maven")
         }
@@ -24,5 +25,7 @@ dependencyResolutionManagement {
 
 
 
+
 rootProject.name = "Studing"
 include(":app")
+

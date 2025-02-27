@@ -33,10 +33,12 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Locale
 
 class RegisterNoticeFragment : Fragment() {
@@ -270,11 +272,16 @@ class RegisterNoticeFragment : Fragment() {
     fun selectDateTime() {
         binding.run {
             editTextStartDate.setOnClickListener {
-                val dateBottomsheet = DateBottomSheetFragment()
+                val dateBottomsheet = if (editTextStartDate.text.isNotEmpty()) {
+                    DateBottomSheetFragment(getTodayDateString(), editTextStartDate.text.toString())
+                } else {
+                    DateBottomSheetFragment(getTodayDateString(), getTodayDateString())
+                }
 
                 dateBottomsheet.setDateBottomSheetInterface(object : DateBottomSheetInterface {
                     override fun onDateClickCompleteButton(date: String) {
                         editTextStartDate.setText(date)
+                        checkEnabled()
                     }
                 })
 
@@ -290,6 +297,7 @@ class RegisterNoticeFragment : Fragment() {
                 timeBottomsheet.setTimeBottomSheetInterface(object : TimeBottomSheetInterface {
                     override fun onTimeClickCompleteButton(time: String) {
                         editTextStartTime.setText(time)
+                        checkEnabled()
                     }
                 })
 
@@ -300,11 +308,23 @@ class RegisterNoticeFragment : Fragment() {
             }
 
             editTextEndDate.setOnClickListener {
-                val dateBottomsheet = DateBottomSheetFragment()
+                var startDate =
+                    if (editTextStartDate.text.isNotEmpty()) {
+                        editTextStartDate.text.toString()
+                    } else {
+                        getTodayDateString()
+                    }
+
+                val dateBottomsheet = if (editTextEndDate.text.isNotEmpty()) {
+                    DateBottomSheetFragment(startDate, editTextEndDate.text.toString())
+                } else {
+                    DateBottomSheetFragment(startDate, getTodayDateString())
+                }
 
                 dateBottomsheet.setDateBottomSheetInterface(object : DateBottomSheetInterface {
                     override fun onDateClickCompleteButton(date: String) {
                         editTextEndDate.setText(date)
+                        checkEnabled()
                     }
                 })
 
@@ -320,6 +340,7 @@ class RegisterNoticeFragment : Fragment() {
                 timeBottomsheet.setTimeBottomSheetInterface(object : TimeBottomSheetInterface {
                     override fun onTimeClickCompleteButton(time: String) {
                         editTextEndTime.setText(time)
+                        checkEnabled()
                     }
                 })
 
@@ -368,6 +389,12 @@ class RegisterNoticeFragment : Fragment() {
                     editTextNoticeTitle.text.isNotEmpty() && editTextNoticeContent.text.isNotEmpty() && noticeTag != ""
             }
         }
+    }
+
+    fun getTodayDateString(): String {
+        val calendar = Calendar.getInstance() // 현재 날짜 가져오기
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+        return dateFormat.format(calendar.time) // 날짜를 원하는 형식으로 변환
     }
 
     private fun processSelectedImages(uris: List<Uri>): List<MultipartBody.Part> {
