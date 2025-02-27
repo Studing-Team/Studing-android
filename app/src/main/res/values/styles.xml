@@ -107,11 +107,10 @@
     <style name="LoginEditText" parent="Body2">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:inputType">text</item>
-        <item name="android:textColor">@color/black_50</item>
-        <item name="android:textColorHint">@color/black_50</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
         <item name="android:background">@drawable/background_edittext_login</item>
-        <item name="android:paddingHorizontal">15dp</item>
-        <item name="android:paddingVertical">8dp</item>
+        <item name="android:padding">15dp</item>
     </style>
 
 

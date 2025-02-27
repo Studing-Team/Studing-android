@@ -110,6 +110,7 @@ class UnreadNoticePagerAdapter(
                 notices[position].endTime!!,
                 position
             )
+            holder.eventNum.text = "인원 ${notices[position].firstComeNumber}명"
         } else {
             holder.buttonJoinEvent.visibility = View.GONE
             holder.timeTitle.text = "공지사항 안내"
@@ -240,6 +241,7 @@ class UnreadNoticePagerAdapter(
         val dotsIndicator = binding.dotsIndicatorNotice
         val tag = binding.chipNoticeType
 
+        val eventNum = binding.textViewEventNum
         val timeTitle = binding.textViewEventTimeTitle
         val startTime = binding.textViewEventStartTimeValue
         val endTime = binding.textViewEventEndTimeValue
